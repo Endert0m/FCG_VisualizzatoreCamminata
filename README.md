@@ -19,7 +19,7 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 
 Per compliare:
 
-    cmake -build
+    cmake --build
 
 Per lanciare:
 
