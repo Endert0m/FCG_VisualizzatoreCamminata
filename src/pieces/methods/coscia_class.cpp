@@ -28,16 +28,26 @@ sf::Shape* Coscia::draw(ReferencePlane plane){
     case ReferencePlane::XZ:
         {
         sf::Shape* shape = shapeXZ;
-        shape->setRotation(sf::Angle(sf::radians(tmpRot[2])));
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
+
+        //calcolo ridimensionamento dato da cos(x)-> questo per definire l'ancoraggio corretto del pivot
+        shape->setScale({1,cos(float(tmpRot[0]))});
+        //shape->setScale({1,(0.5* cos(float(tmpRot[0]*2)))+0.5});
+
+        
         return shape;}
         break;
     
     case ReferencePlane::YZ:
         {
         sf::Shape* shape = shapeYZ;
-        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[0])));
         shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
+
+        //calcolo ridimensionamento dato da cos(x) -> questo per definire l'ancoraggio corretto del pivot
+        shape->setScale({1,cos(float(tmpRot[1]))});
+        //shape->setScale({1,(0.5* cos(float(tmpRot[1]*2)))+0.5});
         return shape;}
         break;
     

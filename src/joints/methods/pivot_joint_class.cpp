@@ -9,34 +9,57 @@ void PivotJoint::rotate(unsigned int id){
     
     ////  sposto l'origine passivamente su tutti gli assi ////
 
-    float alpha = float (fRot[2] - oldRot[2]);
+    float alpha = float (fRot[0] - oldRot[0]);
     float cosA = glm::cos(alpha);
     float sinA = glm::sin(alpha);
+    float alpha1 = float (fRot[1] - oldRot[1]);
+    float cosA1 = glm::cos(alpha1);
+    float sinA1 = glm::sin(alpha1);
 
-    float beta = float (cRot[2] - oldCRot[id][2]);
+    float beta = float (cRot[0] - oldCRot[id][0]);
     float cosB = glm::cos(beta);
     float sinB = glm::sin(beta);
+    float beta1 = float (cRot[1] - oldCRot[id][1]);
+    float cosB1 = glm::cos(beta1);
+    float sinB1 = glm::sin(beta1);
+   
+    glm::mat4 Rpx = glm::mat4{
+        1 , 0, 0, 0,
+        0, cosA, sinA, 0,
+        0, -sinA, cosA, 0,
+        0, 0, 0, 1
+    };
 
-    glm::mat3 R1 = glm::mat3(
-        /*cos*/ cosA, /*sin*/ sinA, 0,
-        /*-sin*/ -sinA , /*cos*/  cosA, 0,
-        0,      0,           1
-    );
+    glm::mat4 Rpy = glm::mat4{
+        cosA1 , 0, sinA1, 0,
+        0, 1, 0, 0,
+        -sinA1, 0, cosA1, 0,
+        0, 0, 0, 1
+    };
+    
+    glm::mat4 Rcx = glm::mat4{
+        1 , 0, 0, 0,
+        0, cosB, sinB, 0,
+        0, -sinB, cosB, 0,
+        0, 0, 0, 1
+    };
 
-    glm::mat3 R2 = glm::mat3(
-        /*cos*/ cosB, /*sin*/ sinB, 0,
-        /*-sin*/ -sinB , /*cos*/  cosB, 0,
-        0,      0,           1
-    );
-
-    glm::vec3 pivotNXZ = R1 * glm::vec3(pivot[0],pivot[2],1);
-    pivot = rb::Vector3{pivotNXZ[0],pivot[1],pivotNXZ[1]};
-    glm::vec3 offsetNXZ = R2 * glm::vec3(offset[id][0],offset[id][2],1);
-    offset[id] = rb::Vector3{offsetNXZ[0],offset[id][1],offsetNXZ[1]};
+    glm::mat4 Rcy = glm::mat4{
+        cosB1 , 0, sinB1, 0,
+        0, 1, 0, 0,
+        -sinB1, 0, cosB1, 0,
+        0, 0, 0, 1
+    };
 
     
+    glm::vec4 pivotN =  Rpy * Rpx * glm::vec4(pivot[0], pivot[1], pivot[2],1);
+    pivot = rb::Vector3{pivotN[0],pivotN[1],pivotN[2]};
+    glm::vec4 offN = Rcy * Rcx * glm::vec4(offset[id][0],offset[id][1],offset[id][2],1);
+    offset[id] = rb::Vector3{offN[0],offN[1],offN[2]};
+
     childs[id]->body.setPos(rb::Vector3{fPos[0]+offset[id][0]+pivot[0],fPos[1]+offset[id][1]+pivot[1],fPos[2]+offset[id][2]+pivot[2]});
 
+    //printf("Offset = %f %f %f \n" , offN[0], offN[1], offN[2]);
 
     oldRot = fRot; //aggiorno la rotazione per il ciclo successivo
     oldCRot[id] = cRot;
@@ -55,7 +78,7 @@ PivotJoint::PivotJoint(PieceInterface* father,std::vector<PieceInterface*> child
     rb::Vector3_s fRot = father->body.getRot();
 
     pivot = pivotPoint;
-    rb::Vector3 pivotCenter = father->globalPos + father->body.getPos() + pivot;
+    rb::Vector3 pivotCenter = father->body.getPos() + pivot;
 
     /*
     float sign = pivot[2] >= 0 ? 1 : -1;
@@ -69,7 +92,7 @@ PivotJoint::PivotJoint(PieceInterface* father,std::vector<PieceInterface*> child
     //mi calcolo l'offset per ogni child rispetto al pivot
     for(PieceInterface* c : childs){
         rb::Vector3 tmpCoords;
-        rb::Vector3 cCoords = c->globalPos + c->body.getPos();
+        rb::Vector3 cCoords = c->body.getPos();
         tmpCoords = cCoords - pivotCenter;
 
         /*

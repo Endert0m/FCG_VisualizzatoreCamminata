@@ -29,7 +29,7 @@ sf::Shape* Torso::draw(ReferencePlane plane){
     case ReferencePlane::XZ:
         {
         sf::Shape* shape = shapeXZ;
-        shape->setRotation(sf::Angle(sf::radians(tmpRot[2])));
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
         return shape;}
         break;
@@ -37,7 +37,7 @@ sf::Shape* Torso::draw(ReferencePlane plane){
     case ReferencePlane::YZ:
         {
         sf::Shape* shape = shapeYZ;
-        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[0])));
         shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
         return shape;}
         break;

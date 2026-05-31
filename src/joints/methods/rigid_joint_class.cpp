@@ -12,30 +12,48 @@ void RigidJoint::rotate(unsigned int id){
 
     childs[id]->body.setRot(fRot + rotOffset[id]);
 
-
-    // sposto il alla distanza offset rispetto all'origine R*pos
+    //passo a coordinate 3D per calcolare rotazione sul piano YZ oltre che al piano XZ
     // calcolo alpha angolo 
 
-    float alpha = float (fRot[2] - fRotOld[2]);
+    float alpha = float (fRot[0] - fRotOld[0]);
+    float beta = float (fRot[1] - fRotOld[1]);
+
     float cosA = glm::cos(alpha);
     float sinA = glm::sin(alpha);
+    
+    float cosB = glm::cos(beta);
+    float sinB = glm::sin(beta);
 
-    glm::mat3 R = glm::mat3(
-        /*cos*/ cosA, /*sin*/ sinA, 0,
-        /*-sin*/ -sinA , /*cos*/  cosA, 0,
-        0,      0,           1
-    );
 
-    //sposto il child all'origine rispetto al padre
+    glm::mat4 Rx = glm::mat4{
+        1 , 0, 0, 0,
+        0, cosA, sinA, 0,
+        0, -sinA, cosA, 0,
+        0, 0, 0, 1
+    };
 
-    glm::vec3 XZ_cPos = {offset[id][0],offset[id][2],1};
-    glm::vec3 resRot = R * XZ_cPos;
+    glm::mat4 Ry = glm::mat4{
+        cosB , 0, sinB, 0,
+        0, 1, 0, 0,
+        -sinB, 0, cosB, 0,
+        0, 0, 0, 1
+    };
 
-    offset[id][0] = resRot[0] ;
-    offset[id][2] = resRot[1] ; 
+    glm::mat4 T = glm::mat4{
+        1, 0, 0, 0, 
+        0, 1, 0, 0,
+        0 ,0, 1, 0,
+        fPos[0], fPos[1], fPos[2], 1
+    };
 
-    childs[id]->body.setPos({fPos[0]-offset[id][0],offset[id][1],fPos[2] -offset[id][2]});
-   
+    glm::vec4 resRot = Rx * Ry * glm::vec4(offset[id][0],offset[id][1],offset[id][2],1);
+    offset[id] = rb::Vector3{resRot[0], resRot[1], resRot[2]};
+
+    glm::vec4 resTransf = T * resRot;
+
+    childs[id]->body.setPos({resTransf[0],resTransf[1],resTransf[2]});
+    
+
 }   
 
 void RigidJoint::traslate(unsigned int id){

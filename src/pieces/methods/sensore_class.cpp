@@ -33,6 +33,9 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
         std::vector<float> tmpA = {row[5],row[6],row[4]};
         std::vector<float> tmpG = {-row[8],-row[9],-row[7]};
                
+        /////// DA CAMBIARE QUI ///////////
+
+
         rotData.push_back(tmpR);
         accData.push_back(tmpA);
         gData.push_back(tmpG);
@@ -66,7 +69,7 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
     case ReferencePlane::XZ:
         {
         sf::Shape* shape = shapeXZ;
-        shape->setRotation(sf::Angle(sf::radians(tmpRot[2])));
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
         return shape;}
         break;
@@ -74,7 +77,7 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
     case ReferencePlane::YZ:
         {
         sf::Shape* shape = shapeYZ;
-        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[0])));
         shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
         return shape;}
         break;
@@ -98,11 +101,11 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
     float tmpSinY = -grav[1] / modG;
     float tmpSinZ = -grav[2] / modG;
 
-    float tmpAX = acos(tmpSinY);
-    float tmpAY = acos(tmpSinZ);
-    float tmpAZ = acos(tmpSinX);
+    float tmpAX = acos(tmpSinX);
+    float tmpAY = acos(tmpSinY);
+    float tmpAZ = acos(tmpSinZ);
 
-    body.setRot(rb::Vector3_s{_Float16( tmpAX),_Float16( tmpAY),_Float16( tmpAZ) });
+    body.setRot(rb::Vector3_s{_Float16( tmpAY),_Float16( tmpAX),_Float16( tmpAZ) });
 
 }
 /*

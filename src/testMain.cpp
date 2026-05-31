@@ -38,30 +38,30 @@ int main() {
         const auto& coscia = processor.getData();
 
 
-        gs.pieces.push_back(new Coscia (rb::Vector3{300,10,300},2));
+        gs.pieces.push_back(new Coscia (rb::Vector3{300,300,300},2));
         gs.pieces.push_back(new Sensore (rb::Vector3{300,300,300},_Float16( 0.2 ),900,3000,coscia));
-        gs.pieces.push_back(new Caviglia (rb::Vector3{300,10,500},1));
+        gs.pieces.push_back(new Caviglia (rb::Vector3{300,300,500},1));
 
         gs.pieces[1]->body.setRot({0,0,0});
 
 
         processor.readCSVFile(DATA_PATH + "caviglia_filt.csv");
         const auto& caviglia = processor.getData();
-        gs.pieces.push_back(new Sensore (rb::Vector3{300,700,500},_Float16( 0.2 ),900,3000,caviglia));
-        
+        gs.pieces.push_back(new Sensore (rb::Vector3{300,300,500},_Float16( 0.2 ),900,3000,caviglia));
+
         gs.pieces.push_back(new Torso(rb::Vector3{300,400,150},2));
 
         // modifico la rotazione relativa della gamba
-        gs.pieces[1]->body.setRot({0,0,_Float16 (1.6)});
-        gs.pieces[3]->body.setRot({0,0,_Float16 (1.7)});
+        gs.pieces[1]->body.setRot({_Float16 (1.3),_Float16 (1.5),0});
+        gs.pieces[3]->body.setRot({_Float16 (1.8),_Float16 (1.5),0});
+
 
 
         // aggiungo i joint
-
+        gs.joints.push_back(new PivotJoint(gs.pieces[4], {gs.pieces[1]}, rb::Vector3{0,-100,50}));
         gs.joints.push_back(new RigidJoint(gs.pieces[1], {gs.pieces[0]}));
         gs.joints.push_back(new PivotJoint(gs.pieces[1], {gs.pieces[3]}, rb::Vector3{0,0,100}));
         gs.joints.push_back(new RigidJoint(gs.pieces[3], {gs.pieces[2]}));
-        gs.joints.push_back(new PivotJoint(gs.pieces[4], {gs.pieces[1]}, rb::Vector3{0,0,50}));
         
 
         printf("Ho costruito tutto!\n");

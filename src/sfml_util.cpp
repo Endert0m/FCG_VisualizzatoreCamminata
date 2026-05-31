@@ -85,23 +85,39 @@ void handle(const sf::Event::MouseMoved &mouseMoved, State &gs)
 {
     sf::Vector2i offset = mouseMoved.position - gs.mouse_pos;
     gs.mouse_pos = mouseMoved.position;
+    float px = 1;
+    float py = 0;
+    switch (gs.selectedPlane)
+    {
+    case ReferencePlane::XZ:
+        px = 1;
+        py = 0;
+        break;
+    case ReferencePlane::YZ:
+        px = 0;
+        py = 1;
+        break;
+    
+    default:
+        break;
+    }
+
     if (gs.drag){
         for(PieceInterface* p : gs.pieces){
-            p->globalPos = {p->globalPos[0] + offset.x, p->globalPos[1],p->globalPos[2] + offset.y};
-
-            /// Devo spostare sul piano di visualizzazione
-            /// Quindi dovrò settare una variabile che mi definisce qual è il piano preso in considerazione, questo sarà nello state
+            p->globalPos = {p->globalPos[0] + (offset.x * px), p->globalPos[1]+ (offset.x * py),p->globalPos[2] + offset.y};
         }
     }
     if (gs.selected != -1 && gs.drag_Piece){
         rb::Vector3 tmp = gs.pieces[gs.selected]->body.getPos();
-        gs.pieces[gs.selected]->body.setPos({tmp[0]+offset.x,tmp[1],tmp[2]+offset.y});
+        gs.pieces[gs.selected]->body.setPos({tmp[0]+ (offset.x * px),tmp[1]+ (offset.x * py),tmp[2]+offset.y});
     }
     if (gs.selected != -1 && gs.rot_Piece){
         rb::Vector3_s tmp = gs.pieces[gs.selected]->body.getRot();
 
         _Float16 nrot = _Float16(offset.x)/10;
-        gs.pieces[gs.selected]->body.setRot({tmp[0],tmp[1],tmp[2]+nrot});
+        gs.pieces[gs.selected]->body.setRot({tmp[0]+(nrot*_Float16(py)),tmp[1]+(nrot*_Float16(px)),tmp[2]});
+        
+        //printf("Rotation : %f,%f,%f \n",gs.pieces[gs.selected]->body.getRot()[0],gs.pieces[gs.selected]->body.getRot()[1],gs.pieces[gs.selected]->body.getRot()[2]);
     }
 
     
@@ -115,8 +131,11 @@ void handle(const sf::Event::MouseButtonPressed &mouseBP, State &gs)
         gs.drag_Piece = true;
         int i = 0;
         for (PieceInterface* p : gs.pieces){
-            
-            sf::Vector2f pos = {p->globalPos[0]+ p->body.getPos()[0], p->globalPos[2]+ p->body.getPos()[2]};
+            sf::Vector2f pos;
+            if (gs.selectedPlane == ReferencePlane::XZ)
+             pos = {p->globalPos[0]+ p->body.getPos()[0], p->globalPos[2]+ p->body.getPos()[2]};
+            else if (gs.selectedPlane == ReferencePlane::YZ)
+             pos = {p->globalPos[1]+ p->body.getPos()[1], p->globalPos[2]+ p->body.getPos()[2]};
 
             if (dist(pos,mouseBP.position) < 20){
                 gs.selected = i;
