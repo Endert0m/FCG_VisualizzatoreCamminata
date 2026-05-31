@@ -22,10 +22,16 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Aggiustato calcolo dei pivot implementando le rotazioni con algebra affine e glm
 - Aggiuta classe caviglia (per differenziarla dalla coscia) 
 
-Per compliare:
+## Nella versione v0.3:
+- Applicato refactoring delle classi pieces
+- Aggiunta pezzo torso
+- Nel testMain vengono agganciate caviglia e coscia al nuovo torso
+
+
+# Per compliare:
 
     cmake --build
 
-Per lanciare:
+# Per lanciare:
 
-    ./build/bin/mainV2
+    ./build/bin/mainV3

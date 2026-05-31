@@ -1,17 +1,16 @@
 #include "../headers/coscia.hpp"
 
 Coscia::Coscia(rb::Vector3 coords, _Float16 mass){
-    size = coscia_Dim;
-    rb::Vector3 com = {size.x/2,0, size.y/2};
+    rb::Vector3 com = {coscia_Dim.x/2,coscia_Dim.z/2,coscia_Dim.y/2};
     body = rb::rigidbody(coords, com, mass);
     color = coscia_Col;
-    shape = new sf::RectangleShape(size);
-    shape->setOrigin({size.x/2,size.y/2});
     globalPos = {0,0,0};
+    initialize_shapes(coscia_Dim);
 }
 
 Coscia::~Coscia(){
-    delete shape;
+    delete shapeXZ;
+    delete shapeYZ;
 }
 
 void Coscia::update(sf::Clock cl){
@@ -19,22 +18,33 @@ void Coscia::update(sf::Clock cl){
 }
 
 sf::Shape* Coscia::draw(ReferencePlane plane){
-    shape->setFillColor(color);
+    
     rb::Vector3 tmpPos = body.getPos();
     rb::Vector3_s tmpRot = body.getRot();
+
 
     switch (plane)
     {
     case ReferencePlane::XZ:
-        shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
+        {
+        sf::Shape* shape = shapeXZ;
         shape->setRotation(sf::Angle(sf::radians(tmpRot[2])));
+        shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
+        return shape;}
         break;
     
-
+    case ReferencePlane::YZ:
+        {
+        sf::Shape* shape = shapeYZ;
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
+        shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
+        return shape;}
+        break;
+    
     default:
         break;
     }
 
    
-    return shape;
+    return nullptr;
 }

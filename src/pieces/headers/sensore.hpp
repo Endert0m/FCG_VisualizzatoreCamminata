@@ -3,11 +3,13 @@
 #ifndef SENSORE_H
 #define SENSORE_H
 
-const sf::Vector2f sensore_Dim = {30, 60};
-const sf::Color sensore_Col = sf::Color::Red;
+
 
 class Sensore : public PieceInterface{
     private:
+        const sf::Vector3f sensore_Dim = {30, 60, 30};
+        const sf::Color sensore_Col = sf::Color::Red;
+        
         std::vector<std::vector<float>> accData;
         std::vector<std::vector<float>> gData;
         std::vector<std::vector<float>> rotData;
@@ -21,6 +23,7 @@ class Sensore : public PieceInterface{
 
         //funzioni ausiliarie
         void calcRotWithG(unsigned int index);
+        
 
     public: 
         Sensore(rb::Vector3 coords, _Float16 mass);

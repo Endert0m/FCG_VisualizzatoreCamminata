@@ -22,6 +22,7 @@ struct State
     sf::Vector2f cameraOffset = {0.,0.};
 
     sf::Clock clock;
+    ReferencePlane selectedPlane = ReferencePlane::XZ;
 
     int selected = -1;
 
@@ -72,6 +73,12 @@ void handle(const sf::Event::TextEntered &textEnter, State &gs)
 
 void handle(const sf::Event::KeyPressed &keyPressed, State &gs)
 {
+    if (keyPressed.scancode == sf::Keyboard::Scancode::Space){
+        if (gs.selectedPlane == ReferencePlane::XZ)
+            gs.selectedPlane = ReferencePlane::YZ;
+        else 
+            gs.selectedPlane = ReferencePlane::XZ;
+    }
 }
 
 void handle(const sf::Event::MouseMoved &mouseMoved, State &gs)
@@ -113,7 +120,6 @@ void handle(const sf::Event::MouseButtonPressed &mouseBP, State &gs)
 
             if (dist(pos,mouseBP.position) < 20){
                 gs.selected = i;
-                break;
             }
             i++;
         }
@@ -127,7 +133,6 @@ void handle(const sf::Event::MouseButtonPressed &mouseBP, State &gs)
 
             if (dist(pos,mouseBP.position) < 20){
                 gs.selected = i;
-                break;
             }
             i++;
         }
@@ -173,7 +178,7 @@ void doGraphics(State &gs)
     doGUI(gs);
 
     for(PieceInterface* p: gs.pieces){
-        gs.window.draw(*p->draw(ReferencePlane::XZ));
+        gs.window.draw(*p->draw(gs.selectedPlane));
     }
     
     // TODO: add here code to display shapes in your canvas

@@ -3,11 +3,13 @@
 #ifndef COSCIA_H
 #define COSCIA_H
 
-const sf::Vector2f coscia_Dim = {80, 200};
-const sf::Color coscia_Col = sf::Color::Yellow;
 
 
 class Coscia : public PieceInterface{
+    private:
+        const sf::Vector3f coscia_Dim = {80, 200, 80};
+        const sf::Color coscia_Col = sf::Color::Yellow;
+        
     public: 
 
         Coscia(rb::Vector3 coords, _Float16 mass);

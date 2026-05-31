@@ -23,7 +23,7 @@ FetchContent_MakeAvailable(glm)
 set(METHODS_PATH "./src/*/methods/*.cpp")
 
 
-set(VERSION "V2")
+set(VERSION "V3")
 
 file(GLOB_RECURSE METHODS_SRC "${METHODS_PATH}")
 add_executable(main${VERSION} ./src/testMain.cpp ${METHODS_SRC} )

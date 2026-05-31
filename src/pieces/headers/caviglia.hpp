@@ -3,11 +3,12 @@
 #ifndef CAVIGLIA_H
 #define CAVIGLIA_H
 
-const sf::Vector2f caviglia_Dim = {60, 200};
-const sf::Color caviglia_Col = sf::Color(230,160,11,255);
-
 
 class Caviglia : public PieceInterface{
+    private:
+        const sf::Vector3f caviglia_Dim = {60, 200, 60};
+        const sf::Color caviglia_Col = sf::Color(230,160,11,255);
+
     public: 
 
         Caviglia(rb::Vector3 coords, _Float16 mass);

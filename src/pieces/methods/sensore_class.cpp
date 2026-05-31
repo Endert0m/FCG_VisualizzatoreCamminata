@@ -2,12 +2,11 @@
 
 
 Sensore::Sensore(rb::Vector3 coords, _Float16 mass){
-    size = sensore_Dim;
-    rb::Vector3 com = {size.x/2,0, size.y/2};
+    rb::Vector3 com = {sensore_Dim.x/2,sensore_Dim.z/2, sensore_Dim.y/2};
     body = rb::rigidbody(coords, com, mass);
     color = sensore_Col;
-    shape = new sf::RectangleShape(size);
     globalPos = {0,0,0};
+    initialize_shapes(sensore_Dim);
 }
 
 Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, unsigned int dataIntvl, std::vector<std::vector<float>> data) : Sensore(coords, mass){
@@ -18,7 +17,8 @@ Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, unsigned in
 
 
 Sensore::~Sensore(){
-    delete shape;
+    delete shapeXZ;
+    delete shapeYZ;
 }
 
 void Sensore::initCSV(std::vector<std::vector<float>> data){
@@ -48,6 +48,8 @@ void Sensore::update(sf::Clock cl){
 
         //calcolo la posizione e velocità
         calcRotWithG(dataPos);
+
+
         body.setAcc(rb::Vector3{accData[dataPos]});
         body.step(cl);
     }
@@ -55,30 +57,33 @@ void Sensore::update(sf::Clock cl){
 }
 
 sf::Shape* Sensore::draw(ReferencePlane plane){
-    shape->setFillColor(color);
-
-    shape->setOrigin({sensore_Dim.x/2, sensore_Dim.y/2});
     
     rb::Vector3_s tmpRot = body.getRot();
-    
-
     rb::Vector3 tmpPos = body.getPos();
 
     switch (plane)
     {
     case ReferencePlane::XZ:
+        {
+        sf::Shape* shape = shapeXZ;
         shape->setRotation(sf::Angle(sf::radians(tmpRot[2])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
+        return shape;}
+        break;
+    
+    case ReferencePlane::YZ:
+        {
+        sf::Shape* shape = shapeYZ;
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
+        shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
+        return shape;}
         break;
     
     default:
         break;
     }
-    
 
-    
-
-    return shape;
+    return nullptr;
 }
 
 
@@ -100,3 +105,9 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
     body.setRot(rb::Vector3_s{_Float16( tmpAX),_Float16( tmpAY),_Float16( tmpAZ) });
 
 }
+/*
+void Sensore::calcRotWithConstraint(){
+
+};*/
+
+/////////////// cinematica inversa

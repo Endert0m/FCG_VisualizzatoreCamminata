@@ -17,11 +17,17 @@ enum class ReferencePlane {
 class PieceInterface{
     protected:
         
-        //std::vector<JointInterface*> joints;
+        void initialize_shapes(sf::Vector3f dim){
+            shapeXZ = new sf::RectangleShape({dim.x, dim.y});
+            shapeYZ = new sf::RectangleShape({dim.z, dim.y});
+            shapeXZ->setOrigin({dim.x/2,dim.y/2});
+            shapeYZ->setOrigin({dim.z/2,dim.y/2});
+            shapeXZ->setFillColor(color);
+            shapeYZ->setFillColor(color);
+        }
 
     public:
-        sf::Shape* shape;
-        sf::Vector2f size;
+        sf::Shape* shapeXZ, *shapeYZ;
         rb::Vector3 globalPos;
         rb::rigidbody body;
         sf::Color color;

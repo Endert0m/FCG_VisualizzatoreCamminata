@@ -4,5 +4,6 @@
 #include "pieces/headers/coscia.hpp"
 #include "pieces/headers/caviglia.hpp"
 #include "pieces/headers/sensore.hpp"
+#include "pieces/headers/torso.hpp"
 #include "joints/headers/rigid_joint.hpp"
 #include "joints/headers/pivot_joint.hpp"
