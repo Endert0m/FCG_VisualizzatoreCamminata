@@ -20,7 +20,7 @@ void Coscia::update(sf::Clock cl){
 sf::Shape* Coscia::draw(ReferencePlane plane){
     
     rb::Vector3 tmpPos = body.getPos();
-    rb::Vector3_s tmpRot = body.getRot();
+    rb::Vector3 tmpRot = body.getRot();
 
 
     switch (plane)

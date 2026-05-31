@@ -7,14 +7,14 @@
 
     namespace rb{
         typedef std::vector<float> Vector3;
-        typedef std::vector<_Float16> Vector3_s;
+        //typedef std::vector<_Float16> Vector3;
 
         class rigidbody
         {
             private:
                 Vector3 vel = {0,0,0};
                 Vector3 acc = {0,0,0};
-                Vector3_s rot = {0,0,0};
+                Vector3 rot = {0,0,0};
                 Vector3 tanAcc = {0,0,0};
 
                 _Float16 mass = 1;
@@ -40,9 +40,9 @@
 
                 
                 Vector3 getPos();
-                Vector3_s getRot();
+                Vector3 getRot();
                 void setPos(const Vector3 Npos);
-                void setRot(const Vector3_s Nrot);
+                void setRot(const Vector3 Nrot);
                 void setVel(const Vector3 Nacc);
                 void setAcc(const Vector3 Nvel);
                 void step(const sf::Clock time);
@@ -76,30 +76,9 @@
                 v1[2] - v2[2]
             };
         }
-
-    inline rb::Vector3_s operator+(const rb::Vector3_s& v1, const rb::Vector3_s& v2) {
-            if (v1.size() != 3 || v2.size() != 3) {
-                throw std::invalid_argument("I vettori devono avere esattamente 3 elementi.");
-            }
-            return rb::Vector3_s{
-                v1[0] + v2[0],
-                v1[1] + v2[1],
-                v1[2] + v2[2]
-            };
-        }
-
-     inline rb::Vector3_s operator-(const rb::Vector3_s& v1, const rb::Vector3_s& v2) {
-            if (v1.size() != 3 || v2.size() != 3) {
-                throw std::invalid_argument("I vettori devono avere esattamente 3 elementi.");
-            }
-            return rb::Vector3_s{
-                v1[0] - v2[0],
-                v1[1] - v2[1],
-                v1[2] - v2[2]
-            };
-        }
+    
         /*
-        inline bool operator!=(const rb::Vector3_s& v1, const rb::Vector3_s& v2) {
+        inline bool operator!=(const rb::Vector3& v1, const rb::Vector3& v2) {
             if (v1.size() != 3 || v2.size() != 3) {
                 throw std::invalid_argument("I vettori devono avere esattamente 3 elementi.");
             }

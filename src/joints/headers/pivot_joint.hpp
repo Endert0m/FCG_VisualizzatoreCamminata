@@ -5,9 +5,9 @@ class PivotJoint : public JointInterface {
         void rotate(unsigned int id) override;
         void traslate(unsigned int id) override;
 
-        rb::Vector3_s oldRot;
+        rb::Vector3 oldRot;
         rb::Vector3 pivot;
-        std::vector<rb::Vector3_s> oldCRot;
+        std::vector<rb::Vector3> oldCRot;
 
         //possono servire per calcolare l'offset rispetto alla posizione precedente
         rb::Vector3 oldPos;

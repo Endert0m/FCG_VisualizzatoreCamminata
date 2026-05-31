@@ -3,9 +3,9 @@
 #define ZERO_INT 0.00001
 
 void PivotJoint::rotate(unsigned int id){
-    rb::Vector3_s fRot = father->body.getRot();
+    rb::Vector3 fRot = father->body.getRot();
     rb::Vector3 fPos = father->body.getPos();
-    rb::Vector3_s cRot = childs[id]->body.getRot();
+    rb::Vector3 cRot = childs[id]->body.getRot();
     
     ////  sposto l'origine passivamente su tutti gli assi ////
 
@@ -75,7 +75,7 @@ PivotJoint::PivotJoint(PieceInterface* father,std::vector<PieceInterface*> child
     this->childs = childs;
     this->father = father;
     rb::Vector3 fCoords = father->globalPos + father->body.getPos();
-    rb::Vector3_s fRot = father->body.getRot();
+    rb::Vector3 fRot = father->body.getRot();
 
     pivot = pivotPoint;
     rb::Vector3 pivotCenter = father->body.getPos() + pivot;
@@ -83,7 +83,7 @@ PivotJoint::PivotJoint(PieceInterface* father,std::vector<PieceInterface*> child
     /*
     float sign = pivot[2] >= 0 ? 1 : -1;
     float r = sqrt(pow(pivot[0],2)+pow(pivot[2],2));
-    rotOffset.push_back(  rb::Vector3_s{0,0,_Float16( acos(sign * pivot[0]/r) )} );
+    rotOffset.push_back(  rb::Vector3{0,0,_Float16( acos(sign * pivot[0]/r) )} );
     */
 
 
@@ -97,7 +97,7 @@ PivotJoint::PivotJoint(PieceInterface* father,std::vector<PieceInterface*> child
 
         /*
         float r = sqrt(pow(tmpCoords[0],2)+pow(tmpCoords[2],2));
-        oldCRot.push_back( rb::Vector3_s{0,0,_Float16( acos(tmpCoords[0]/r) )} );
+        oldCRot.push_back( rb::Vector3{0,0,_Float16( acos(tmpCoords[0]/r) )} );
         */
         oldCRot.push_back(c->body.getRot());
 

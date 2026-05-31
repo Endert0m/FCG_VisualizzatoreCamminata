@@ -112,10 +112,10 @@ void handle(const sf::Event::MouseMoved &mouseMoved, State &gs)
         gs.pieces[gs.selected]->body.setPos({tmp[0]+ (offset.x * px),tmp[1]+ (offset.x * py),tmp[2]+offset.y});
     }
     if (gs.selected != -1 && gs.rot_Piece){
-        rb::Vector3_s tmp = gs.pieces[gs.selected]->body.getRot();
+        rb::Vector3 tmp = gs.pieces[gs.selected]->body.getRot();
 
-        _Float16 nrot = _Float16(offset.x)/100;
-        gs.pieces[gs.selected]->body.setRot({tmp[0]+(nrot*_Float16(py)),tmp[1]+(nrot*_Float16(px)),tmp[2]});
+        float nrot = float(offset.x)/100;
+        gs.pieces[gs.selected]->body.setRot({tmp[0]+(nrot*py),tmp[1]+(nrot*px),tmp[2]});
         
         //printf("Rotation : %f,%f,%f \n",gs.pieces[gs.selected]->body.getRot()[0],gs.pieces[gs.selected]->body.getRot()[1],gs.pieces[gs.selected]->body.getRot()[2]);
     }

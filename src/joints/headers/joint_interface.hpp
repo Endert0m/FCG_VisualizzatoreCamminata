@@ -21,7 +21,7 @@ class JointInterface{
 
     public:
         std::vector<rb::Vector3> offset;
-        std::vector<rb::Vector3_s> rotOffset;
+        std::vector<rb::Vector3> rotOffset;
         PieceInterface* father;
         std::vector<PieceInterface*> childs;
 

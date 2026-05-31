@@ -5,8 +5,8 @@
 //using namespace glm;
 
 void RigidJoint::rotate(unsigned int id){
-    rb::Vector3_s fRot = father->body.getRot();
-    rb::Vector3_s fRotOld = childs[id]->body.getRot() - rotOffset[id];
+    rb::Vector3 fRot = father->body.getRot();
+    rb::Vector3 fRotOld = childs[id]->body.getRot() - rotOffset[id];
     rb::Vector3 fPos = father->body.getPos();
     rb::Vector3 cPos = childs[id]->body.getPos();
 
@@ -65,7 +65,7 @@ RigidJoint::RigidJoint(PieceInterface* father,std::vector<PieceInterface*> child
     this->childs = childs;
     this->father = father;
     rb::Vector3 fCoords = father->globalPos + father->body.getPos();
-    rb::Vector3_s fRot = father->body.getRot();
+    rb::Vector3 fRot = father->body.getRot();
 
 
 
@@ -73,7 +73,7 @@ RigidJoint::RigidJoint(PieceInterface* father,std::vector<PieceInterface*> child
     //mi calcolo l'offset per ogni child rispetto al padre
     for(PieceInterface* c : childs){
         rb::Vector3 tmpCoords;
-        rb::Vector3_s tmpRot;
+        rb::Vector3 tmpRot;
 
         rb::Vector3 cCoords = c->globalPos + c->body.getPos();
 

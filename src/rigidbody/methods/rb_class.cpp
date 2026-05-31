@@ -21,8 +21,8 @@ rigidbody::~rigidbody()
 Vector3 rigidbody::getPos(){
     return Vector3 {coords};
 }
-Vector3_s rigidbody::getRot(){
-    return Vector3_s {rot};
+Vector3 rigidbody::getRot(){
+    return Vector3 {rot};
 }
 
 void rigidbody::setPos(Vector3 Npos){
@@ -47,7 +47,7 @@ void rigidbody::setAcc(const Vector3 Nacc){
 
 }
 
-void rigidbody::setRot(const Vector3_s Nrot){
+void rigidbody::setRot(const Vector3 Nrot){
     if (Nrot.size() != 3) throw "Vel vector must be 3 in lenght!";
     
     int i = 0;

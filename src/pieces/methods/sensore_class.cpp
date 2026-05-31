@@ -61,7 +61,7 @@ void Sensore::update(sf::Clock cl){
 
 sf::Shape* Sensore::draw(ReferencePlane plane){
     
-    rb::Vector3_s tmpRot = body.getRot();
+    rb::Vector3 tmpRot = body.getRot();
     rb::Vector3 tmpPos = body.getPos();
 
     switch (plane)
@@ -105,7 +105,7 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
     float tmpAY = acos(tmpSinY);
     float tmpAZ = acos(tmpSinZ);
 
-    body.setRot(rb::Vector3_s{_Float16( tmpAY),_Float16( tmpAX),_Float16( tmpAZ) });
+    body.setRot(rb::Vector3{tmpAY, tmpAX, tmpAZ });
 
 }
 /*

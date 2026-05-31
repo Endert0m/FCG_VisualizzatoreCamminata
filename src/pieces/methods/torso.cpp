@@ -20,7 +20,7 @@ void Torso::update(sf::Clock cl){
 
 sf::Shape* Torso::draw(ReferencePlane plane){
    
-    rb::Vector3_s tmpRot = body.getRot();
+    rb::Vector3 tmpRot = body.getRot();
     rb::Vector3 tmpPos = body.getPos();
 
 
