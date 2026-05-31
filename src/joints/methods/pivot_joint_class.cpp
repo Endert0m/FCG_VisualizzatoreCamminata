@@ -4,55 +4,43 @@
 
 void PivotJoint::rotate(unsigned int id){
     rb::Vector3_s fRot = father->body.getRot();
+    rb::Vector3 fPos = father->body.getPos();
     rb::Vector3_s cRot = childs[id]->body.getRot();
     
     ////  sposto l'origine passivamente su tutti gli assi ////
 
-    float r1 = sqrt(pow(pivot[0],2)+pow(pivot[2],2)); //calcolo modulo dell'offset (per ora solo sul piano xz)
-    float r2 = sqrt(pow(offset[id][0],2)+pow(offset[id][2],2)); 
-    if (r1>ZERO_INT){
-        
-        float sign = pivot[2] >= 0 ? 1 : -1;
+    float alpha = float (fRot[2] - oldRot[2]);
+    float cosA = glm::cos(alpha);
+    float sinA = glm::sin(alpha);
 
+    float beta = float (cRot[2] - oldCRot[id][2]);
+    float cosB = glm::cos(beta);
+    float sinB = glm::sin(beta);
 
-        sf::Angle alpha = sf::radians(fRot[2] - oldRot[2]); // angolo aggiunto
-        sf::Angle alpha1 = sf::radians(acos(sign * pivot[0]/r1)); // angolo rispetto alla posizione del pivot 
-        sf::Angle alpha2 = alpha + alpha1;
+    glm::mat3 R1 = glm::mat3(
+        /*cos*/ cosA, /*sin*/ sinA, 0,
+        /*-sin*/ -sinA , /*cos*/  cosA, 0,
+        0,      0,           1
+    );
 
-        sf::Vector2f tmpCoordsX = sf::Vector2f(r1,alpha2);
-        pivot = {sign * tmpCoordsX.x,pivot[1],sign * tmpCoordsX.y};
+    glm::mat3 R2 = glm::mat3(
+        /*cos*/ cosB, /*sin*/ sinB, 0,
+        /*-sin*/ -sinB , /*cos*/  cosB, 0,
+        0,      0,           1
+    );
 
-        //calcolo la posizione in base alla rotazione del child 
-        sign = offset[id][2] >= 0 ? 1 : -1;
+    glm::vec3 pivotNXZ = R1 * glm::vec3(pivot[0],pivot[2],1);
+    pivot = rb::Vector3{pivotNXZ[0],pivot[1],pivotNXZ[1]};
+    glm::vec3 offsetNXZ = R2 * glm::vec3(offset[id][0],offset[id][2],1);
+    offset[id] = rb::Vector3{offsetNXZ[0],offset[id][1],offsetNXZ[1]};
 
-        sf::Angle beta = sf::radians(cRot[2] - oldCRot[id][2]);
-        sf::Angle beta1 = sf::radians(acos(sign * offset[id][0]/r2));
-        sf::Angle beta2 = beta + beta1;
-        sf::Vector2f tmpCoordsC = sf::Vector2f(r2,beta2);
-        offset[id] = {sign * tmpCoordsC.x,offset[id][1],sign * tmpCoordsC.y};
-
-
-        //ora devo muovere il child rispetto al nuovo offset 
-        rb::Vector3 pivotPos = father->body.getPos()+father->globalPos+pivot;
-        rb::Vector3 cPos = childs[id]->body.getPos() + childs[id]->globalPos;
-
-        rb::Vector3 tmpChild =  pivotPos + offset[id];
-
-        childs[id]->body.setPos(tmpChild - childs[id]->globalPos); 
-    }
+    
+    childs[id]->body.setPos(rb::Vector3{fPos[0]+offset[id][0]+pivot[0],fPos[1]+offset[id][1]+pivot[1],fPos[2]+offset[id][2]+pivot[2]});
 
 
     oldRot = fRot; //aggiorno la rotazione per il ciclo successivo
     oldCRot[id] = cRot;
 
-    // r cosA = x -> x/r = cosA
-
-    /*
-    Devo spostare l'offset per poter ricalcolare la posizione relativa dei child rispetto al father dopo aver eseguito la rotazione.
-    La rotazione va eseguita nella posizione del mondo, ovvero sulle coordinate di body
-
-    Le coordinate camera non vanno toccate, determinano solo lo spostamento rispetto alla telecamera
-    */
 }   
 
 void PivotJoint::traslate(unsigned int id){

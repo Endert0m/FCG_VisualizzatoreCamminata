@@ -4,10 +4,10 @@
 Sensore::Sensore(rb::Vector3 coords, _Float16 mass){
     size = sensore_Dim;
     rb::Vector3 com = {size.x/2,0, size.y/2};
-    body = rb::rigidbody({0,0,0}, com, mass);
+    body = rb::rigidbody(coords, com, mass);
     color = sensore_Col;
     shape = new sf::RectangleShape(size);
-    globalPos = coords;
+    globalPos = {0,0,0};
 }
 
 Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, unsigned int dataIntvl, std::vector<std::vector<float>> data) : Sensore(coords, mass){

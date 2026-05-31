@@ -1,7 +1,7 @@
 # FCG_VisualizzatoreCamminata
 
 
-Nella versione versione v0.1 è presente la base del progetto.
+## Nella versione versione v0.1 è presente la base del progetto.
 
 - La gerarchia dei file e delle classi
 
@@ -17,10 +17,15 @@ Per questione di debug tutti i pezzi rappresentati si possono trascinare e ruota
 
 Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 
+## Nella versione v0.2:
+- Applicato refactoring di diverse classi
+- Aggiustato calcolo dei pivot implementando le rotazioni con algebra affine e glm
+- Aggiuta classe caviglia (per differenziarla dalla coscia) 
+
 Per compliare:
 
     cmake --build
 
 Per lanciare:
 
-    ./build/bin/mainV1
+    ./build/bin/mainV2

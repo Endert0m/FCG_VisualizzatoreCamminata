@@ -2,55 +2,40 @@
 
 #define ZERO_INT 0.00001
 
+//using namespace glm;
+
 void RigidJoint::rotate(unsigned int id){
     rb::Vector3_s fRot = father->body.getRot();
     rb::Vector3_s fRotOld = childs[id]->body.getRot() - rotOffset[id];
-
-    rb::Vector3 cPos = childs[id]->body.getPos() + childs[id]->globalPos;
+    rb::Vector3 fPos = father->body.getPos();
+    rb::Vector3 cPos = childs[id]->body.getPos();
 
     childs[id]->body.setRot(fRot + rotOffset[id]);
 
-    ////  sposto l'origine passivamente su tutti gli assi ////
-    //se si muove il child devo muovere anche il padre -> devo trovare la differenza di posizione prima di ricalcolare l'offset
-    /*
-    if (cPos != oldCPos[id]);*/
 
-    float r = sqrt(pow(offset[id][0],2)+pow(offset[id][2],2)); //calcolo modulo dell'offset (per ora solo sul piano xz)
+    // sposto il alla distanza offset rispetto all'origine R*pos
+    // calcolo alpha angolo 
 
-    if (r>ZERO_INT){
-        
-        float sign = offset[id][2] >= 0 ? 1 : -1;
-        
+    float alpha = float (fRot[2] - fRotOld[2]);
+    float cosA = glm::cos(alpha);
+    float sinA = glm::sin(alpha);
 
-        sf::Angle alpha = sf::radians(fRot[2] - fRotOld[2]); // angolo aggiunto
-        sf::Angle alpha1 = sf::radians(acos(sign * offset[id][0]/r)); // angolo rispetto alla posizione del child 
-        sf::Angle beta = alpha + alpha1;
+    glm::mat3 R = glm::mat3(
+        /*cos*/ cosA, /*sin*/ sinA, 0,
+        /*-sin*/ -sinA , /*cos*/  cosA, 0,
+        0,      0,           1
+    );
 
-        sf::Vector2f tmpCoordsX = sf::Vector2f(r,beta);
-        offset[id] = {sign * tmpCoordsX.x,offset[id][1],sign * tmpCoordsX.y};
+    //sposto il child all'origine rispetto al padre
 
-        //ora devo muovere il child rispetto al nuovo offset 
+    glm::vec3 XZ_cPos = {offset[id][0],offset[id][2],1};
+    glm::vec3 resRot = R * XZ_cPos;
 
-        
+    offset[id][0] = resRot[0] ;
+    offset[id][2] = resRot[1] ; 
 
-        rb::Vector3 fPos = father->body.getPos() + father->globalPos;
-        rb::Vector3 tmpChild =  fPos + offset[id];
-
-        childs[id]->body.setPos(tmpChild - childs[id]->globalPos); 
-    }
-    else{
-        childs[id]->body.setPos(father->body.getPos()+father->globalPos-childs[id]->globalPos);
-    }
-
-
-    // r cosA = x -> x/r = cosA
-
-    /*
-    Devo spostare l'offset per poter ricalcolare la posizione relativa dei child rispetto al father dopo aver eseguito la rotazione.
-    La rotazione va eseguita nella posizione del mondo, ovvero sulle coordinate di body
-
-    Le coordinate camera non vanno toccate, determinano solo lo spostamento rispetto alla telecamera
-    */
+    childs[id]->body.setPos({fPos[0]-offset[id][0],offset[id][1],fPos[2] -offset[id][2]});
+   
 }   
 
 void RigidJoint::traslate(unsigned int id){

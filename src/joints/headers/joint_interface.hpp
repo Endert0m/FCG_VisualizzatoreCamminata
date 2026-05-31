@@ -1,4 +1,5 @@
 #include "../../pieces/headers/piece_interface.hpp"
+#include <glm/glm.hpp>
 
 #ifndef JOINT_INTERFACE_H
 #define JOINT_INTERFACE_H

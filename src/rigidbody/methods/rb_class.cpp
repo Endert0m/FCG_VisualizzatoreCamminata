@@ -51,7 +51,7 @@ void rigidbody::setRot(const Vector3_s Nrot){
     if (Nrot.size() != 3) throw "Vel vector must be 3 in lenght!";
     
     int i = 0;
-    for (float axis : Nrot){
+    for (_Float16 axis : Nrot){
         rot[i] = axis;
         i++;
     }

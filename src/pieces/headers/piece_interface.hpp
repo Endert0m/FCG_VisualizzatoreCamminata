@@ -1,16 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include "../../rigidbody/headers/rb.hpp"
-//#include "../../joints/headers/joint_interface.hpp"
+
 
 #ifndef PIECE_INTERFACE_H
 #define PIECE_INTERFACE_H
 
-
-// costanti
-
-const sf::Vector2f caviglia_Dim = {50, 200};
-const sf::Color caviglia_Col = sf::Color::Red;
 
 enum class ReferencePlane {
     XY,
