@@ -27,6 +27,11 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Aggiunta pezzo torso
 - Nel testMain vengono agganciate caviglia e coscia al nuovo torso
 
+## Nella versione v0.4
+- Aggiunta vista frontale (con spazio si può camnbiare vista)
+- Modifica calcolo pivot per gestire spazio 3D
+- Aggiustati assi di riferimento (ora sono coerenti su tutte le classi)
+
 
 # Per compliare:
 
@@ -34,4 +39,4 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 
 # Per lanciare:
 
-    ./build/bin/mainV3
+    ./build/bin/mainV4
