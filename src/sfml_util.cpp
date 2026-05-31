@@ -147,8 +147,11 @@ void handle(const sf::Event::MouseButtonPressed &mouseBP, State &gs)
         gs.rot_Piece = true;
         int i = 0;
         for (PieceInterface* p : gs.pieces){
-            
-            sf::Vector2f pos = {p->globalPos[0]+ p->body.getPos()[0], p->globalPos[2]+ p->body.getPos()[2]};
+            sf::Vector2f pos;
+            if (gs.selectedPlane == ReferencePlane::XZ)
+            pos = {p->globalPos[0]+ p->body.getPos()[0], p->globalPos[2]+ p->body.getPos()[2]};
+            else if (gs.selectedPlane == ReferencePlane::YZ)
+            pos = {p->globalPos[1]+ p->body.getPos()[1], p->globalPos[2]+ p->body.getPos()[2]};
 
             if (dist(pos,mouseBP.position) < 20){
                 gs.selected = i;
