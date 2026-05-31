@@ -49,7 +49,7 @@ void State::update(){
     
 
     for(PieceInterface* p : pieces){
-        p->update(clock);
+        //p->update(clock);
     }
     for(JointInterface* j : joints){
         j->movechild();
@@ -114,7 +114,7 @@ void handle(const sf::Event::MouseMoved &mouseMoved, State &gs)
     if (gs.selected != -1 && gs.rot_Piece){
         rb::Vector3_s tmp = gs.pieces[gs.selected]->body.getRot();
 
-        _Float16 nrot = _Float16(offset.x)/10;
+        _Float16 nrot = _Float16(offset.x)/100;
         gs.pieces[gs.selected]->body.setRot({tmp[0]+(nrot*_Float16(py)),tmp[1]+(nrot*_Float16(px)),tmp[2]});
         
         //printf("Rotation : %f,%f,%f \n",gs.pieces[gs.selected]->body.getRot()[0],gs.pieces[gs.selected]->body.getRot()[1],gs.pieces[gs.selected]->body.getRot()[2]);

@@ -59,7 +59,7 @@ void PivotJoint::rotate(unsigned int id){
 
     childs[id]->body.setPos(rb::Vector3{fPos[0]+offset[id][0]+pivot[0],fPos[1]+offset[id][1]+pivot[1],fPos[2]+offset[id][2]+pivot[2]});
 
-    //printf("Offset = %f %f %f \n" , offN[0], offN[1], offN[2]);
+    printf("Offset = %f %f %f \n" , offN[0], offN[1], offN[2]);
 
     oldRot = fRot; //aggiorno la rotazione per il ciclo successivo
     oldCRot[id] = cRot;
