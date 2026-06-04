@@ -36,6 +36,7 @@ int main() {
     try{
         processor.readCSVFile (DATA_PATH + "coscia_filt.csv");
         const auto& coscia = processor.getData();
+        gs.setIntervall(coscia.size());
 
 
         gs.pieces.push_back(new Coscia (rb::Vector3{300,300,300},2));
@@ -74,9 +75,6 @@ int main() {
     gs.clock.start();
     while (gs.window.isOpen()) 
     {
-        // event loop and handler through callbacks
-        gs.window.handleEvents([&](const auto &event)
-                               { handle(event, gs); });
         // Show update
         gs.update();
         doGraphics(gs);

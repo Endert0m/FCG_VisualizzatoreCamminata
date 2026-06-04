@@ -19,13 +19,42 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glm)
 
+# Aggiunta ImGUI
+
+
+FetchContent_Declare(ImGui
+    GIT_REPOSITORY https://github.com/ocornut/imgui
+    GIT_TAG v1.91.9b
+    GIT_SHALLOW ON
+    EXCLUDE_FROM_ALL
+    SYSTEM)
+FetchContent_MakeAvailable(ImGui)
+FetchContent_GetProperties(ImGui SOURCE_DIR IMGUI_DIR)
+
+set(IMGUI_SFML_FIND_SFML OFF)
+FetchContent_Declare(ImGui-SFML
+    GIT_REPOSITORY https://github.com/SFML/imgui-sfml
+    GIT_TAG v3.0
+    GIT_SHALLOW ON
+    EXCLUDE_FROM_ALL
+    SYSTEM)
+FetchContent_MakeAvailable(ImGui-SFML)
+
+add_library(common INTERFACE)
+target_compile_features(common INTERFACE cxx_std_17)
+target_compile_options(common INTERFACE
+  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: -Wall>
+  $<$<CXX_COMPILER_ID:MSVC>: /W4>
+)
+
+
+# Fine aggiunta
+
 
 set(METHODS_PATH "./src/*/methods/*.cpp")
 
-
-set(VERSION "V4")
+set(VERSION "V5")
 
 file(GLOB_RECURSE METHODS_SRC "${METHODS_PATH}")
 add_executable(main${VERSION} ./src/testMain.cpp ${METHODS_SRC} )
-target_compile_features(main${VERSION} PRIVATE cxx_std_17)
-target_link_libraries(main${VERSION} PRIVATE SFML::Graphics glm)
+target_link_libraries(main${VERSION} PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML common glm)
