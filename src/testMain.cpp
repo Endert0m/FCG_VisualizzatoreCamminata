@@ -37,7 +37,7 @@ int main() {
 
     //Costruisco la GUI 
     State gs(800, 600, "Visualizzatore passo",&maj,&min,&pos);
-    gs.window.setFramerateLimit(140);
+    gs.window.setFramerateLimit(70);
     printf("Costruisco gli oggetti\n");
 
     try{

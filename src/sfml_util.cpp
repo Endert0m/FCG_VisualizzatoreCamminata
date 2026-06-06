@@ -214,11 +214,22 @@ void doGUI(State &gs)
     ImGui::SliderScalar("Min", ImGuiDataType_U32 ,gs.intervalMinLimit,&zero,gs.intervalMajLimit);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.5);
-    ImGui::SliderScalar("Pos", ImGuiDataType_U32 ,gs.pos,gs.intervalMinLimit,gs.intervalMajLimit);
+    if (ImGui::SliderScalar("Pos", ImGuiDataType_U32 ,gs.pos,gs.intervalMinLimit,gs.intervalMajLimit)){
+        gs.play = false;
+    }
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.8);
     ImGui::SliderScalar("Max", ImGuiDataType_U32 ,gs.intervalMajLimit,gs.intervalMinLimit,&gs.maxEntries);
-
+    
+    bool red = false;
+    if (!gs.play){
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1,0,0,1));
+        red = true;
+    }
+    if (ImGui::ArrowButton("Play", ImGuiDir_Right)){
+        gs.play = !gs.play;
+    }
+    if (red) ImGui::PopStyleColor();
     ImGui::End();
 
     ImGui::SFML::Render(gs.window);
@@ -249,7 +260,6 @@ void doGraphics(State &gs)
     }
     doGUI(gs);
 
-    
   
     
     // TODO: add here code to display shapes in your canvas
