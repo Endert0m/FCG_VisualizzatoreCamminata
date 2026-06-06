@@ -65,7 +65,7 @@ void State::update(){
     
 
     for(PieceInterface* p : pieces){
-        p->update(*pos);
+        p->update(clock);
     }
     for(JointInterface* j : joints){
         j->movechild();

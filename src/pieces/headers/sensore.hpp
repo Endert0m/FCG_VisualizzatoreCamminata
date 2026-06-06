@@ -14,12 +14,9 @@ class Sensore : public PieceInterface{
         std::vector<std::vector<float>> gData;
         std::vector<std::vector<float>> rotData;
         std::vector<float> timeData;
-        rb::Vector3 stPos;
 
         //in che punto sto controllando il segnale 
-        unsigned int dataPos;
-        std::vector<int> dataIntvl; 
-        unsigned int curTime;
+        unsigned int* dataPos;
 
         //funzioni ausiliarie
         void calcRotWithG(unsigned int index);
@@ -27,10 +24,10 @@ class Sensore : public PieceInterface{
 
     public: 
         Sensore(rb::Vector3 coords, _Float16 mass);
-        Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, int min, int max, std::vector<std::vector<float>> data);
+        Sensore(rb::Vector3 coords, _Float16 mass, unsigned int* st, std::vector<std::vector<float>> data);
         ~Sensore();
 
-        void update(unsigned int pos) override;
+        void update(sf::Clock cl) override;
         sf::Shape* draw(ReferencePlane plane) override;
 
         //funzioni specifiche

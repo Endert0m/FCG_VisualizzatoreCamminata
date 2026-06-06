@@ -9,11 +9,9 @@ Sensore::Sensore(rb::Vector3 coords, _Float16 mass){
     initialize_shapes(sensore_Dim);
 }
 
-Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, int min, int max, std::vector<std::vector<float>> data) : Sensore(coords, mass){
+Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int* st, std::vector<std::vector<float>> data) : Sensore(coords, mass){
         dataPos = st;
-        this->dataIntvl = {min, max};
         initCSV(data);
-        curTime = 0;
 }
 
 
@@ -45,27 +43,14 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
 
 
 void Sensore::update(sf::Clock cl){
-    // Aggiorno la posizione nei dati
-    curTime += cl.getElapsedTime().asMilliseconds(); 
-    /*
-    if (timeData[dataPos]){
-
-    }
-    */
    
-    /*
-    if (timeData[dataPos] < currTime && dataIntvl - dataPos > 0) { //aggiorno solo se ho cambiato posizione
-        dataPos++;
-
-        //calcolo la posizione e velocità
-        calcRotWithG(dataPos);
+    //calcolo la posizione e velocità
+    calcRotWithG(*dataPos);
 
 
-        body.setAcc(rb::Vector3{accData[dataPos]});
-        body.step(cl);
-    }
-    */
-
+    body.setAcc(rb::Vector3{accData[*dataPos]});
+    body.step(cl);
+   
 }
 
 sf::Shape* Sensore::draw(ReferencePlane plane){
@@ -116,14 +101,6 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
 
     body.setRot(rb::Vector3{tmpAY, tmpAX, tmpAZ });
 
-}
-
-void Sensore::setIntervall(int min, int max){
-    this->dataIntvl = {min, max};
-}
-
-void Sensore::setPos(int &pos){
-    this->dataPos = pos;
 }
 
 
