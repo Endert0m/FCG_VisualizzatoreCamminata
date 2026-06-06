@@ -28,8 +28,15 @@ int main() {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
+    // inizializzo variabili per gestire l'intervallo di visualizzazione
+
+    unsigned int max = 1000;
+    unsigned int min = 0;
+    unsigned int pos = 0;
+    unsigned int maj = 100;
+
     //Costruisco la GUI 
-    State gs(800, 600, "Visualizzatore passo");
+    State gs(800, 600, "Visualizzatore passo",&maj,&min,&pos);
     gs.window.setFramerateLimit(60);
     printf("Costruisco gli oggetti\n");
 
@@ -40,7 +47,7 @@ int main() {
 
 
         gs.pieces.push_back(new Coscia (rb::Vector3{300,300,300},2));
-        gs.pieces.push_back(new Sensore (rb::Vector3{300,300,300},_Float16( 0.2 ),900,3000,coscia));
+        gs.pieces.push_back(new Sensore (rb::Vector3{300,300,300},_Float16( 0.2 ),900,900,3000,coscia));
         gs.pieces.push_back(new Caviglia (rb::Vector3{300,300,500},1));
 
         gs.pieces[1]->body.setRot({0,0,0});
@@ -48,7 +55,7 @@ int main() {
 
         processor.readCSVFile(DATA_PATH + "caviglia_filt.csv");
         const auto& caviglia = processor.getData();
-        gs.pieces.push_back(new Sensore (rb::Vector3{300,300,500},_Float16( 0.2 ),900,3000,caviglia));
+        gs.pieces.push_back(new Sensore (rb::Vector3{300,300,500},_Float16( 0.2 ),900,900,3000,caviglia));
 
         gs.pieces.push_back(new Torso(rb::Vector3{300,400,150},2));
 
@@ -71,10 +78,22 @@ int main() {
         printf("%s\n",e);
     }
     printf("Avvio l'interfaccia grafica\n");
+
+
+    unsigned int curTime;
+    unsigned int freq = 50;
+    const unsigned int T = 1000/freq; //i sensori hanno una freq di campionamento di 50hz
+
     //Avvio il loop della GUI
     gs.clock.start();
     while (gs.window.isOpen()) 
     {
+        curTime += gs.clock.getElapsedTime().asMilliseconds();
+        if (curTime > T){
+            curTime = 0;
+            if (gs.play && pos < maj) pos += 1; 
+        }
+
         // Show update
         gs.update();
         doGraphics(gs);

@@ -32,7 +32,7 @@ class PieceInterface{
         rb::rigidbody body;
         sf::Color color;
 
-        virtual void update(sf::Clock cl) = 0;
+        virtual void update(unsigned int pos) = 0;
         virtual sf::Shape* draw(ReferencePlane plane) = 0;
         virtual ~PieceInterface(){}
 };

@@ -34,16 +34,20 @@ struct State
     sf::Vector2i mouse_pos;
 
     /// per settare l'ntervallo di visualizzazione
-    unsigned int pos = 0;
-    unsigned int intervalMajLimit = 1000;
-    unsigned int intervalMinLimit = 0;
-    unsigned int maxEntries = 10000;
+    unsigned int* pos ;
+    unsigned int* intervalMajLimit ;
+    unsigned int* intervalMinLimit ;
+    unsigned int maxEntries = 1000;
+    bool play = true;
 
-    State(unsigned w, unsigned h, std::string title) 
+    State(unsigned w, unsigned h, std::string title, unsigned int* maj, unsigned int* min, unsigned int* pos) 
     {
         window = sf::RenderWindow(sf::VideoMode({w, h}), title);
         ImGui::SFML::Init(window);
         clock.restart();
+        intervalMajLimit = maj;
+        intervalMinLimit = min;
+        this->pos = pos; 
     }
     void update();
     void setIntervall(int n){
@@ -61,7 +65,7 @@ void State::update(){
     
 
     for(PieceInterface* p : pieces){
-        p->update(clock);
+        p->update(*pos);
     }
     for(JointInterface* j : joints){
         j->movechild();
@@ -207,13 +211,13 @@ void doGUI(State &gs)
     ImGui::ShowDemoWindow();
     ImGui::Begin("Set data position");
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.3);
-    ImGui::SliderScalar("Min", ImGuiDataType_U32 ,&gs.intervalMinLimit,&zero,&gs.intervalMajLimit);
+    ImGui::SliderScalar("Min", ImGuiDataType_U32 ,gs.intervalMinLimit,&zero,gs.intervalMajLimit);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.5);
-    ImGui::SliderScalar("Pos", ImGuiDataType_U32 ,&gs.pos,&gs.intervalMinLimit,&gs.intervalMajLimit);
+    ImGui::SliderScalar("Pos", ImGuiDataType_U32 ,gs.pos,gs.intervalMinLimit,gs.intervalMajLimit);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.8);
-    ImGui::SliderScalar("Max", ImGuiDataType_U32 ,&gs.intervalMajLimit,&gs.intervalMinLimit,&gs.maxEntries);
+    ImGui::SliderScalar("Max", ImGuiDataType_U32 ,gs.intervalMajLimit,gs.intervalMinLimit,&gs.maxEntries);
 
     ImGui::End();
 

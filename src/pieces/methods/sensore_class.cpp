@@ -9,10 +9,11 @@ Sensore::Sensore(rb::Vector3 coords, _Float16 mass){
     initialize_shapes(sensore_Dim);
 }
 
-Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, unsigned int dataIntvl, std::vector<std::vector<float>> data) : Sensore(coords, mass){
+Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, int min, int max, std::vector<std::vector<float>> data) : Sensore(coords, mass){
         dataPos = st;
-        this->dataIntvl = dataIntvl;
+        this->dataIntvl = {min, max};
         initCSV(data);
+        curTime = 0;
 }
 
 
@@ -35,7 +36,7 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
                
         /////// DA CAMBIARE QUI ///////////
 
-
+        
         rotData.push_back(tmpR);
         accData.push_back(tmpA);
         gData.push_back(tmpG);
@@ -45,7 +46,14 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
 
 void Sensore::update(sf::Clock cl){
     // Aggiorno la posizione nei dati
-    int64_t currTime = cl.getElapsedTime().asMicroseconds() *100000;
+    curTime += cl.getElapsedTime().asMilliseconds(); 
+    /*
+    if (timeData[dataPos]){
+
+    }
+    */
+   
+    /*
     if (timeData[dataPos] < currTime && dataIntvl - dataPos > 0) { //aggiorno solo se ho cambiato posizione
         dataPos++;
 
@@ -56,6 +64,7 @@ void Sensore::update(sf::Clock cl){
         body.setAcc(rb::Vector3{accData[dataPos]});
         body.step(cl);
     }
+    */
 
 }
 
@@ -108,9 +117,14 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
     body.setRot(rb::Vector3{tmpAY, tmpAX, tmpAZ });
 
 }
-/*
-void Sensore::calcRotWithConstraint(){
 
-};*/
+void Sensore::setIntervall(int min, int max){
+    this->dataIntvl = {min, max};
+}
+
+void Sensore::setPos(int &pos){
+    this->dataPos = pos;
+}
+
 
 /////////////// cinematica inversa

@@ -18,8 +18,8 @@ class Sensore : public PieceInterface{
 
         //in che punto sto controllando il segnale 
         unsigned int dataPos;
-        unsigned int dataIntvl; 
-        
+        std::vector<int> dataIntvl; 
+        unsigned int curTime;
 
         //funzioni ausiliarie
         void calcRotWithG(unsigned int index);
@@ -27,14 +27,16 @@ class Sensore : public PieceInterface{
 
     public: 
         Sensore(rb::Vector3 coords, _Float16 mass);
-        Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, unsigned int dataIntvl, std::vector<std::vector<float>> data);
+        Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, int min, int max, std::vector<std::vector<float>> data);
         ~Sensore();
 
-        void update(sf::Clock cl) override;
+        void update(unsigned int pos) override;
         sf::Shape* draw(ReferencePlane plane) override;
 
         //funzioni specifiche
         void initCSV(std::vector<std::vector<float>> data);
+        void setIntervall(int min, int max);
+        void setPos(int &pos);
 
 };
 
