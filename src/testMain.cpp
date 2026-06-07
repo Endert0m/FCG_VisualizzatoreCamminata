@@ -30,7 +30,6 @@ int main() {
 
     // inizializzo variabili per gestire l'intervallo di visualizzazione
 
-    unsigned int max = 1000;
     unsigned int min = 0;
     unsigned int pos = 0;
     unsigned int maj = 100;
@@ -80,7 +79,7 @@ int main() {
     printf("Avvio l'interfaccia grafica\n");
 
 
-    unsigned int curTime;
+    unsigned int curTime = 0;
     unsigned int freq = 50;
     const unsigned int T = 1000/freq; //i sensori hanno una freq di campionamento di 50hz
 
