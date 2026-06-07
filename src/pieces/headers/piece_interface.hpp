@@ -8,9 +8,9 @@
 
 
 enum class ReferencePlane {
-    XY,
+    XZ,
     YZ,
-    XZ
+    XZN
 };
 
 //classi

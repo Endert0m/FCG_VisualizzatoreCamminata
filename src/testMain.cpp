@@ -59,8 +59,8 @@ int main() {
         gs.pieces.push_back(new Torso(rb::Vector3{300,400,150},2));
 
         // modifico la rotazione relativa della gamba
-        gs.pieces[1]->body.setRot({_Float16 (1.3),_Float16 (1.5),0});
-        gs.pieces[3]->body.setRot({_Float16 (1.8),_Float16 (1.5),0});
+        gs.pieces[1]->body.setRot({_Float16 (1.3),_Float16 (1.7),0});
+        gs.pieces[3]->body.setRot({_Float16 (1.8),_Float16 (1.7),0});
 
 
 

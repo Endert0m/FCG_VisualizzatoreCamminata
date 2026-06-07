@@ -43,7 +43,7 @@ struct State
     State(unsigned w, unsigned h, std::string title, unsigned int* maj, unsigned int* min, unsigned int* pos) 
     {
         window = sf::RenderWindow(sf::VideoMode({w, h}), title);
-        ImGui::SFML::Init(window);
+        if (ImGui::SFML::Init(window)); // L'if è solo per togliere il warning, va aggiustato gestendo le eccezioni
         clock.restart();
         intervalMajLimit = maj;
         intervalMinLimit = min;
@@ -63,13 +63,15 @@ struct State
 
 void State::update(){
     
-
-    for(PieceInterface* p : pieces){
-        p->update(clock);
+    if (play){
+        for(PieceInterface* p : pieces){
+            p->update(clock);
+        }
     }
     for(JointInterface* j : joints){
         j->movechild();
     }
+    
 }
 
 ///
@@ -242,8 +244,8 @@ void doGUI(State &gs)
 
 
     //Finestra gestione piano visualizzazione
-    ImGui::Begin("Set visualization plane");
-    const char* MyEnumNames[] = { "Basso", "Medio", "Alto" };
+    ImGui::Begin("Set visualization plane",0,sdp_flags);
+    const char* MyEnumNames[] = { "XZ", "YZ", "-XZ" };
     int currentPlane = (int)gs.selectedPlane;
     ImGui::SliderInt("Selected Plane", &currentPlane,0,2,MyEnumNames[currentPlane]);
     gs.selectedPlane = (ReferencePlane)currentPlane;
@@ -251,9 +253,10 @@ void doGUI(State &gs)
 
 
     sf::Vector2u wsize = gs.window.getSize();
-    ImGui::SetWindowPos("Set data position",ImVec2(0,wsize.y - 50));
-    ImGui::SetWindowSize("Set data position",ImVec2(wsize.x,50));
-
+    ImGui::SetWindowPos("Set data position",ImVec2(0,wsize.y - 30));
+    ImGui::SetWindowSize("Set data position",ImVec2(wsize.x,30));
+    ImGui::SetWindowPos("Set visualization plane",ImVec2(wsize.x-400,0));
+    ImGui::SetWindowSize("Set visualization plane",ImVec2(400,30));
     ImGui::SFML::Render(gs.window);
 }
 
