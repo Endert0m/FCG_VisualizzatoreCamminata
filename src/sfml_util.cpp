@@ -209,9 +209,17 @@ void doGUI(State &gs)
 
     ImGui::SFML::Update(gs.window, elapsed);
     ImGui::ShowDemoWindow();
-    ImGui::Begin("Set data position");
+
+    //Finestra gestione posizione nei dati
+    ImGuiWindowFlags sdp_flags = ImGuiWindowFlags_NoMove|
+                                 ImGuiWindowFlags_NoResize|
+                                 ImGuiWindowFlags_NoScrollbar|
+                                 ImGuiWindowFlags_NoCollapse|
+                                 ImGuiWindowFlags_NoTitleBar;
+   
+    ImGui::Begin("Set data position", 0,sdp_flags);
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.3);
-    ImGui::SliderScalar("Min", ImGuiDataType_U32 ,gs.intervalMinLimit,&zero,gs.intervalMajLimit);
+    ImGui::SliderScalar("Start", ImGuiDataType_U32 ,gs.intervalMinLimit,&zero,gs.intervalMajLimit);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.5);
     if (ImGui::SliderScalar("Pos", ImGuiDataType_U32 ,gs.pos,gs.intervalMinLimit,gs.intervalMajLimit)){
@@ -219,18 +227,32 @@ void doGUI(State &gs)
     }
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.8);
-    ImGui::SliderScalar("Max", ImGuiDataType_U32 ,gs.intervalMajLimit,gs.intervalMinLimit,&gs.maxEntries);
-    
+    ImGui::SliderScalar("End", ImGuiDataType_U32 ,gs.intervalMajLimit,gs.intervalMinLimit,&gs.maxEntries);
     bool red = false;
     if (!gs.play){
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1,0,0,1));
         red = true;
     }
+    ImGui::SameLine();
     if (ImGui::ArrowButton("Play", ImGuiDir_Right)){
         gs.play = !gs.play;
     }
     if (red) ImGui::PopStyleColor();
     ImGui::End();
+
+
+    //Finestra gestione piano visualizzazione
+    ImGui::Begin("Set visualization plane");
+    const char* MyEnumNames[] = { "Basso", "Medio", "Alto" };
+    int currentPlane = (int)gs.selectedPlane;
+    ImGui::SliderInt("Selected Plane", &currentPlane,0,2,MyEnumNames[currentPlane]);
+    gs.selectedPlane = (ReferencePlane)currentPlane;
+    ImGui::End();
+
+
+    sf::Vector2u wsize = gs.window.getSize();
+    ImGui::SetWindowPos("Set data position",ImVec2(0,wsize.y - 50));
+    ImGui::SetWindowSize("Set data position",ImVec2(wsize.x,50));
 
     ImGui::SFML::Render(gs.window);
 }

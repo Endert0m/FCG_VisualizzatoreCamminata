@@ -45,6 +45,8 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
 void Sensore::update(sf::Clock cl){
    
     //calcolo la posizione e velocità
+    if (*dataPos >= gData.size()) *dataPos = gData.size()-1;
+
     calcRotWithG(*dataPos);
 
 

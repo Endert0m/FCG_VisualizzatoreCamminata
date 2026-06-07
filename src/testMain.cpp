@@ -91,7 +91,7 @@ int main() {
     {
         curTime += mainClock.restart().asMilliseconds();
         if (curTime > T){
-            if (gs.play && pos < maj) pos += curTime / T; 
+            if (gs.play && pos+curTime/T < maj) pos += curTime / T; 
             curTime = 0;
         }
 
