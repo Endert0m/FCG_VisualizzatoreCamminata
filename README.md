@@ -32,6 +32,10 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Modifica calcolo pivot per gestire spazio 3D
 - Aggiustati assi di riferimento (ora sono coerenti su tutte le classi)
 
+## Nella versione v0.5
+- Aggiunta ImGUI
+- Aggiunta selettore sulla posizione dei dati
+- Refactoring classe sensore e state per gestire posizione dati da gui
 
 # Per compliare:
 
