@@ -69,6 +69,8 @@ int main() {
         gs.joints.push_back(new RigidJoint(gs.pieces[3], {gs.pieces[2]}));
         
 
+        //provo ad aggiungere una collection
+        Gamba g = Gamba({0,0,0},&pos,"coscia_filt.csv","coscia_filt.csv");
         printf("Ho costruito tutto!\n");
     }
     catch(char* e){

@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 
+#ifndef CSV_H
+#define CSV_H
+
 #define DATA_PATH std::string("./../../data/")
 
 class CSVProcessor {
@@ -20,3 +23,5 @@ public:
     const std::vector<std::vector<float>>& getData() const;
 
 };
+
+#endif

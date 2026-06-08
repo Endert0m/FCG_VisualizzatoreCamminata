@@ -1,5 +1,8 @@
 #include "joint_interface.hpp"
 
+#ifndef PIVOTJ_H
+#define PIVOTJ_H
+
 class PivotJoint : public JointInterface {
     protected:
         void rotate(unsigned int id) override;
@@ -26,3 +29,5 @@ class PivotJoint : public JointInterface {
         PivotJoint(PieceInterface* father,std::vector<PieceInterface*> childs, rb::Vector3 pivotPoint);
         ~PivotJoint();
 };
+
+#endif

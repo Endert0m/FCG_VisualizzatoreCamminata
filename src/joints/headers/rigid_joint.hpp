@@ -1,5 +1,7 @@
 #include "joint_interface.hpp"
 
+#ifndef RIGIDJ_H
+#define RIGIDJ_H
 
 class RigidJoint : public JointInterface {
     protected:
@@ -17,3 +19,5 @@ class RigidJoint : public JointInterface {
         RigidJoint(PieceInterface* father,std::vector<PieceInterface*> childs);
         ~RigidJoint();
 };
+
+#endif

@@ -7,3 +7,4 @@
 #include "pieces/headers/torso.hpp"
 #include "joints/headers/rigid_joint.hpp"
 #include "joints/headers/pivot_joint.hpp"
+#include "collections/headers/gamba.hpp"
