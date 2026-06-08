@@ -1,7 +1,5 @@
 #include "include.hpp"
 
-#define DATA_PATH std::string("./../../data/")
-
 int main() {
     CSVProcessor processor;
     try {

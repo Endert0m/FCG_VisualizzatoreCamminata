@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#define DATA_PATH std::string("./../../data/")
+
 class CSVProcessor {
 private:
     std::vector<std::string> headers;
