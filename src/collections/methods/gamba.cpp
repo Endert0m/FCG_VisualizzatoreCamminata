@@ -24,7 +24,7 @@ Gamba::Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std
 
     }
     catch(char* e){
-        throw sprintf("Gamba ERROR : %s\n",e);
+        throw "Gamba ERROR : "+ std::string(e) +" \n" ;
     }
 
 }
