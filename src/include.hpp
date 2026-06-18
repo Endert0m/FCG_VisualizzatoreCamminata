@@ -8,3 +8,4 @@
 #include "joints/headers/rigid_joint.hpp"
 #include "joints/headers/pivot_joint.hpp"
 #include "collections/headers/gamba.hpp"
+#include "collections/headers/lower_body.hpp"

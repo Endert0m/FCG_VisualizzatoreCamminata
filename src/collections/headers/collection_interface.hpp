@@ -17,7 +17,7 @@ class CollectionInterface{
 };
 
 
-#endif
+
 
 inline collection operator+(collection c1, collection c2){
     collection res;
@@ -29,3 +29,5 @@ inline collection operator+(collection c1, collection c2){
     }
     return res;
 }
+
+#endif

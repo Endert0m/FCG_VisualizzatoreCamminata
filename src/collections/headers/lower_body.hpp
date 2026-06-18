@@ -1,4 +1,5 @@
 #include "gamba.hpp"
+#include "collection_interface.hpp"
 
 #ifndef LOWER_BODY_H
 #define LOWER_BODY_H
@@ -10,7 +11,7 @@ struct gamba_data{
 };
 
 
-class Lower_Body : CollectionInterface{
+class Lower_Body : public CollectionInterface{
 protected:
     Gamba* sx;
     Gamba* dx;
@@ -23,7 +24,7 @@ protected:
     float alpha = 1;
 
 public:
-    Lower_Body(std::vector<gamba_data> data);
+    Lower_Body(rb::Vector3 pos, std::vector<gamba_data> data);
     ~Lower_Body();
 
     void setVisibility(bool c);

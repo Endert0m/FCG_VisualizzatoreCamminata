@@ -71,6 +71,16 @@ int main() {
 
         //provo ad aggiungere una collection
         Gamba g = Gamba({0,0,0},&pos,"coscia_filt.csv","coscia_filt.csv");
+
+        std::vector<gamba_data> data;
+        gamba_data d;
+        d.dataPos = &pos;
+        d.cavigliaData = "coscia_filt.csv";
+        d.cosciaData = "coscia_filt.csv";
+        data.push_back(d);
+        data.push_back(d);
+        Lower_Body b = Lower_Body(rb::Vector3{0,0,0},data);
+
         printf("Ho costruito tutto!\n");
     }
     catch(char* e){
