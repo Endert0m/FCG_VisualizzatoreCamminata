@@ -99,6 +99,7 @@ void handle_keyPressed(const sf::Event::KeyPressed &keyPressed, State &gs)
     }
 }
 
+
 void handle_mouseMove(const sf::Event::MouseMoved &mouseMoved, State &gs)
 {
     sf::Vector2i offset = mouseMoved.position - gs.mouse_pos;
@@ -125,6 +126,9 @@ void handle_mouseMove(const sf::Event::MouseMoved &mouseMoved, State &gs)
             p->globalPos = {p->globalPos[0] + (offset.x * px), p->globalPos[1]+ (offset.x * py),p->globalPos[2] + offset.y};
         }
     }
+
+    #ifdef DEBUG_MODE
+
     if (gs.selected != -1 && gs.drag_Piece){
         rb::Vector3 tmp = gs.pieces[gs.selected]->body.getPos();
         gs.pieces[gs.selected]->body.setPos({tmp[0]+ (offset.x * px),tmp[1]+ (offset.x * py),tmp[2]+offset.y});
@@ -137,7 +141,7 @@ void handle_mouseMove(const sf::Event::MouseMoved &mouseMoved, State &gs)
         
         //printf("Rotation : %f,%f,%f \n",gs.pieces[gs.selected]->body.getRot()[0],gs.pieces[gs.selected]->body.getRot()[1],gs.pieces[gs.selected]->body.getRot()[2]);
     }
-
+    #endif
     
 }
 
@@ -145,6 +149,9 @@ void handle_mousePressed(const sf::Event::MouseButtonPressed &mouseBP, State &gs
 {
     gs.mouse_pos = mouseBP.position;
     if ( mouseBP.button == sf::Mouse::Button::Middle) gs.drag = true;
+
+    #ifdef DEBUG_MODE
+
     if ( mouseBP.button == sf::Mouse::Button::Left){
         gs.drag_Piece = true;
         int i = 0;
@@ -177,6 +184,8 @@ void handle_mousePressed(const sf::Event::MouseButtonPressed &mouseBP, State &gs
             i++;
         }
     }
+    
+    #endif
 
 }
 
@@ -187,6 +196,8 @@ void handle_mouseRelease(const sf::Event::MouseButtonReleased &, State &gs)
     gs.rot_Piece = false;
     gs.selected = -1;
 }
+
+
 
 void handle_resize(const sf::Event::Resized &resized, State &gs)
 {
