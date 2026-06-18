@@ -31,8 +31,6 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
         std::vector<float> tmpR = {row[2],row[3],row[1]}; 
         std::vector<float> tmpA = {row[5],row[6],row[4]};
         std::vector<float> tmpG = {-row[8],-row[9],-row[7]};
-               
-        /////// DA CAMBIARE QUI ///////////
 
         
         rotData.push_back(tmpR);

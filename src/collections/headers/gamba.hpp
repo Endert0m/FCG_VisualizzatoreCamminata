@@ -1,10 +1,5 @@
 #include "collection_interface.hpp"
-#include "../../csv/headers/csv.hpp"
-#include "../../pieces/headers/caviglia.hpp"
-#include "../../pieces/headers/coscia.hpp"
-#include "../../pieces/headers/sensore.hpp"
-#include "../../joints/headers/rigid_joint.hpp"
-#include "../../joints/headers/pivot_joint.hpp"
+#include "include_pieces.hpp"
 
 #ifndef GAMBA_H
 #define GAMBA_H
