@@ -44,3 +44,7 @@ collection Gamba::create(ReferencePlane plane){
 
     return coll;
 }
+
+PieceInterface* Gamba::getJointPiece(){
+    return sensori[0];
+}

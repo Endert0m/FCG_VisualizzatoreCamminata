@@ -34,7 +34,6 @@ class Sensore : public PieceInterface{
         void initCSV(std::vector<std::vector<float>> data);
         void setIntervall(int min, int max);
         void setPos(int &pos);
-
 };
 
 #endif

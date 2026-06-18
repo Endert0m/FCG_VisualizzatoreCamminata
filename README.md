@@ -37,7 +37,7 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Aggiunta selettore sulla posizione dei dati
 - Refactoring classe sensore e state per gestire posizione dati da gui
 
-# Per compliare:
+# Per compilare:
 
     cmake --build
 

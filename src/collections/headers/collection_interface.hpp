@@ -18,3 +18,14 @@ class CollectionInterface{
 
 
 #endif
+
+inline collection operator+(collection c1, collection c2){
+    collection res;
+    for (PieceInterface* i : c1.pieces){
+        res.pieces.push_back(i);
+    }
+    for (JointInterface* i : c1.joints){
+        res.joints.push_back(i);
+    }
+    return res;
+}

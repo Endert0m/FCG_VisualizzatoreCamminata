@@ -4,23 +4,30 @@
 #define LOWER_BODY_H
 
 struct gamba_data{
-    rb::Vector3 pos; 
     unsigned int* dataPos; 
     std::string cosciaData; 
     std::string cavigliaData;
 };
 
 
-class lower_body
-{
+class Lower_Body : CollectionInterface{
 protected:
-    Gamba sx;
-    Gamba dx;
-    Torso t;
+    Gamba* sx;
+    Gamba* dx;
+    Torso* t;
+
+    PivotJoint* jsx;
+    PivotJoint* jdx;
+
+    bool visible = true;
+    float alpha = 1;
 
 public:
-    lower_body(std::vector<gamba_data> data);
-    ~lower_body();
+    Lower_Body(std::vector<gamba_data> data);
+    ~Lower_Body();
+
+    void setVisibility(bool c);
+    collection create(ReferencePlane plane) override;
 };
 
 
