@@ -37,6 +37,12 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Aggiunta selettore sulla posizione dei dati
 - Refactoring classe sensore e state per gestire posizione dati da gui
 
+## Nella versione v0.6
+- Aggiunta collezioni
+  - Servono a semplificare la struttura del main e il disegno degli elementi della gamba 
+- Modifica di sfml_util per gestire le collezioni
+- Aggiunta modalità debug  
+
 # Per compilare:
 
     cmake --build
