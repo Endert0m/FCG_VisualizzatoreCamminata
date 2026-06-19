@@ -2,6 +2,7 @@
 #include <math.h>
 #include "pieces/headers/piece_interface.hpp"
 #include "joints/headers/joint_interface.hpp"
+#include "collections/headers/collection_interface.hpp"
 #include <imgui.h>
 #include <imgui-SFML.h>
 
@@ -21,6 +22,10 @@ struct State
     int menubar_height = 50;
     std::vector<PieceInterface*> pieces;
     std::vector<JointInterface*> joints;
+    std::vector<CollectionInterface*> collections;
+
+    std::vector<collection> createdColl;
+
     sf::Vector2f cameraOffset = {0.,0.};
 
     sf::Clock clock;
@@ -48,10 +53,18 @@ struct State
         intervalMajLimit = maj;
         intervalMinLimit = min;
         this->pos = pos; 
+        updateCollections();
     }
     void update();
     void setIntervall(int n){
         maxEntries = n;
+    }
+
+    void updateCollections(){
+        createdColl.clear();
+        for (auto c: collections){
+            createdColl.push_back(c->create(selectedPlane));
+        }
     }
 };
 
@@ -62,7 +75,23 @@ struct State
 /// Fisics functions
 
 void State::update(){
-    
+
+    /*
+    std::vector<PieceInterface*> collPieces;
+    std::vector<JointInterface*> collJoints;
+    */
+
+    for (auto i : createdColl){
+        if (play){
+            for (auto j : i.pieces){
+                j->update(clock);
+            }
+        }
+        for (auto j : i.joints){
+            j->movechild();
+        }
+    }
+
     if (play){
         for(PieceInterface* p : pieces){
             p->update(clock);
@@ -97,6 +126,7 @@ void handle_keyPressed(const sf::Event::KeyPressed &keyPressed, State &gs)
         else 
             gs.selectedPlane = ReferencePlane::XZ;
     }
+    gs.updateCollections();
 }
 
 
@@ -124,6 +154,11 @@ void handle_mouseMove(const sf::Event::MouseMoved &mouseMoved, State &gs)
     if (gs.drag){
         for(PieceInterface* p : gs.pieces){
             p->globalPos = {p->globalPos[0] + (offset.x * px), p->globalPos[1]+ (offset.x * py),p->globalPos[2] + offset.y};
+        }
+        for(collection c : gs.createdColl){
+            for(auto p : c.pieces){
+                p->globalPos = {p->globalPos[0] + (offset.x * px), p->globalPos[1]+ (offset.x * py),p->globalPos[2] + offset.y};
+            }
         }
     }
 
@@ -167,6 +202,7 @@ void handle_mousePressed(const sf::Event::MouseButtonPressed &mouseBP, State &gs
             }
             i++;
         }
+        
     }
     if ( mouseBP.button == sf::Mouse::Button::Right){
         gs.rot_Piece = true;
@@ -258,7 +294,7 @@ void doGUI(State &gs)
     ImGui::Begin("Set visualization plane",0,sdp_flags);
     const char* MyEnumNames[] = { "XZ", "YZ", "-XZ" };
     int currentPlane = (int)gs.selectedPlane;
-    ImGui::SliderInt("Selected Plane", &currentPlane,0,2,MyEnumNames[currentPlane]);
+    if (ImGui::SliderInt("Selected Plane", &currentPlane,0,2,MyEnumNames[currentPlane])) gs.updateCollections();
     gs.selectedPlane = (ReferencePlane)currentPlane;
     ImGui::End();
 
@@ -275,10 +311,19 @@ void doGraphics(State &gs)
 {
    
     gs.window.clear();
+
+    //disegno i pezzi singoli
     for(PieceInterface* p: gs.pieces){
         gs.window.draw(*p->draw(gs.selectedPlane));
     }
     
+    //disegno le collezioni
+    for(auto c : gs.createdColl){
+        for(auto p : c.pieces){
+            gs.window.draw(*p->draw(gs.selectedPlane));
+        }
+    }
+
     while (const std::optional event = gs.window.pollEvent()) {
         ImGui::SFML::ProcessEvent(gs.window, *event);
         if (event->is<sf::Event::Closed>())

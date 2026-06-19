@@ -38,11 +38,12 @@ int main() {
     printf("Costruisco gli oggetti\n");
 
     try{
+        
         processor.readCSVFile (DATA_PATH + "coscia_filt.csv");
         const auto& coscia = processor.getData();
         gs.setIntervall(coscia.size());
 
-
+        /*
         gs.pieces.push_back(new Coscia (rb::Vector3{300,300,300},2));
         gs.pieces.push_back(new Sensore (rb::Vector3{300,300,300},_Float16( 0.2 ),&pos,coscia));
         gs.pieces.push_back(new Caviglia (rb::Vector3{300,300,500},1));
@@ -67,19 +68,19 @@ int main() {
         gs.joints.push_back(new RigidJoint(gs.pieces[1], {gs.pieces[0]}));
         gs.joints.push_back(new PivotJoint(gs.pieces[1], {gs.pieces[3]}, rb::Vector3{0,0,100}));
         gs.joints.push_back(new RigidJoint(gs.pieces[3], {gs.pieces[2]}));
-        
+        */
 
         //provo ad aggiungere una collection
-        Gamba g = Gamba({0,0,0},&pos,"coscia_filt.csv","coscia_filt.csv");
+        gs.collections.push_back(new Gamba({220,0,220},&pos,"coscia_filt.csv","caviglia_filt.csv"));
 
         std::vector<gamba_data> data;
         gamba_data d;
         d.dataPos = &pos;
-        d.cavigliaData = "coscia_filt.csv";
+        d.cavigliaData = "caviglia_filt.csv";
         d.cosciaData = "coscia_filt.csv";
         data.push_back(d);
         data.push_back(d);
-        Lower_Body b = Lower_Body(rb::Vector3{0,0,0},data);
+        gs.collections.push_back(new Lower_Body(rb::Vector3{0,0,0},data));
 
         printf("Ho costruito tutto!\n");
     }
@@ -95,6 +96,7 @@ int main() {
 
     //Avvio il loop della GUI
     gs.clock.start();
+    gs.updateCollections();
 
     sf::Clock mainClock;
     while (gs.window.isOpen()) 

@@ -24,9 +24,16 @@ inline collection operator+(collection c1, collection c2){
     for (PieceInterface* i : c1.pieces){
         res.pieces.push_back(i);
     }
+    for (PieceInterface* i : c2.pieces){
+        res.pieces.push_back(i);
+    }
     for (JointInterface* i : c1.joints){
         res.joints.push_back(i);
     }
+    for (JointInterface* i : c2.joints){
+        res.joints.push_back(i);
+    }
+    
     return res;
 }
 

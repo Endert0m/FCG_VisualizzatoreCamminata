@@ -3,15 +3,15 @@
 Gamba::Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData){
     CSVProcessor processor;
     try {
-        processor.readCSVFile (DATA_PATH + "coscia_filt.csv");
-        const auto& coscia = processor.getData();
-        processor.readCSVFile(DATA_PATH + "caviglia_filt.csv");
-        const auto& caviglia = processor.getData();
-
         pezzi.push_back(new Coscia(pos,2));
         pezzi.push_back(new Caviglia(rb::Vector3{pos[0],pos[1],pos[2]+200},2));
-
+        
+        processor.readCSVFile (DATA_PATH + cosciaData);
+        const auto& coscia = processor.getData();
         sensori.push_back(new Sensore(pos,_Float16( 0.2 ),dataPos,coscia));
+        
+        processor.readCSVFile(DATA_PATH + cavigliaData);
+        const auto& caviglia = processor.getData();
         sensori.push_back(new Sensore (rb::Vector3{pos[0],pos[1],pos[2]+200},_Float16( 0.2 ),dataPos,caviglia));
 
         // modifico la rotazione relativa della gamba
