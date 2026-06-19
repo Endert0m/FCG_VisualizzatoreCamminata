@@ -31,7 +31,7 @@ struct State
     sf::Clock clock;
     ReferencePlane selectedPlane = ReferencePlane::XZ;
 
-    int selected = -1;
+    PieceInterface* selected = nullptr;
 
     bool rot_Piece = false;
     bool drag_Piece = false;
@@ -164,15 +164,15 @@ void handle_mouseMove(const sf::Event::MouseMoved &mouseMoved, State &gs)
 
     #ifdef DEBUG_MODE
 
-    if (gs.selected != -1 && gs.drag_Piece){
-        rb::Vector3 tmp = gs.pieces[gs.selected]->body.getPos();
-        gs.pieces[gs.selected]->body.setPos({tmp[0]+ (offset.x * px),tmp[1]+ (offset.x * py),tmp[2]+offset.y});
+    if (gs.selected != nullptr && gs.drag_Piece){
+        rb::Vector3 tmp = gs.selected->body.getPos();
+        gs.selected->body.setPos({tmp[0]+ (offset.x * px),tmp[1]+ (offset.x * py),tmp[2]+offset.y});
     }
-    if (gs.selected != -1 && gs.rot_Piece){
-        rb::Vector3 tmp = gs.pieces[gs.selected]->body.getRot();
+    if (gs.selected != nullptr && gs.rot_Piece){
+        rb::Vector3 tmp = gs.selected->body.getRot();
 
         float nrot = float(offset.x)/100;
-        gs.pieces[gs.selected]->body.setRot({tmp[0]+(nrot*py),tmp[1]+(nrot*px),tmp[2]});
+        gs.selected->body.setRot({tmp[0]+(nrot*py),tmp[1]+(nrot*px),tmp[2]});
         
         //printf("Rotation : %f,%f,%f \n",gs.pieces[gs.selected]->body.getRot()[0],gs.pieces[gs.selected]->body.getRot()[1],gs.pieces[gs.selected]->body.getRot()[2]);
     }
@@ -189,7 +189,7 @@ void handle_mousePressed(const sf::Event::MouseButtonPressed &mouseBP, State &gs
 
     if ( mouseBP.button == sf::Mouse::Button::Left){
         gs.drag_Piece = true;
-        int i = 0;
+
         for (PieceInterface* p : gs.pieces){
             sf::Vector2f pos;
             if (gs.selectedPlane == ReferencePlane::XZ)
@@ -198,15 +198,27 @@ void handle_mousePressed(const sf::Event::MouseButtonPressed &mouseBP, State &gs
              pos = {p->globalPos[1]+ p->body.getPos()[1], p->globalPos[2]+ p->body.getPos()[2]};
 
             if (dist(pos,mouseBP.position) < 20){
-                gs.selected = i;
+                gs.selected = p;
             }
-            i++;
         }
-        
+        for (collection c : gs.createdColl){
+            for (auto p : c.pieces){
+                sf::Vector2f pos;
+                if (gs.selectedPlane == ReferencePlane::XZ)
+                pos = {p->globalPos[0]+ p->body.getPos()[0], p->globalPos[2]+ p->body.getPos()[2]};
+                else if (gs.selectedPlane == ReferencePlane::YZ)
+                pos = {p->globalPos[1]+ p->body.getPos()[1], p->globalPos[2]+ p->body.getPos()[2]};
+
+                if (dist(pos,mouseBP.position) < 20){
+                    gs.selected = p;
+                }
+                
+            }
+        }
+
     }
     if ( mouseBP.button == sf::Mouse::Button::Right){
         gs.rot_Piece = true;
-        int i = 0;
         for (PieceInterface* p : gs.pieces){
             sf::Vector2f pos;
             if (gs.selectedPlane == ReferencePlane::XZ)
@@ -215,9 +227,23 @@ void handle_mousePressed(const sf::Event::MouseButtonPressed &mouseBP, State &gs
             pos = {p->globalPos[1]+ p->body.getPos()[1], p->globalPos[2]+ p->body.getPos()[2]};
 
             if (dist(pos,mouseBP.position) < 20){
-                gs.selected = i;
+                gs.selected = p;
             }
-            i++;
+            
+        }
+        for (collection c : gs.createdColl){
+            for (auto p : c.pieces){
+                sf::Vector2f pos;
+                if (gs.selectedPlane == ReferencePlane::XZ)
+                pos = {p->globalPos[0]+ p->body.getPos()[0], p->globalPos[2]+ p->body.getPos()[2]};
+                else if (gs.selectedPlane == ReferencePlane::YZ)
+                pos = {p->globalPos[1]+ p->body.getPos()[1], p->globalPos[2]+ p->body.getPos()[2]};
+
+                if (dist(pos,mouseBP.position) < 20){
+                    gs.selected = p;
+                }
+                
+            }
         }
     }
     
@@ -230,7 +256,7 @@ void handle_mouseRelease(const sf::Event::MouseButtonReleased &, State &gs)
     gs.drag = false;
     gs.drag_Piece = false;
     gs.rot_Piece = false;
-    gs.selected = -1;
+    gs.selected = nullptr;
 }
 
 
