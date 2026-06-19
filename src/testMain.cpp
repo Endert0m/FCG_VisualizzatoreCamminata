@@ -43,8 +43,8 @@ int main() {
         const auto& coscia = processor.getData();
         gs.setIntervall(coscia.size());
 
-        /*
-        gs.pieces.push_back(new Coscia (rb::Vector3{300,300,300},2));
+        /*        
+        gs.pieces.push_back(new Coscia (rb::Vector3{0,0,0},2));
         gs.pieces.push_back(new Sensore (rb::Vector3{300,300,300},_Float16( 0.2 ),&pos,coscia));
         gs.pieces.push_back(new Caviglia (rb::Vector3{300,300,500},1));
 
@@ -68,11 +68,12 @@ int main() {
         gs.joints.push_back(new RigidJoint(gs.pieces[1], {gs.pieces[0]}));
         gs.joints.push_back(new PivotJoint(gs.pieces[1], {gs.pieces[3]}, rb::Vector3{0,0,100}));
         gs.joints.push_back(new RigidJoint(gs.pieces[3], {gs.pieces[2]}));
+        
+        gs.pieces[2]->setDirection(Direction::R);
         */
-
         //provo ad aggiungere una collection
         //gs.collections.push_back(new Gamba({220,0,220},&pos,"coscia_filt.csv","caviglia_filt.csv"));
-
+        
         std::vector<gamba_data> data;
         gamba_data d;
         d.dataPos = &pos;
@@ -85,7 +86,7 @@ int main() {
         data.push_back(d);
         data.push_back(s);
         gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
-
+        
         printf("Ho costruito tutto!\n");
     }
     catch(char* e){

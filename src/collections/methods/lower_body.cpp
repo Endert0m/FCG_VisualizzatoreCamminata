@@ -21,10 +21,12 @@ collection Lower_Body::create(ReferencePlane plane){
     switch (plane)
     {
     case ReferencePlane::XZ: case ReferencePlane::XZN:
+        dx->setDirection(Direction::R);
         coll = coll + sx->create(plane);
         coll = coll + dx->create(plane);
         break;
     case ReferencePlane::YZ:
+        dx->setDirection(Direction::L);
         coll = coll + dx->create(plane);
         coll = coll + sx->create(plane);
         break;

@@ -48,3 +48,12 @@ collection Gamba::create(ReferencePlane plane){
 PieceInterface* Gamba::getJointPiece(){
     return sensori[0];
 }
+
+void Gamba::setDirection(Direction dir){
+    for (auto i : pezzi){
+        i->setDirection(dir);
+    }
+    for (auto i : sensori){
+        i->setDirection(dir);
+    }
+}

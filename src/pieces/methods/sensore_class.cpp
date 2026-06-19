@@ -62,6 +62,7 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
     {
     case ReferencePlane::XZ:
         {
+       
         sf::Shape* shape = shapeXZ;
         shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
@@ -85,7 +86,7 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
 
 
 void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori della gravità
-
+    int dir = direction == Direction::R ? -1 : 1;
     std::vector<float> grav = gData[index];
     float modG = sqrt(pow(grav[0],2)+pow(grav[1],2)+pow(grav[2],2));
 
@@ -95,7 +96,7 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
     float tmpSinY = -grav[1] / modG;
     float tmpSinZ = -grav[2] / modG;
 
-    float tmpAX = acos(tmpSinX);
+    float tmpAX = acos(dir*tmpSinX);
     float tmpAY = acos(tmpSinY);
     float tmpAZ = acos(tmpSinZ);
 

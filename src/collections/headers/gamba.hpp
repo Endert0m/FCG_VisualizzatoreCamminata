@@ -13,6 +13,7 @@ class Gamba : public CollectionInterface {
         Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData);
         collection create(ReferencePlane plane) override;
         PieceInterface* getJointPiece();
+        void setDirection(Direction dir);
 };
 
 #endif

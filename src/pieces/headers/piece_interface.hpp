@@ -13,6 +13,11 @@ enum class ReferencePlane {
     XZN
 };
 
+enum class Direction {
+    L,
+    R
+};
+
 //classi
 class PieceInterface{
     protected:
@@ -25,7 +30,7 @@ class PieceInterface{
             shapeXZ->setFillColor(color);
             shapeYZ->setFillColor(color);
         }
-
+        Direction direction = Direction::L;
     public:
         sf::Shape* shapeXZ, *shapeYZ;
         rb::Vector3 globalPos;
@@ -35,6 +40,9 @@ class PieceInterface{
         virtual void update(sf::Clock cl) = 0;
         virtual sf::Shape* draw(ReferencePlane plane) = 0;
         virtual ~PieceInterface(){}
+        virtual void setDirection(Direction dir){
+            direction = dir;
+        }
 };
 
 
