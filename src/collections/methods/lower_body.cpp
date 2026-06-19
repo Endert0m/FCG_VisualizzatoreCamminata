@@ -4,7 +4,7 @@ Lower_Body::Lower_Body(rb::Vector3 pos,std::vector<gamba_data> data){
     if (data.size() != 2) throw "Lower_Body_Error: data vector size must be 2";
 
     sx = new Gamba({pos[0],pos[1],pos[2]+150},data[0].dataPos,data[0].cosciaData,data[0].cavigliaData);
-    dx = new Gamba({pos[0],pos[1]+100,pos[2]+150},data[1].dataPos,data[1].cosciaData,data[1].cavigliaData);
+    dx = new Gamba({pos[0],pos[1]+200,pos[2]+150},data[1].dataPos,data[1].cosciaData,data[1].cavigliaData);
     t = new Torso({pos[0],pos[1]+100,pos[2]},_Float16(3.0));
 
     PieceInterface* psx = sx->getJointPiece();

@@ -71,7 +71,7 @@ int main() {
         */
 
         //provo ad aggiungere una collection
-        gs.collections.push_back(new Gamba({220,0,220},&pos,"coscia_filt.csv","caviglia_filt.csv"));
+        //gs.collections.push_back(new Gamba({220,0,220},&pos,"coscia_filt.csv","caviglia_filt.csv"));
 
         std::vector<gamba_data> data;
         gamba_data d;
