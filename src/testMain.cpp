@@ -33,7 +33,7 @@ int main() {
     unsigned int maj = 100;
 
     //Costruisco la GUI 
-    State gs(800, 600, "Visualizzatore passo",&maj,&min,&pos);
+    State gs(800, 700, "Visualizzatore passo",&maj,&min,&pos);
     gs.window.setFramerateLimit(70);
     printf("Costruisco gli oggetti\n");
 
@@ -76,11 +76,15 @@ int main() {
         std::vector<gamba_data> data;
         gamba_data d;
         d.dataPos = &pos;
-        d.cavigliaData = "caviglia_filt.csv";
-        d.cosciaData = "coscia_filt.csv";
+        d.cavigliaData = "caviglia_dx.csv";
+        d.cosciaData = "coscia_dx.csv";
+        gamba_data s;
+        s.dataPos = &pos;
+        s.cavigliaData = "caviglia_sx.csv";
+        s.cosciaData = "coscia_sx.csv";
         data.push_back(d);
-        data.push_back(d);
-        gs.collections.push_back(new Lower_Body(rb::Vector3{0,0,0},data));
+        data.push_back(s);
+        gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
 
         printf("Ho costruito tutto!\n");
     }
