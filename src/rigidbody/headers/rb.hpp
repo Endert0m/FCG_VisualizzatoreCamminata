@@ -16,7 +16,9 @@
                 Vector3 acc = {0,0,0};
                 Vector3 rot = {0,0,0};
                 Vector3 tanAcc = {0,0,0};
+                Vector3 tanVel = {0,0,0};
 
+                float R = 1;
                 _Float16 mass = 1;
 
                 Vector3 coords = {0,0,0};
@@ -34,8 +36,8 @@
 
 
             public:
-                rigidbody(){}
-                rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass);
+                rigidbody(){ }
+                rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass, float radius);
                 ~rigidbody();
 
                 
@@ -45,7 +47,7 @@
                 void setRot(const Vector3 Nrot);
                 void setVel(const Vector3 Nacc);
                 void setAcc(const Vector3 Nvel);
-                void setTanAcc(const Vector3 Dacc, const Vector3 pos);
+                void setTanAcc(const Vector3 Dacc);
                 void step(const sf::Clock time);
 
                 //complesso, deve definire accelerazione e accelerazione tangenziale 

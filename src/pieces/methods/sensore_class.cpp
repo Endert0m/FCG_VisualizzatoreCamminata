@@ -3,7 +3,7 @@
 
 Sensore::Sensore(rb::Vector3 coords, _Float16 mass){
     rb::Vector3 com = {sensore_Dim.x/2,sensore_Dim.z/2, sensore_Dim.y/2};
-    body = rb::rigidbody(coords, com, mass);
+    body = rb::rigidbody(coords, com, mass, sensore_Dim.z/2);
     color = sensore_Col;
     globalPos = {0,0,0};
     initialize_shapes(sensore_Dim);

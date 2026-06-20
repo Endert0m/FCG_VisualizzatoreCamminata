@@ -2,7 +2,7 @@
 
 Caviglia::Caviglia(rb::Vector3 coords, _Float16 mass){
     rb::Vector3 com = {caviglia_Dim.x/2,caviglia_Dim.x/2, caviglia_Dim.y/2};
-    body = rb::rigidbody(coords, com, mass);
+    body = rb::rigidbody(coords, com, mass, caviglia_Dim.x/2);
     color = caviglia_Col;
     globalPos = {0,0,0};
 

@@ -3,7 +3,7 @@
 
 using namespace rb ;
 
-rigidbody::rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass)
+rigidbody::rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass, float radius)
 {
     if (coords.size() != 3) throw "Coords must be 3";
     if (centerOfMass.size() != 3) throw "COM coords must be 3";
@@ -11,7 +11,7 @@ rigidbody::rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass)
     this->coords = coords;
     this->centerOfMass = centerOfMass;
     this->mass = mass;
-
+    this->R = radius;
 }
 
 rigidbody::~rigidbody()
@@ -37,7 +37,7 @@ void rigidbody::setPos(Vector3 Npos){
 }
 
 void rigidbody::setAcc(const Vector3 Nacc){
-    if (Nacc.size() != 3) throw "Vel vector must be 3 in lenght!";
+    if (Nacc.size() != 3) throw "Acc vector must be 3 in lenght!";
     
     int i = 0;
     for (float axis : Nacc){
@@ -93,15 +93,42 @@ void rigidbody::step(const sf::Clock time){
     float dt = (float(Dtime) / 1000000.0) - (float(prevT) / 1000000.0);
     prevT = Dtime;
 
+    calcRot(dt);
     calcPos(dt);
     calcVel(dt);
 }
     
-void rigidbody::setTanAcc(const Vector3 Dacc, const Vector3 pos){
-    
+void rigidbody::setTanAcc(const Vector3 Dacc){
+    if (Dacc.size() != 3) throw "Vel vector must be 3 in lenght!";
+
+    int i = 0;
+    for (float a : Dacc ){
+        tanAcc[i] = a;
+        i++;
+    }
+
 }
 
 
 void rigidbody::calcRot(const float Dtime){
+    // Ds = wt +1/2*at^2 -> l'accelerazione angolare la trovo ac = v^2/R
+    Vector3 tmpVel;
+    for (float a : tanAcc){
+        tmpVel.push_back( a*Dtime );
+    }
+    int i = 0;
+    for (float nv : tmpVel){
+        tanVel[i++] += nv;
+    }
+
+    Vector3 tmpTanAcc;
+    for (int i = 0; i<3; i++){
+        tmpTanAcc.push_back( pow(tanVel[i],2) / R );
+    }
+
+    i=0;
+    for (auto axes : rot){
+        axes += 0.5 * tmpTanAcc[i] * pow(Dtime,2);
+    }
 
 }

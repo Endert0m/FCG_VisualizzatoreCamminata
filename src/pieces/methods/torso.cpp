@@ -2,7 +2,7 @@
 
 Torso::Torso(rb::Vector3 coords, _Float16 mass){
     rb::Vector3 com = {torso_Dim.x/2, torso_Dim.y/2, torso_Dim.z/2};
-    body = rb::rigidbody(coords,com, mass);
+    body = rb::rigidbody(coords,com, mass, torso_Dim.y/2);
     color = torso_Col;
     globalPos = {0,0,0};
 

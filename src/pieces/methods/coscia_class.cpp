@@ -2,7 +2,7 @@
 
 Coscia::Coscia(rb::Vector3 coords, _Float16 mass){
     rb::Vector3 com = {coscia_Dim.x/2,coscia_Dim.z/2,coscia_Dim.y/2};
-    body = rb::rigidbody(coords, com, mass);
+    body = rb::rigidbody(coords, com, mass, coscia_Dim.z/2);
     color = coscia_Col;
     globalPos = {0,0,0};
     initialize_shapes(coscia_Dim);
