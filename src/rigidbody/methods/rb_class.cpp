@@ -128,7 +128,8 @@ void rigidbody::calcRot(const float Dtime){
 
     i=0;
     for (auto axes : rot){
-        axes += 0.5 * tmpTanAcc[i] * pow(Dtime,2);
+        rot[i] = axes + (0.5 * tmpTanAcc[i] * pow(Dtime,2));
+        i++;
     }
 
 }

@@ -81,6 +81,10 @@ void State::update(){
     std::vector<JointInterface*> collJoints;
     */
 
+    for (auto i : collections){
+        i->update();
+    }
+
     for (auto i : createdColl){
         if (play){
             for (auto j : i.pieces){

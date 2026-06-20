@@ -75,5 +75,10 @@ bool Lower_Body::setTransparency(float alpha){
 }
 
 void Lower_Body::update(){
-    
+    float sxAcc = sx->getZ_Acc();
+    float dxAcc = dx->getZ_Acc();
+
+    float totAcc = sxAcc + dxAcc;
+
+    t->body.setTanAcc({0,totAcc,0});
 }
