@@ -57,3 +57,13 @@ void Gamba::setDirection(Direction dir){
         i->setDirection(dir);
     }
 }
+
+bool Gamba::setTransparency(float alpha){
+    for (auto i : pezzi){
+        if (!i->setTransparency(alpha)) return false;
+    }
+    for (auto i : sensori){
+        if (!i->setTransparency(alpha)) return false;
+    }
+    return true;
+}

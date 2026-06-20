@@ -53,3 +53,10 @@ Lower_Body::~Lower_Body(){
 void Lower_Body::setVisibility(bool c){
 
 }
+
+bool Lower_Body::setTransparency(float alpha){
+    if (!sx->setTransparency(alpha)) return false;
+    dx->setTransparency(alpha);
+    t->setTransparency(alpha);
+    return true;
+}

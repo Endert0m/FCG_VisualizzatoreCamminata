@@ -14,6 +14,7 @@ class Gamba : public CollectionInterface {
         collection create(ReferencePlane plane) override;
         PieceInterface* getJointPiece();
         void setDirection(Direction dir);
+        bool setTransparency(float alpha) override;
 };
 
 #endif

@@ -28,7 +28,7 @@ public:
     ~Lower_Body();
 
     void setVisibility(bool c);
-    void setTransparency(float t);
+    bool setTransparency(float alpha) override;
     collection create(ReferencePlane plane) override;
 };
 
