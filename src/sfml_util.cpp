@@ -324,6 +324,13 @@ void doGUI(State &gs)
         gs.selectedPlane = (ReferencePlane)currentPlane;
         gs.updateCollections();
     } 
+
+
+    /*//////   DA FARE  ///////*/
+
+    //Finestra gestione velocità di riproduzione 
+
+    //Finestra controllo sovrapposizione 
     
     ImGui::End();
 

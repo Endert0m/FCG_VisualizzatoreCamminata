@@ -15,6 +15,8 @@ class Sensore : public PieceInterface{
         std::vector<std::vector<float>> rotData;
         std::vector<float> timeData;
 
+        float gModule;
+
         //in che punto sto controllando il segnale 
         unsigned int* dataPos;
 
@@ -32,8 +34,8 @@ class Sensore : public PieceInterface{
 
         //funzioni specifiche
         void initCSV(std::vector<std::vector<float>> data);
-        void setIntervall(int min, int max);
-        void setPos(int &pos);
+
+        float getZ_Acc();
 };
 
 #endif

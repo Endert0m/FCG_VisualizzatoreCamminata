@@ -22,7 +22,7 @@ Sensore::~Sensore(){
 
 void Sensore::initCSV(std::vector<std::vector<float>> data){
     //timestamp_ns, wx, wy, wz, ax, ay, az, gx, gy, gz
-    if (data.size() < 1) throw "Sensor data empty";
+    if (data.size() < 10) throw "Sensor data empty";
     float stTime = int64_t( data[0][0] ) ;
 
     for (std::vector<float> row : data){
@@ -37,6 +37,14 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
         accData.push_back(tmpA);
         gData.push_back(tmpG);
     }
+
+    //trovo il modulo di g facendo la media del modulo nei primi 1000 campioni
+    gModule = 0;
+    for(int i = 0; i< data.size()>1000 ? 1000 : 10; i++){
+        gModule +=  sqrt(pow(gData[i][0],2)+pow(gData[i][1],2)+pow(gData[i][2],2));
+    }
+    gModule = gModule / 1000;
+
 }
 
 
@@ -90,13 +98,12 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
 void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori della gravità
     int dir = direction == Direction::R ? -1 : 1;
     std::vector<float> grav = gData[index];
-    float modG = sqrt(pow(grav[0],2)+pow(grav[1],2)+pow(grav[2],2));
 
     //x = mod * cosX -> mod = x/cosx -> cosx = x/mod
 
-    float tmpSinX = -grav[0] / modG;
-    float tmpSinY = -grav[1] / modG;
-    float tmpSinZ = -grav[2] / modG;
+    float tmpSinX = -grav[0] / gModule;
+    float tmpSinY = -grav[1] / gModule;
+    float tmpSinZ = -grav[2] / gModule;
 
     float tmpAX = acos(dir*tmpSinX);
     float tmpAY = acos(dir*tmpSinY);
@@ -106,5 +113,11 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
 
 }
 
+float Sensore::getZ_Acc(){
+    int id = *dataPos;
+    float tmpAcc = 0;
 
+    tmpAcc = gModule - sqrt(pow(gData[id][0],2)+pow(gData[id][1],2)+pow(gData[id][2],2));
+    return tmpAcc;
+}
 /////////////// cinematica inversa
