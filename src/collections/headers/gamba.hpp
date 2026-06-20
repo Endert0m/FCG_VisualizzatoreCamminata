@@ -6,7 +6,7 @@
 
 class Gamba : public CollectionInterface {
     protected:
-        std::vector<PieceInterface*> sensori;
+        std::vector<Sensore*> sensori;
         std::vector<PieceInterface*> pezzi;
         std::vector<JointInterface*> joints;
     public:
@@ -15,6 +15,7 @@ class Gamba : public CollectionInterface {
         PieceInterface* getJointPiece();
         void setDirection(Direction dir);
         bool setTransparency(float alpha) override;
+        float getZ_Acc();
 };
 
 #endif

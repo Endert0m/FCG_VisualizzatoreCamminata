@@ -67,3 +67,13 @@ bool Gamba::setTransparency(float alpha){
     }
     return true;
 }
+
+float Gamba::getZ_Acc(){
+    
+    float totZ_Acc = 0;
+    for (auto i : sensori){
+        totZ_Acc += i->getZ_Acc();
+    }
+    
+    return totZ_Acc;
+}

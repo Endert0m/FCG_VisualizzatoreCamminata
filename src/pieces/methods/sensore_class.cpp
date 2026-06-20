@@ -40,7 +40,8 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
 
     //trovo il modulo di g facendo la media del modulo nei primi 1000 campioni
     gModule = 0;
-    for(int i = 0; i< data.size()>1000 ? 1000 : 10; i++){
+    int nCampioni = int(data.size())>1000 ? 1000 : 10;
+    for(int i = 0; i<nCampioni ;i++) {
         gModule +=  sqrt(pow(gData[i][0],2)+pow(gData[i][1],2)+pow(gData[i][2],2));
     }
     gModule = gModule / 1000;
