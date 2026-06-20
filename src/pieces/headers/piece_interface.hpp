@@ -47,6 +47,7 @@ class PieceInterface{
         virtual bool setTransparency(float alpha){
             if (alpha < 0 || alpha > 1) return false;
             transparency = alpha; 
+            return true;
         }
 };
 

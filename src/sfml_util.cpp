@@ -320,8 +320,11 @@ void doGUI(State &gs)
     ImGui::Begin("Set visualization plane",0,sdp_flags);
     const char* MyEnumNames[] = { "XZ", "YZ", "-XZ" };
     int currentPlane = (int)gs.selectedPlane;
-    if (ImGui::SliderInt("Selected Plane", &currentPlane,0,2,MyEnumNames[currentPlane])) gs.updateCollections();
-    gs.selectedPlane = (ReferencePlane)currentPlane;
+    if (ImGui::SliderInt("Selected Plane", &currentPlane,0,2,MyEnumNames[currentPlane])){
+        gs.selectedPlane = (ReferencePlane)currentPlane;
+        gs.updateCollections();
+    } 
+    
     ImGui::End();
 
 
