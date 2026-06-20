@@ -36,12 +36,17 @@ class PieceInterface{
         rb::Vector3 globalPos;
         rb::rigidbody body;
         sf::Color color;
+        float transparency = 1.0; //canale alpha del pezzo
 
         virtual void update(sf::Clock cl) = 0;
         virtual sf::Shape* draw(ReferencePlane plane) = 0;
         virtual ~PieceInterface(){}
         virtual void setDirection(Direction dir){
             direction = dir;
+        }
+        virtual bool setTransparency(float alpha){
+            if (alpha < 0 || alpha > 1) return false;
+            transparency = alpha; 
         }
 };
 

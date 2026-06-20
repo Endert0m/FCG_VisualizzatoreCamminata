@@ -26,12 +26,13 @@ sf::Shape* Caviglia::draw(ReferencePlane plane){
 
     switch (plane)
     {
-    case ReferencePlane::XZ:
+    case ReferencePlane::XZ : case ReferencePlane::XZN:
         {
         sf::Shape* shape = shapeXZ;
         shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
         shape->setScale({1,cos(float(tmpRot[0]))});
+        shape->setFillColor(color*sf::Color(255,255,255,transparency*255));
         return shape;}
         break;
     
@@ -41,6 +42,7 @@ sf::Shape* Caviglia::draw(ReferencePlane plane){
         shape->setRotation(sf::Angle(sf::radians(tmpRot[0])));
         shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
         shape->setScale({1,cos(float(tmpRot[1]))});
+        shape->setFillColor(color*sf::Color(255,255,255,transparency*255));
         return shape;}
         break;
     
