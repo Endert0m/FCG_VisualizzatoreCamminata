@@ -43,6 +43,13 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Modifica di sfml_util per gestire le collezioni
 - Aggiunta modalità debug  
 
+## Nella versione v0.7
+- Aggiunta impostazione di trasparenza dei pezzi
+- Aggiustato cambio direzione della gamba (sulla visualizzazione dei piani XZ e -XZ)
+- Aggiunto controllo trasparenza delle collezioni
+- Modificato lower_body per gestire la trasparenza della gamba più lontana
+- Ridimensionato bacino per migiore visualizzazione
+
 # Per compilare:
 
     cmake --build
