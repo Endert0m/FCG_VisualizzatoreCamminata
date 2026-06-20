@@ -13,6 +13,7 @@ struct collection{
 class CollectionInterface{
     public:
         virtual collection create(ReferencePlane plane) = 0;
+        virtual void update() = 0;
         virtual bool setTransparency(float alpha) = 0; 
         virtual ~CollectionInterface(){};
 };

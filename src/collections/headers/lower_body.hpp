@@ -26,7 +26,7 @@ protected:
 public:
     Lower_Body(rb::Vector3 pos, std::vector<gamba_data> data);
     ~Lower_Body();
-
+    void update() override;
     void setVisibility(bool c);
     bool setTransparency(float alpha) override;
     collection create(ReferencePlane plane) override;

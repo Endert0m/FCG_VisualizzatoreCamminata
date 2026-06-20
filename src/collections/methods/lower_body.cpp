@@ -73,3 +73,7 @@ bool Lower_Body::setTransparency(float alpha){
     t->setTransparency(alpha);
     return true;
 }
+
+void Lower_Body::update(){
+    
+}

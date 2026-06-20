@@ -26,7 +26,7 @@
 
                 //funzioni
                 void calcVel(const float Dtime);
-                void calcRot(const time_t Dtime);
+                void calcRot(const float Dtime);
                 void calcAcc(const Vector3 Dacc);
                 void calcTanAcc(const Vector3 Dacc);
                 void calcPos(const float Dtime);
@@ -45,6 +45,7 @@
                 void setRot(const Vector3 Nrot);
                 void setVel(const Vector3 Nacc);
                 void setAcc(const Vector3 Nvel);
+                void setTanAcc(const Vector3 Dacc, const Vector3 pos);
                 void step(const sf::Clock time);
 
                 //complesso, deve definire accelerazione e accelerazione tangenziale 

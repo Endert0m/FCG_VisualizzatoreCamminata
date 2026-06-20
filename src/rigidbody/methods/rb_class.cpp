@@ -97,4 +97,11 @@ void rigidbody::step(const sf::Clock time){
     calcVel(dt);
 }
     
+void rigidbody::setTanAcc(const Vector3 Dacc, const Vector3 pos){
+    
+}
 
+
+void rigidbody::calcRot(const float Dtime){
+
+}
