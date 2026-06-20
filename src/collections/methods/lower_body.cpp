@@ -17,7 +17,7 @@ Lower_Body::Lower_Body(rb::Vector3 pos,std::vector<gamba_data> data){
 
 collection Lower_Body::create(ReferencePlane plane){
     collection coll;
-    dx->setDirection(Direction::R);
+    
     sx->setTransparency(1);
     dx->setTransparency(1);
 
@@ -25,15 +25,21 @@ collection Lower_Body::create(ReferencePlane plane){
     {
     case ReferencePlane::XZN: 
         dx->setTransparency(0.5);
+        dx->setDirection(Direction::L);
+        sx->setDirection(Direction::R);
         coll = coll + dx->create(plane);
         coll = coll + sx->create(plane);
         break;
     case ReferencePlane::XZ:
         sx->setTransparency(0.5);
+        dx->setDirection(Direction::R);
+        sx->setDirection(Direction::L);
         coll = coll + sx->create(plane);
         coll = coll + dx->create(plane);
         break;
     case ReferencePlane::YZ:
+        sx->setDirection(Direction::R);
+        dx->setDirection(Direction::L);
         coll = coll + dx->create(plane);
         coll = coll + sx->create(plane);
         break;
