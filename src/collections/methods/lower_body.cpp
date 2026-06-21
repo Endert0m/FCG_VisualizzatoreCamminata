@@ -78,13 +78,15 @@ bool Lower_Body::setTransparency(float alpha){
 
 void Lower_Body::update(sf::Clock cl){
     float sxAcc = sx->getZ_Acc() * 10;
-    float dxAcc = dx->getZ_Acc() * 10000;
+    float dxAcc = dx->getZ_Acc();
 
     //float totAcc = sxAcc + dxAcc;
     //t->body.setTanAcc({0,totAcc,0}); // non funziona, cambio sistema
 
     /* Posso considerare lo spostamento come A*sin(alpha)*/
     /* Mi calcolo le velocità totali sull'asse z */
+
+    printf("Acc: %f\n", dxAcc);
 
     int64_t Dtime = cl.getElapsedTime().asMicroseconds();
     if (prevT == 0) prevT = Dtime;
@@ -94,8 +96,14 @@ void Lower_Body::update(sf::Clock cl){
     float tmpVelS = sxAcc*dt;
     float tmpVelD = dxAcc*dt;
 
-    float tmpPosD =  velD *dt ;
+    printf("Vel: %f\n", tmpVelD);
+
+
+    float tmpPosD =  velD *dt *100 ;
     float tmpPosS = velS * 100 * dt + tmpVelD * 100 *dt;
+
+
+    printf("DPos: %f\n\n", tmpPosD);
 
     velD += tmpVelD; 
     velS += tmpVelS;
@@ -106,7 +114,7 @@ void Lower_Body::update(sf::Clock cl){
     float alpha = asin(posD/60.0);
 
     t->body.setRot({alpha,0,0});
-    //auto tPos = t->body.getPos();
-    //t->body.setPos({tPos[0],tPos[1],tPos[2]+tmpPosD});
+    auto tPos = t->body.getPos();
+    //t->body.setPos({tPos[0],tPos[1],tPos[2]+posD});
 
 }

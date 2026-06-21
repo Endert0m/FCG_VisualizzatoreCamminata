@@ -29,6 +29,7 @@ struct State
     sf::Vector2f cameraOffset = {0.,0.};
 
     sf::Clock clock;
+    sf::Clock PieceClock;
     ReferencePlane selectedPlane = ReferencePlane::XZ;
 
     PieceInterface* selected = nullptr;
@@ -50,6 +51,7 @@ struct State
         window = sf::RenderWindow(sf::VideoMode({w, h}), title);
         if (ImGui::SFML::Init(window)); // L'if è solo per togliere il warning, va aggiustato gestendo le eccezioni
         clock.restart();
+        PieceClock.restart();
         intervalMajLimit = maj;
         intervalMinLimit = min;
         this->pos = pos; 
@@ -82,13 +84,13 @@ void State::update(){
     */
 
     for (auto i : collections){
-        i->update(clock);
+        i->update(PieceClock);
     }
 
     for (auto i : createdColl){
         if (play){
             for (auto j : i.pieces){
-                j->update(clock);
+                j->update(PieceClock);
             }
         }
         for (auto j : i.joints){
@@ -98,7 +100,7 @@ void State::update(){
 
     if (play){
         for(PieceInterface* p : pieces){
-            p->update(clock);
+            p->update(PieceClock);
         }
     }
     for(JointInterface* j : joints){
