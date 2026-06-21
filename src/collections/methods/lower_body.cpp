@@ -99,7 +99,7 @@ void Lower_Body::update(sf::Clock cl){
     printf("Vel: %f\n", tmpVelD);
 
 
-    float tmpPosD =  velD *dt *100 ;
+    float tmpPosD = velD * 100 * dt + tmpVelD *dt *100 ;
     float tmpPosS = velS * 100 * dt + tmpVelD * 100 *dt;
 
 
@@ -111,7 +111,7 @@ void Lower_Body::update(sf::Clock cl){
     posS += tmpPosS;
 
     // PosD + PosS + Z = 0
-    float alpha = asin(posD/60.0);
+    float alpha = atan(tmpPosD/60.0);
 
     t->body.setRot({alpha,0,0});
     auto tPos = t->body.getPos();
