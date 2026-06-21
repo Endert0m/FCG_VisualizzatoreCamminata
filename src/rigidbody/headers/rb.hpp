@@ -43,6 +43,7 @@
                 
                 Vector3 getPos();
                 Vector3 getRot();
+                Vector3 getAcc();
                 void setPos(const Vector3 Npos);
                 void setRot(const Vector3 Nrot);
                 void setVel(const Vector3 Nacc);

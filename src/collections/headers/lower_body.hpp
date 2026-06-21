@@ -12,6 +12,13 @@ struct gamba_data{
 
 
 class Lower_Body : public CollectionInterface{
+private:
+    int64_t prevT = 0;
+    float velD = 0;
+    float velS = 0;
+    float posS = 0;
+    float posD = 0;
+
 protected:
     Gamba* sx;
     Gamba* dx;
@@ -26,7 +33,7 @@ protected:
 public:
     Lower_Body(rb::Vector3 pos, std::vector<gamba_data> data);
     ~Lower_Body();
-    void update() override;
+    void update(sf::Clock cl) override;
     void setVisibility(bool c);
     bool setTransparency(float alpha) override;
     collection create(ReferencePlane plane) override;

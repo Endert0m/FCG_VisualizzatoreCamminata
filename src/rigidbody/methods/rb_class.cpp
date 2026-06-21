@@ -133,3 +133,7 @@ void rigidbody::calcRot(const float Dtime){
     }
 
 }
+
+rb::Vector3 rigidbody::getAcc(){
+    return Vector3(acc);
+}

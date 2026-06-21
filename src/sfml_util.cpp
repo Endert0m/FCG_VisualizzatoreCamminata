@@ -82,7 +82,7 @@ void State::update(){
     */
 
     for (auto i : collections){
-        i->update();
+        i->update(clock);
     }
 
     for (auto i : createdColl){

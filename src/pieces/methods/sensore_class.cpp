@@ -117,8 +117,17 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
 float Sensore::getZ_Acc(){
     int id = *dataPos;
     float tmpAcc = 0;
+    
+    rb::Vector3 acc = body.getAcc();
+    rb::Vector3 rot = body.getRot();
 
-    tmpAcc = gModule - sqrt(pow(gData[id][0],2)+pow(gData[id][1],2)+pow(gData[id][2],2));
+    float modAcc = sqrt(pow(acc[0],2)+pow(acc[1],2)+pow(acc[2],2));
+
+    float zAcc = cos(rot[2]) * modAcc;
+
+    //dipende se il sensore conta la gravità nell'accelerazione sugli assi
+    tmpAcc = zAcc - gModule;
+    //tmpAcc = gModule - sqrt(pow(gData[id][0],2)+pow(gData[id][1],2)+pow(gData[id][2],2));
     return tmpAcc;
 }
 /////////////// cinematica inversa

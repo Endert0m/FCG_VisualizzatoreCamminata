@@ -21,6 +21,10 @@ collection Lower_Body::create(ReferencePlane plane){
     sx->setTransparency(1);
     dx->setTransparency(1);
 
+    
+    coll.joints.push_back(jsx);
+    coll.joints.push_back(jdx);
+
     switch (plane)
     {
     case ReferencePlane::XZN: 
@@ -47,10 +51,8 @@ collection Lower_Body::create(ReferencePlane plane){
     default:
         break;
     }
-    coll.pieces.push_back(t);
-    coll.joints.push_back(jsx);
-    coll.joints.push_back(jdx);
     
+    coll.pieces.push_back(t);
     
     return coll;
 }
@@ -74,11 +76,37 @@ bool Lower_Body::setTransparency(float alpha){
     return true;
 }
 
-void Lower_Body::update(){
-    float sxAcc = sx->getZ_Acc();
-    float dxAcc = dx->getZ_Acc();
+void Lower_Body::update(sf::Clock cl){
+    float sxAcc = sx->getZ_Acc() * 10;
+    float dxAcc = dx->getZ_Acc() * 10000;
 
-    float totAcc = sxAcc + dxAcc;
+    //float totAcc = sxAcc + dxAcc;
+    //t->body.setTanAcc({0,totAcc,0}); // non funziona, cambio sistema
 
-    t->body.setTanAcc({0,totAcc,0});
+    /* Posso considerare lo spostamento come A*sin(alpha)*/
+    /* Mi calcolo le velocità totali sull'asse z */
+
+    int64_t Dtime = cl.getElapsedTime().asMicroseconds();
+    if (prevT == 0) prevT = Dtime;
+    float dt = (float(Dtime) / 1000000.0) - (float(prevT) / 1000000.0);
+    prevT = Dtime;
+
+    float tmpVelS = sxAcc*dt;
+    float tmpVelD = dxAcc*dt;
+
+    float tmpPosD =  velD *dt ;
+    float tmpPosS = velS * 100 * dt + tmpVelD * 100 *dt;
+
+    velD += tmpVelD; 
+    velS += tmpVelS;
+    posD += tmpPosD;
+    posS += tmpPosS;
+
+    // PosD + PosS + Z = 0
+    float alpha = asin(posD/60.0);
+
+    t->body.setRot({alpha,0,0});
+    //auto tPos = t->body.getPos();
+    //t->body.setPos({tPos[0],tPos[1],tPos[2]+tmpPosD});
+
 }
