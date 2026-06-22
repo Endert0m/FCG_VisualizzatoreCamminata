@@ -71,6 +71,11 @@ int main() {
         
         gs.pieces[2]->setDirection(Direction::R);
         */
+
+
+
+
+
         //provo ad aggiungere una collection
         //gs.collections.push_back(new Gamba({220,0,220},&pos,"coscia_filt.csv","caviglia_filt.csv"));
         
@@ -86,6 +91,11 @@ int main() {
         data.push_back(d);
         data.push_back(s);
         gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
+
+
+
+        //aggiungo il pavimento 
+        gs.pieces.push_back(new Pavimento({200,200,550},0.2));
         
         printf("Ho costruito tutto!\n");
     }

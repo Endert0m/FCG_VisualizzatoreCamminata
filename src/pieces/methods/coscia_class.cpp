@@ -11,7 +11,7 @@ Coscia::Coscia(rb::Vector3 coords, _Float16 mass){
         setTextures(TEXTURE_F,TEXTURE_L);
     }
     catch (const char* &e ){
-        printf("Caviglia: %s\n", e);
+        printf("Coscia: %s\n", e);
     }
 }
 
