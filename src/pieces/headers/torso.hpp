@@ -14,7 +14,7 @@ class Torso : public PieceInterface{
         Torso(rb::Vector3 coords, _Float16 mass);
         ~Torso();
 
-        void update(sf::Clock cl) override;
+        void update(sf::Clock cl, float multiplier) override;
         sf::Shape* draw(ReferencePlane plane) override;
 };
 

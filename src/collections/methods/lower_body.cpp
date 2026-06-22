@@ -76,7 +76,7 @@ bool Lower_Body::setTransparency(float alpha){
     return true;
 }
 
-void Lower_Body::update(sf::Clock cl){
+void Lower_Body::update(sf::Clock cl, float multiplier){
     float sxAcc = sx->getZ_Acc() ;
     float dxAcc = dx->getZ_Acc() ;
 

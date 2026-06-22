@@ -13,7 +13,7 @@ struct collection{
 class CollectionInterface{
     public:
         virtual collection create(ReferencePlane plane) = 0;
-        virtual void update(sf::Clock cl) = 0;
+        virtual void update(sf::Clock cl, float multiplier) = 0;
         virtual bool setTransparency(float alpha) = 0; 
         virtual ~CollectionInterface(){};
 };

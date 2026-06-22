@@ -33,7 +33,7 @@ protected:
 public:
     Lower_Body(rb::Vector3 pos, std::vector<gamba_data> data);
     ~Lower_Body();
-    void update(sf::Clock cl) override;
+    void update(sf::Clock cl, float multiplier) override;
     void setVisibility(bool c);
     bool setTransparency(float alpha) override;
     collection create(ReferencePlane plane) override;

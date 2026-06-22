@@ -29,11 +29,11 @@ struct State
     sf::Vector2f cameraOffset = {0.,0.};
 
     sf::Clock clock;
+    float* tMul; 
     sf::Clock PieceClock;
     ReferencePlane selectedPlane = ReferencePlane::XZ;
 
     PieceInterface* selected = nullptr;
-
     bool rot_Piece = false;
     bool drag_Piece = false;
     bool drag = false;
@@ -51,6 +51,7 @@ struct State
         window = sf::RenderWindow(sf::VideoMode({w, h}), title);
         if (ImGui::SFML::Init(window)); // L'if è solo per togliere il warning, va aggiustato gestendo le eccezioni
         clock.restart();
+        tMul = new float(1.0);
         PieceClock.restart();
         intervalMajLimit = maj;
         intervalMinLimit = min;
@@ -68,6 +69,9 @@ struct State
             createdColl.push_back(c->create(selectedPlane));
         }
     }
+    ~State(){
+        delete tMul;
+    }
 };
 
 ///
@@ -84,14 +88,14 @@ void State::update(){
     */
     if (play){
         for (auto i : collections){
-            i->update(PieceClock);
+            i->update(PieceClock, *tMul);
         }
     }
 
     for (auto i : createdColl){
         if (play){
             for (auto j : i.pieces){
-                j->update(PieceClock);
+                j->update(PieceClock, *tMul);
             }
         }
         for (auto j : i.joints){
@@ -101,7 +105,7 @@ void State::update(){
 
     if (play){
         for(PieceInterface* p : pieces){
-            p->update(PieceClock);
+            p->update(PieceClock, *tMul);
         }
     }
     for(JointInterface* j : joints){
@@ -333,9 +337,15 @@ void doGUI(State &gs)
     } 
 
 
-    /*//////   DA FARE  ///////*/
-
+   
     //Finestra gestione velocità di riproduzione 
+    ImGui::Begin("Set time multiplier", 0,sdp_flags);
+    const float TimeMul[] = {0.5, 0.75, 1, 1.25, 1.5};
+    const char* TimeMulChar[] = {"0.5", "0.75", "1", "1.25", "1.5"};
+    int id = 2;
+    ImGui::SliderInt("Selected Plane", &id,0,4,TimeMulChar[id]);
+    gs.tMul* = TimeMul[id]; 
+    ImGui::End();
 
     //Finestra controllo sovrapposizione 
     

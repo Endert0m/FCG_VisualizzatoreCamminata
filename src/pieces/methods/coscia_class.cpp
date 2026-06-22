@@ -13,7 +13,7 @@ Coscia::~Coscia(){
     delete shapeYZ;
 }
 
-void Coscia::update(sf::Clock cl){
+void Coscia::update(sf::Clock cl, float multiplier){
     //body.step(cl);
 }
 

@@ -49,7 +49,7 @@ void Sensore::initCSV(std::vector<std::vector<float>> data){
 }
 
 
-void Sensore::update(sf::Clock cl){
+void Sensore::update(sf::Clock cl, float multiplier){
    
     //calcolo la posizione e velocità
     if (*dataPos >= gData.size()) *dataPos = gData.size()-1;
@@ -58,7 +58,7 @@ void Sensore::update(sf::Clock cl){
 
 
     body.setAcc(rb::Vector3{accData[*dataPos]});
-    body.step(cl);
+    body.step(cl, multiplier);
    
 }
 

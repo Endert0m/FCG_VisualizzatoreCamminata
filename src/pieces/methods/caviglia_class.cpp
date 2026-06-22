@@ -15,7 +15,7 @@ Caviglia::~Caviglia(){
     delete shapeYZ;
 }
 
-void Caviglia::update(sf::Clock cl){
+void Caviglia::update(sf::Clock cl,float multiplier){
     //body.step(cl);
 }
 

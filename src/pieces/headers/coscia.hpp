@@ -15,7 +15,7 @@ class Coscia : public PieceInterface{
         Coscia(rb::Vector3 coords, _Float16 mass);
         ~Coscia();
 
-        void update(sf::Clock cl) override;
+        void update(sf::Clock cl, float multiplier) override;
         sf::Shape* draw(ReferencePlane plane) override;
 };
 

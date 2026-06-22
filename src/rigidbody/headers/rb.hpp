@@ -49,7 +49,7 @@
                 void setVel(const Vector3 Nacc);
                 void setAcc(const Vector3 Nvel);
                 void setTanAcc(const Vector3 Dacc);
-                void step(const sf::Clock time);
+                void step(const sf::Clock time, float multiplier);
 
                 //complesso, deve definire accelerazione e accelerazione tangenziale 
                 void appForce(Vector3 f, Vector3 pos);

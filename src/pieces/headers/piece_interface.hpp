@@ -38,7 +38,7 @@ class PieceInterface{
         sf::Color color;
         float transparency = 1.0; //canale alpha del pezzo
 
-        virtual void update(sf::Clock cl) = 0;
+        virtual void update(sf::Clock cl, float multiplier) = 0;
         virtual sf::Shape* draw(ReferencePlane plane) = 0;
         virtual ~PieceInterface(){}
         virtual void setDirection(Direction dir){

@@ -14,7 +14,7 @@ Torso::~Torso(){
     delete shapeYZ;
 }
 
-void Torso::update(sf::Clock cl){
+void Torso::update(sf::Clock cl,float multiplier){
     
 }
 

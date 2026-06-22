@@ -14,7 +14,7 @@ class Caviglia : public PieceInterface{
         Caviglia(rb::Vector3 coords, _Float16 mass);
         ~Caviglia();
 
-        void update(sf::Clock cl) override;
+        void update(sf::Clock cl, float multiplier) override;
         sf::Shape* draw(ReferencePlane plane) override;
 };
 

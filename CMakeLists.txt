@@ -53,7 +53,7 @@ target_compile_options(common INTERFACE
 
 set(METHODS_PATH "./src/*/methods/*.cpp")
 
-set(VERSION "V8")
+set(VERSION "V9")
 
 file(GLOB_RECURSE METHODS_SRC "${METHODS_PATH}")
 add_executable(main${VERSION} ./src/testMain.cpp ${METHODS_SRC} )

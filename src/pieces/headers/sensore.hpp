@@ -29,7 +29,7 @@ class Sensore : public PieceInterface{
         Sensore(rb::Vector3 coords, _Float16 mass, unsigned int* st, std::vector<std::vector<float>> data);
         ~Sensore();
 
-        void update(sf::Clock cl) override;
+        void update(sf::Clock cl,float multiplier) override;
         sf::Shape* draw(ReferencePlane plane) override;
 
         //funzioni specifiche
