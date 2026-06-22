@@ -82,9 +82,10 @@ void State::update(){
     std::vector<PieceInterface*> collPieces;
     std::vector<JointInterface*> collJoints;
     */
-
-    for (auto i : collections){
-        i->update(PieceClock);
+    if (play){
+        for (auto i : collections){
+            i->update(PieceClock);
+        }
     }
 
     for (auto i : createdColl){

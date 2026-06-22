@@ -76,7 +76,7 @@ float Gamba::getZ_Acc(){
         totZ_Acc += i->getZ_Acc();
     }*/
     
-    totZ_Acc = sensori[0]->getZ_Acc();// + sensori[1]->getZ_Acc();
+    totZ_Acc = sensori[0]->getZ_Acc() + sensori[1]->getZ_Acc();
     //printf("TotAccGamba %f\n", totZ_Acc);
 
     return totZ_Acc;
