@@ -38,6 +38,7 @@ sf::Shape* Torso::draw(ReferencePlane plane){
         sf::Shape* shape = shapeXZ;
         shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
+        shape->setScale({plane == ReferencePlane::XZ ? float(1.0) : float(-1.0),cos(float(tmpRot[0]))});
         shape->setFillColor(color*sf::Color(255,255,255,transparency*255));
         return shape;}
         break;

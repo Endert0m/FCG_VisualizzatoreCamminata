@@ -7,7 +7,7 @@
 
 class Sensore : public PieceInterface{
     private:
-        const sf::Vector3f sensore_Dim = {30, 60, 30};
+        const sf::Vector3f sensore_Dim = {15, 20, 15};
         const sf::Color sensore_Col = sf::Color::Red;
         
         std::vector<std::vector<float>> accData;
