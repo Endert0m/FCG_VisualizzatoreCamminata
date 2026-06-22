@@ -64,4 +64,4 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 
 # Per lanciare:
 
-    ./build/bin/mainV9
+    ./build/bin/mainV10

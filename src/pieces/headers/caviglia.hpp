@@ -8,6 +8,8 @@ class Caviglia : public PieceInterface{
     private:
         const sf::Vector3f caviglia_Dim = {60, 200, 60};
         const sf::Color caviglia_Col = sf::Color(230,160,11,255);
+        const sf::Texture TextureF = sf::Texture(TEXTUREPATH + "cavigliaF.png");
+        const sf::Texture TextureL = sf::Texture(TEXTUREPATH + "cavigliaL.png");
 
     public: 
 
