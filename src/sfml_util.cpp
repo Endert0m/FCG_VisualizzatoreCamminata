@@ -287,14 +287,12 @@ void handle_resize(const sf::Event::Resized &resized, State &gs)
 /// Graphics
 void doGUI(State &gs)
 {
-    // TODO: here code to display the menus
     //Bottoni
     sf::Time elapsed = gs.clock.restart();
 
     unsigned int zero = 0;
 
     ImGui::SFML::Update(gs.window, elapsed);
-    ImGui::ShowDemoWindow();
 
     //Finestra gestione posizione nei dati
     ImGuiWindowFlags sdp_flags = ImGuiWindowFlags_NoMove|
