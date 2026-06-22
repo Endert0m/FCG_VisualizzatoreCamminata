@@ -54,6 +54,10 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Aggiunta oscillazione bacino 
 - Aggiustato calcolo posizione con clock dedicato
 
+## Nella versione v0.9
+- Modificata la funzione update di pezzi e collezioni per implementare controllo sul tempo
+- Aggiunta finestra con slider per selezione moltiplicatore del tempo
+
 # Per compilare:
 
     cmake --build
