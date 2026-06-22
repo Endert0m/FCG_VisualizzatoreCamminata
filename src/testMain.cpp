@@ -106,7 +106,7 @@ int main() {
     sf::Clock mainClock;
     while (gs.window.isOpen()) 
     {
-        curTime += mainClock.restart().asMilliseconds();
+        curTime += mainClock.restart().asMilliseconds() *(*gs.tMul) ;
         if (curTime > T){
             if (gs.play && pos+curTime/T < maj) pos += curTime / T; 
             curTime = 0;
