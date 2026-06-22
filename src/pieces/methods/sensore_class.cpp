@@ -115,7 +115,7 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
 }
 
 float Sensore::getZ_Acc(){
-    int id = *dataPos;
+    //int id = *dataPos;
     float tmpAcc = 0;
     
     rb::Vector3 acc = body.getAcc();

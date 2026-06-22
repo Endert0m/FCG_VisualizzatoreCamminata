@@ -2,7 +2,7 @@
 #include <math.h>
 #include "../../rigidbody/headers/rb.hpp"
 
-#define TEXTUREPATH std::string("../../../textures/")
+#define TEXTUREPATH std::string("./../../textures/")
 
 #ifndef PIECE_INTERFACE_H
 #define PIECE_INTERFACE_H

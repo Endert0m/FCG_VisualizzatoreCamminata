@@ -81,7 +81,7 @@ void Lower_Body::update(sf::Clock cl, float multiplier){
     float dxAcc = dx->getZ_Acc() ;
 
     int64_t Dtime = cl.getElapsedTime().asMicroseconds();
-    if (prevT == 0) prevT >= Dtime;
+    if (prevT == 0) prevT = Dtime;
     float dt = (float(Dtime) / 1000000.0) - (float(prevT) / 1000000.0);
     prevT = Dtime;
 
