@@ -58,6 +58,12 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Modificata la funzione update di pezzi e collezioni per implementare controllo sul tempo
 - Aggiunta finestra con slider per selezione moltiplicatore del tempo
 
+## Nella versione v0.10
+- Aggiunta controllo texture 
+- Aggiunta pavimento 
+- Refactoring generale
+- Definizione main finale (non più di test)
+
 # Per compilare:
 
     cmake --build

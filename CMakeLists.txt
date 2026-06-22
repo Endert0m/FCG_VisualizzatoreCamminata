@@ -56,6 +56,6 @@ set(METHODS_PATH "./src/*/methods/*.cpp")
 set(VERSION "V10")
 
 file(GLOB_RECURSE METHODS_SRC "${METHODS_PATH}")
-add_executable(main${VERSION} ./src/testMain.cpp ${METHODS_SRC} )
+add_executable(main${VERSION} ./src/Main.cpp ${METHODS_SRC} )
 target_link_libraries(main${VERSION} PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML common glm)
 target_compile_definitions(main${VERSION} PRIVATE $<$<CONFIG:Debug>:DEBUG_MODE>)
