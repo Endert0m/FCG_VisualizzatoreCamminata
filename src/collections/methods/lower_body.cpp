@@ -80,14 +80,6 @@ void Lower_Body::update(sf::Clock cl){
     float sxAcc = sx->getZ_Acc() ;
     float dxAcc = dx->getZ_Acc() ;
 
-    //float totAcc = sxAcc + dxAcc;
-    //t->body.setTanAcc({0,totAcc,0}); // non funziona, cambio sistema
-
-    /* Posso considerare lo spostamento come A*sin(alpha)*/
-    /* Mi calcolo le velocità totali sull'asse z */
-
-    //printf("Acc: %f\n", dxAcc);
-
     int64_t Dtime = cl.getElapsedTime().asMicroseconds();
     if (prevT == 0) prevT = Dtime;
     float dt = (float(Dtime) / 1000000.0) - (float(prevT) / 1000000.0);
@@ -95,20 +87,11 @@ void Lower_Body::update(sf::Clock cl){
 
     float tmpVelS = sxAcc*dt;
     float tmpVelD = dxAcc*dt;
-
-    //printf("Vel: %f\n", tmpVelD);
-
-
     float tmpPosD =  tmpVelD *dt *500 + velD * 500 * dt; 
     float tmpPosS =  tmpVelS * 500 *dt + velS * 500 * dt;
 
-
-    //printf("DPos: %f\n\n", tmpPosD);
-
     velD += tmpVelD; 
     velS += tmpVelS;
-    posD += tmpPosD;
-    posS += tmpPosS;
 
     // PosD + PosS + Z = 0
     float alpha = atan(tmpPosD/60.0 - tmpPosS/60); //il 60 è il raggio (dimesione del bacino)
@@ -116,12 +99,9 @@ void Lower_Body::update(sf::Clock cl){
     //applico smoothing e ritorno a zero
     velD -= velD * fabs(alpha);
     velS -= velS * fabs(alpha) ;
-
-    printf("Svel: %f\n", velS);
-    printf("Dvel: %f\n\n", velD);
-
+    
     t->body.setRot({alpha,0,0});
     auto tPos = t->body.getPos();
-    //t->body.setPos({tPos[0],tPos[1],tPos[2]+posD-posS});
+    
 
 }

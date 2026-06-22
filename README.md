@@ -50,6 +50,10 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Modificato lower_body per gestire la trasparenza della gamba più lontana
 - Ridimensionato bacino per migiore visualizzazione
 
+## Nella versione v0.8
+- Aggiunta oscillazione bacino 
+- Aggiustato calcolo posizione con clock dedicato
+
 # Per compilare:
 
     cmake --build
