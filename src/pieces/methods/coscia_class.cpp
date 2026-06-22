@@ -6,6 +6,13 @@ Coscia::Coscia(rb::Vector3 coords, _Float16 mass){
     color = coscia_Col;
     globalPos = {0,0,0};
     initialize_shapes(coscia_Dim);
+
+    try{
+        setTextures(TEXTURE_F,TEXTURE_L);
+    }
+    catch (const char* &e ){
+        printf("Caviglia: %s\n", e);
+    }
 }
 
 Coscia::~Coscia(){

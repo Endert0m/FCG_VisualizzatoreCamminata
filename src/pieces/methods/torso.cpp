@@ -7,6 +7,13 @@ Torso::Torso(rb::Vector3 coords, _Float16 mass){
     globalPos = {0,0,0};
 
     initialize_shapes(torso_Dim);
+
+    try{
+        setTextures(TEXTURE_F,TEXTURE_L);
+    }
+    catch (const char* &e){
+        printf("Caviglia: %s\n", e);
+    }
 }
 
 Torso::~Torso(){

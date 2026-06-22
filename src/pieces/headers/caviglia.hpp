@@ -3,13 +3,14 @@
 #ifndef CAVIGLIA_H
 #define CAVIGLIA_H
 
-
 class Caviglia : public PieceInterface{
     private:
         const sf::Vector3f caviglia_Dim = {60, 200, 60};
         const sf::Color caviglia_Col = sf::Color(230,160,11,255);
-        const sf::Texture TextureF = sf::Texture(TEXTUREPATH + "cavigliaF.png");
-        const sf::Texture TextureL = sf::Texture(TEXTUREPATH + "cavigliaL.png");
+        
+        const std::string TEXTURE_F = std::string("cavigliaF.png");
+        const std::string TEXTURE_L = std::string("cavigliaL.png");
+
 
     public: 
 

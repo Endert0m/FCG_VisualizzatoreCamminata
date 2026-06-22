@@ -32,6 +32,22 @@ class PieceInterface{
             shapeYZ->setFillColor(color);
         }
         Direction direction = Direction::L;
+
+        sf::Texture TextureF ;
+        sf::Texture TextureL ;
+
+        void setTextures (std::string F, std::string L){
+            try{
+                TextureF = sf::Texture(TEXTUREPATH + F);
+                TextureL = sf::Texture(TEXTUREPATH + L);
+
+                shapeXZ->setTexture(&TextureL);
+                shapeYZ->setTexture(&TextureF);
+            }catch(...){
+                throw "Errore nel caricamento texture.";
+            }
+        }
+
     public:
         sf::Shape* shapeXZ, *shapeYZ;
         rb::Vector3 globalPos;
