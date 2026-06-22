@@ -335,21 +335,21 @@ void doGUI(State &gs)
         gs.selectedPlane = (ReferencePlane)currentPlane;
         gs.updateCollections();
     } 
-
+    ImGui::End();
 
    
     //Finestra gestione velocità di riproduzione 
     ImGui::Begin("Set time multiplier", 0,sdp_flags);
     const float TimeMul[] = {0.5, 0.75, 1, 1.25, 1.5};
     const char* TimeMulChar[] = {"0.5", "0.75", "1", "1.25", "1.5"};
-    int id = 2;
-    ImGui::SliderInt("Selected Plane", &id,0,4,TimeMulChar[id]);
-    gs.tMul* = TimeMul[id]; 
+    static int Timeid = 2;
+    ImGui::SliderInt("Time", &Timeid,0,4,TimeMulChar[Timeid]);
+    *gs.tMul = TimeMul[Timeid]; 
     ImGui::End();
 
     //Finestra controllo sovrapposizione 
     
-    ImGui::End();
+    
 
 
     sf::Vector2u wsize = gs.window.getSize();
@@ -357,6 +357,8 @@ void doGUI(State &gs)
     ImGui::SetWindowSize("Set data position",ImVec2(wsize.x,30));
     ImGui::SetWindowPos("Set visualization plane",ImVec2(wsize.x-400,0));
     ImGui::SetWindowSize("Set visualization plane",ImVec2(400,30));
+    ImGui::SetWindowPos("Set time multiplier",ImVec2(wsize.x-400,wsize.y - 60));
+    ImGui::SetWindowSize("Set time multiplier",ImVec2(400,30));
     ImGui::SFML::Render(gs.window);
 }
 
