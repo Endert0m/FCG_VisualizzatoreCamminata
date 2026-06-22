@@ -76,6 +76,7 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
         shape->setRotation(sf::Angle(sf::radians(tmpRot[1])));
         shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
         shape->setFillColor(color*sf::Color(255,255,255,transparency*255));
+        shape->setScale({plane == ReferencePlane::XZ ? float(1.0) : float(-1.0),1});
         return shape;}
         break;
     
@@ -85,6 +86,7 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
         shape->setRotation(sf::Angle(sf::radians(tmpRot[0])));
         shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
         shape->setFillColor(color*sf::Color(255,255,255,transparency*255));
+        shape->setScale({direction == Direction::R ? float(1.0) : float(-1.0),1});
         return shape;}
         break;
     

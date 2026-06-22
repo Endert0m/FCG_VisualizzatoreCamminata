@@ -49,7 +49,7 @@ sf::Shape* Caviglia::draw(ReferencePlane plane){
         sf::Shape* shape = shapeYZ;
         shape->setRotation(sf::Angle(sf::radians(tmpRot[0])));
         shape->setPosition({tmpPos[1]+globalPos[1],tmpPos[2]+globalPos[2]});
-        shape->setScale({1,cos(float(tmpRot[1]))});
+        shape->setScale({direction == Direction::R ? float(1.0) : float(-1.0),cos(float(tmpRot[1]))});
         shape->setFillColor(color*sf::Color(255,255,255,transparency*255));
         return shape;}
         break;
