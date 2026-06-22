@@ -6,7 +6,7 @@
 
 class Pavimento : public PieceInterface{
     private:
-        const sf::Vector3f pavimento_Dim = {600, 20, 600};
+        const sf::Vector3f pavimento_Dim = {600, 40, 600};
         const sf::Color pavimento_Col = sf::Color(255,255,255,255);
         
         const std::string TEXTURE_F = std::string("pavimentoF.png");

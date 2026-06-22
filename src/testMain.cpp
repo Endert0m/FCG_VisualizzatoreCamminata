@@ -95,7 +95,8 @@ int main() {
 
 
         //aggiungo il pavimento 
-        gs.pieces.push_back(new Pavimento({200,200,550},0.2));
+        gs.pieces.push_back(new Pavimento({200,200,550},_Float16(0.2) ));
+        gs.pieces[0]->body.setRot({0,-0.03,0});
         
         printf("Ho costruito tutto!\n");
     }
