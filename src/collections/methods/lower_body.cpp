@@ -18,42 +18,43 @@ Lower_Body::Lower_Body(rb::Vector3 pos,std::vector<gamba_data> data){
 collection Lower_Body::create(ReferencePlane plane){
     collection coll;
     
-    sx->setTransparency(1);
-    dx->setTransparency(1);
-
+    sx->setTransparency(transparency);
+    dx->setTransparency(transparency);
+    t->setTransparency(transparency);
     
-    coll.joints.push_back(jsx);
-    coll.joints.push_back(jdx);
+    if (isVisible){
+        coll.joints.push_back(jsx);
+        coll.joints.push_back(jdx);
 
-    switch (plane)
-    {
-    case ReferencePlane::XZN: 
-        dx->setTransparency(0.5);
-        dx->setDirection(Direction::L);
-        sx->setDirection(Direction::R);
-        coll = coll + dx->create(plane);
-        coll = coll + sx->create(plane);
-        break;
-    case ReferencePlane::XZ:
-        sx->setTransparency(0.5);
-        dx->setDirection(Direction::R);
-        sx->setDirection(Direction::L);
-        coll = coll + sx->create(plane);
-        coll = coll + dx->create(plane);
-        break;
-    case ReferencePlane::YZ:
-        sx->setDirection(Direction::R);
-        dx->setDirection(Direction::L);
-        coll = coll + dx->create(plane);
-        coll = coll + sx->create(plane);
-        break;
+        switch (plane)
+        {
+        case ReferencePlane::XZN: 
+            dx->setTransparency(0.5 * transparency);
+            dx->setDirection(Direction::L);
+            sx->setDirection(Direction::R);
+            coll = coll + dx->create(plane);
+            coll = coll + sx->create(plane);
+            break;
+        case ReferencePlane::XZ:
+            sx->setTransparency(0.5 * transparency);
+            dx->setDirection(Direction::R);
+            sx->setDirection(Direction::L);
+            coll = coll + sx->create(plane);
+            coll = coll + dx->create(plane);
+            break;
+        case ReferencePlane::YZ:
+            sx->setDirection(Direction::R);
+            dx->setDirection(Direction::L);
+            coll = coll + dx->create(plane);
+            coll = coll + sx->create(plane);
+            break;
 
-    default:
-        break;
+        default:
+            break;
+        }
+        
+        coll.pieces.push_back(t);
     }
-    
-    coll.pieces.push_back(t);
-    
     return coll;
 }
 
@@ -65,14 +66,13 @@ Lower_Body::~Lower_Body(){
     delete jsx;
 }
 
-void Lower_Body::setVisibility(bool c){
+bool Lower_Body::setVisibility(bool c){
 
 }
 
 bool Lower_Body::setTransparency(float alpha){
-    if (!sx->setTransparency(alpha)) return false;
-    dx->setTransparency(alpha);
-    t->setTransparency(alpha);
+    if (alpha < 0 || alpha > 1) return false;
+    transparency = alpha;
     return true;
 }
 
