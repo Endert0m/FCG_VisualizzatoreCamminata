@@ -14,7 +14,6 @@ class Gamba : public CollectionInterface {
         collection create(ReferencePlane plane) override;
         PieceInterface* getJointPiece();
         void setDirection(Direction dir);
-        bool setTransparency(float alpha) override;
         void update(sf::Clock cl, float multiplier)override {};
         float getZ_Acc();
 };

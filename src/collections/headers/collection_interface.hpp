@@ -17,11 +17,17 @@ class CollectionInterface{
     public:
         virtual collection create(ReferencePlane plane) = 0;
         virtual void update(sf::Clock cl, float multiplier) = 0;
-        virtual bool setTransparency(float alpha) = 0; 
+        virtual bool setTransparency(float alpha) {
+            if (alpha < 0 || alpha > 1) return false;
+            transparency = alpha;
+            return true;
+        }; 
         float getTransparency() {
             return transparency;
         }
-        virtual bool setVisibility(bool c);
+        virtual void setVisibility(bool c) {
+            isVisible = c;
+        }
         virtual ~CollectionInterface(){};
 };
 

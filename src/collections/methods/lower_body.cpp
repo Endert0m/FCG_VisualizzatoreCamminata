@@ -66,15 +66,6 @@ Lower_Body::~Lower_Body(){
     delete jsx;
 }
 
-bool Lower_Body::setVisibility(bool c){
-
-}
-
-bool Lower_Body::setTransparency(float alpha){
-    if (alpha < 0 || alpha > 1) return false;
-    transparency = alpha;
-    return true;
-}
 
 void Lower_Body::update(sf::Clock cl, float multiplier){
     float sxAcc = sx->getZ_Acc() ;

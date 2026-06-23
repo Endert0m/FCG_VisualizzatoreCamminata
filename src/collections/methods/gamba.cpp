@@ -32,9 +32,11 @@ Gamba::Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std
 collection Gamba::create(ReferencePlane plane){
     collection coll;
     for(auto e : pezzi){
+        e->setTransparency(transparency);
         coll.pieces.push_back(e);
     }
     for(auto e : sensori){
+        e->setTransparency(transparency);
         coll.pieces.push_back(e);
     }
 
@@ -56,16 +58,6 @@ void Gamba::setDirection(Direction dir){
     for (auto i : sensori){
         i->setDirection(dir);
     }
-}
-
-bool Gamba::setTransparency(float alpha){
-    for (auto i : pezzi){
-        if (!i->setTransparency(alpha)) return false;
-    }
-    for (auto i : sensori){
-        if (!i->setTransparency(alpha)) return false;
-    }
-    return true;
 }
 
 float Gamba::getZ_Acc(){
