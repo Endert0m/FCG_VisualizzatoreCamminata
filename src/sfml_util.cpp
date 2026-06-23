@@ -5,6 +5,7 @@
 #include "collections/headers/collection_interface.hpp"
 #include <imgui.h>
 #include <imgui-SFML.h>
+#include <format>
 
 template <typename T1, typename T2>
 double dist(sf::Vector2<T1> p1, sf::Vector2<T2> p2)
@@ -300,7 +301,9 @@ void doGUI(State &gs)
                                  ImGuiWindowFlags_NoScrollbar|
                                  ImGuiWindowFlags_NoCollapse|
                                  ImGuiWindowFlags_NoTitleBar;
-   
+
+
+    // Finestra gestione posizione dati  
     ImGui::Begin("Set data position", 0,sdp_flags);
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.3);
     ImGui::SliderScalar("Start", ImGuiDataType_U32 ,gs.intervalMinLimit,&zero,gs.intervalMajLimit);
@@ -345,9 +348,29 @@ void doGUI(State &gs)
     *gs.tMul = TimeMul[Timeid]; 
     ImGui::End();
 
-    //Finestra controllo sovrapposizione 
-    
-    
+    //Finestra controllo sovrapposizione (solo su collezioni)
+    ImGui::Begin("Set overlap", 0,sdp_flags);
+    int c = 0;
+    for (auto i : gs.collections){
+        std::stringstream s;
+        s <<"Collezione :" << c;
+        ImGui::Text(s.str().c_str());
+        float tmpTr = i->getTransparency();
+        if (ImGui::SliderFloat("Transparency ", &tmpTr,0.0,1.0)) {
+            gs.updateCollections();
+            i->setTransparency(tmpTr);
+        }
+        bool tmpVs = i->getVisibility();
+        if (ImGui::Checkbox("is visible", &tmpVs)) {
+            i->setVisibility(tmpVs);
+            gs.updateCollections();
+        }
+        
+        
+        c++;
+        ImGui::Separator();
+    }
+    ImGui::End();
 
 
     sf::Vector2u wsize = gs.window.getSize();
@@ -355,8 +378,11 @@ void doGUI(State &gs)
     ImGui::SetWindowSize("Set data position",ImVec2(wsize.x,30));
     ImGui::SetWindowPos("Set visualization plane",ImVec2(wsize.x-400,0));
     ImGui::SetWindowSize("Set visualization plane",ImVec2(400,30));
-    ImGui::SetWindowPos("Set time multiplier",ImVec2(wsize.x-400,wsize.y - 60));
+    ImGui::SetWindowPos("Set time multiplier",ImVec2(wsize.x-400,wsize.y - 61));
     ImGui::SetWindowSize("Set time multiplier",ImVec2(400,30));
+    ImGui::SetWindowPos("Set overlap",ImVec2(wsize.x-300,31));
+    ImGui::SetWindowSize("Set overlap",ImVec2(300,70*gs.collections.size()));
+    
     ImGui::SFML::Render(gs.window);
 }
 

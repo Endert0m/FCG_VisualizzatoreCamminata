@@ -22,9 +22,13 @@ class CollectionInterface{
             transparency = alpha;
             return true;
         }; 
-        float getTransparency() {
+        virtual bool getVisibility(){
+            return isVisible;
+        }
+        virtual float getTransparency() {
             return transparency;
         }
+
         virtual void setVisibility(bool c) {
             isVisible = c;
         }
