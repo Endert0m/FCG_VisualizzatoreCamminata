@@ -1,0 +1,12 @@
+#include <iostream>
+#include "csv/headers/csv.hpp"
+#include "sfml_util.cpp"
+#include "pieces/headers/coscia.hpp"
+#include "pieces/headers/caviglia.hpp"
+#include "pieces/headers/sensore.hpp"
+#include "pieces/headers/torso.hpp"
+#include "pieces/headers/pavimento.hpp"
+#include "joints/headers/rigid_joint.hpp"
+#include "joints/headers/pivot_joint.hpp"
+#include "collections/headers/gamba.hpp"
+#include "collections/headers/lower_body.hpp"

@@ -1,0 +1,102 @@
+#include "../headers/sensore.hpp"
+
+
+Sensore::Sensore(rb::Vector3 coords, _Float16 mass){
+    size = sensore_Dim;
+    rb::Vector3 com = {size.x/2,0, size.y/2};
+    body = rb::rigidbody(coords, com, mass);
+    color = sensore_Col;
+    shape = new sf::RectangleShape(size);
+    globalPos = {0,0,0};
+}
+
+Sensore::Sensore(rb::Vector3 coords, _Float16 mass, unsigned int st, unsigned int dataIntvl, std::vector<std::vector<float>> data) : Sensore(coords, mass){
+        dataPos = st;
+        this->dataIntvl = dataIntvl;
+        initCSV(data);
+}
+
+
+Sensore::~Sensore(){
+    delete shape;
+}
+
+void Sensore::initCSV(std::vector<std::vector<float>> data){
+    //timestamp_ns, wx, wy, wz, ax, ay, az, gx, gy, gz
+    if (data.size() < 1) throw "Sensor data empty";
+    float stTime = int64_t( data[0][0] ) ;
+
+    for (std::vector<float> row : data){
+        timeData.push_back(int64_t( row[0] ) - stTime);
+
+        std::vector<float> tmpR = {row[2],row[3],row[1]}; 
+        std::vector<float> tmpA = {row[5],row[6],row[4]};
+        std::vector<float> tmpG = {-row[8],-row[9],-row[7]};
+               
+        rotData.push_back(tmpR);
+        accData.push_back(tmpA);
+        gData.push_back(tmpG);
+    }
+}
+
+
+void Sensore::update(sf::Clock cl){
+    // Aggiorno la posizione nei dati
+    int64_t currTime = cl.getElapsedTime().asMicroseconds() *100000;
+    if (timeData[dataPos] < currTime && dataIntvl - dataPos > 0) { //aggiorno solo se ho cambiato posizione
+        dataPos++;
+
+        //calcolo la posizione e velocità
+        calcRotWithG(dataPos);
+        body.setAcc(rb::Vector3{accData[dataPos]});
+        body.step(cl);
+    }
+
+}
+
+sf::Shape* Sensore::draw(ReferencePlane plane){
+    shape->setFillColor(color);
+
+    shape->setOrigin({sensore_Dim.x/2, sensore_Dim.y/2});
+    
+    rb::Vector3_s tmpRot = body.getRot();
+    
+
+    rb::Vector3 tmpPos = body.getPos();
+
+    switch (plane)
+    {
+    case ReferencePlane::XZ:
+        shape->setRotation(sf::Angle(sf::radians(tmpRot[2])));
+        shape->setPosition({tmpPos[0]+globalPos[0],tmpPos[2]+globalPos[2]});
+        break;
+    
+    default:
+        break;
+    }
+    
+
+    
+
+    return shape;
+}
+
+
+void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori della gravità
+
+    std::vector<float> grav = gData[index];
+    float modG = sqrt(pow(grav[0],2)+pow(grav[1],2)+pow(grav[2],2));
+
+    //x = mod * cosX -> mod = x/cosx -> cosx = x/mod
+
+    float tmpSinX = -grav[0] / modG;
+    float tmpSinY = -grav[1] / modG;
+    float tmpSinZ = -grav[2] / modG;
+
+    float tmpAX = acos(tmpSinY);
+    float tmpAY = acos(tmpSinZ);
+    float tmpAZ = acos(tmpSinX);
+
+    body.setRot(rb::Vector3_s{_Float16( tmpAX),_Float16( tmpAY),_Float16( tmpAZ) });
+
+}
