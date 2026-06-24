@@ -40,12 +40,12 @@ FetchContent_Declare(ImGui-SFML
     SYSTEM)
 FetchContent_MakeAvailable(ImGui-SFML)
 
-add_library(common INTERFACE)
-target_compile_features(common INTERFACE cxx_std_17)
-target_compile_options(common INTERFACE
-  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: -Wall>
-  $<$<CXX_COMPILER_ID:MSVC>: /W4>
-)
+#add_library(common INTERFACE)
+#target_compile_features(common INTERFACE cxx_std_17)
+#target_compile_options(common INTERFACE
+#  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: -Wall>
+#  $<$<CXX_COMPILER_ID:MSVC>: /W4>
+#)
 
 
 # Fine aggiunta

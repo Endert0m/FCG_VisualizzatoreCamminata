@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.28)
 project(AllReleases LANGUAGES CXX)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 # 1. Identifichiamo tutte le cartelle che rappresentano una release.
 # Usiamo il pattern che identifica le tue cartelle (es. FCG_VisualizzatoreCamminata-*)
 file(GLOB RELEASE_DIRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "FCG_VisualizzatoreCamminata-*")
 
-message(STATUS "Trovate ${#RELEASE_DIRS} release da compilare.")
+message(STATUS "Trovate ${RELEASE_DIRS} release da compilare.")
 
 # 2. Cicliamo su ogni cartella trovata
 foreach(RELEASE_DIR ${RELEASE_DIRS})
