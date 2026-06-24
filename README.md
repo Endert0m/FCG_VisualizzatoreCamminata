@@ -70,8 +70,11 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
   
 # Per compilare:
 
-    cmake --build
+    mkdir build //se non esiste già
+    cd build
+    cmake ..
+    cmake --build . -j$(nproc)
 
 # Per lanciare:
-
-    ./build/bin/mainV11
+    cd bin
+    ./mainV11
