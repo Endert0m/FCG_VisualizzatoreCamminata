@@ -1,5 +1,7 @@
 # FCG_VisualizzatoreCamminata
 
+- # **Nella branch All_Releases ci sono tutte le release con istruzioni per la compilazione e la relazione** 
+
 
 ## Nella versione versione v0.1 è presente la base del progetto.
 
