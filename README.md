@@ -71,7 +71,7 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 - Refactoring collezioni
 
 ## Nella versione v1.2
-  
+    
 # Per compilare:
 
     mkdir build //se non esiste già
