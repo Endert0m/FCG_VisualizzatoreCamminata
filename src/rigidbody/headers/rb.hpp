@@ -80,7 +80,26 @@
                 v1[2] - v2[2]
             };
         }
-    
+    inline rb::Vector3 operator/(const rb::Vector3& v, const float n){
+            if (v.size() != 3 ) {
+                throw std::invalid_argument("I vettori devono avere esattamente 3 elementi.");
+            }
+            return rb::Vector3{
+                v[0] / n,
+                v[1] / n,
+                v[2] / n
+            };
+        }
+    inline rb::Vector3 operator!(const rb::Vector3& v){
+            if (v.size() != 3 ) {
+                throw std::invalid_argument("I vettori devono avere esattamente 3 elementi.");
+            }
+            return rb::Vector3{
+                -v[0] ,
+                -v[1] ,
+                -v[2] 
+            };
+        }
         /*
         inline bool operator!=(const rb::Vector3& v1, const rb::Vector3& v2) {
             if (v1.size() != 3 || v2.size() != 3) {

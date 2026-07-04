@@ -132,4 +132,14 @@ float Sensore::getZ_Acc(){
     //tmpAcc = gModule - sqrt(pow(gData[id][0],2)+pow(gData[id][1],2)+pow(gData[id][2],2));
     return tmpAcc;
 }
-/////////////// cinematica inversa
+
+
+rb::Vector3 Sensore::calibrateRotation(unsigned int nFrames){
+    rb::Vector3 tmpRot = {0,0,0};
+    for (unsigned int i = 0; i<nFrames; i++){
+        calcRotWithG(i);
+        tmpRot = tmpRot + body.getRot();
+    }
+    tmpRot = tmpRot / nFrames;
+    return !tmpRot;
+}

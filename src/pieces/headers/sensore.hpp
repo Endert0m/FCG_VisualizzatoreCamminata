@@ -35,6 +35,8 @@ class Sensore : public PieceInterface{
         //funzioni specifiche
         void initCSV(std::vector<std::vector<float>> data);
 
+        rb::Vector3 calibrateRotation(unsigned int nFrames);
+
         float getZ_Acc();
 };
 
