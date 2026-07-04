@@ -15,8 +15,11 @@ Gamba::Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std
         sensori.push_back(new Sensore (rb::Vector3{pos[0],pos[1],pos[2]+200},_Float16( 0.2 ),dataPos,caviglia));
 
         // modifico la rotazione relativa della gamba
-        sensori[0]->body.setRot({_Float16 (1.5708),_Float16 (1.5708),0});
-        sensori[1]->body.setRot({_Float16 (1.5708),_Float16 (1.5708),0});
+
+
+        sensori[0]->body.setRot(sensori[0]->calibrateRotation(200));
+        sensori[1]->body.setRot(sensori[1]->calibrateRotation(200));
+        //sensori[1]->body.setRot({_Float16 (1.5708),_Float16 (1.5708),0});
 
         joints.push_back(new RigidJoint(sensori[0], {pezzi[0]}));
         joints.push_back(new PivotJoint(sensori[0], {sensori[1]}, rb::Vector3{0,0,100}));

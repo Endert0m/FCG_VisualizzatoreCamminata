@@ -141,5 +141,5 @@ rb::Vector3 Sensore::calibrateRotation(unsigned int nFrames){
         tmpRot = tmpRot + body.getRot();
     }
     tmpRot = tmpRot / nFrames;
-    return !tmpRot;
+    return tmpRot;
 }
