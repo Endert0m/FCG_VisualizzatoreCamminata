@@ -69,6 +69,8 @@ Per spostare l'intera scena si tiene premuto il tasto centrale del mouse.
 ## Nella versione v1.1
 - Aggiunta controllo visibilità collezioni su GUI
 - Refactoring collezioni
+
+## Nella versione v1.2
   
 # Per compilare:
 

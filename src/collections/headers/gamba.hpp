@@ -11,7 +11,7 @@ class Gamba : public CollectionInterface {
         std::vector<JointInterface*> joints;
 
         std::vector<rb::Vector3> calibarzione;
-        
+
     public:
         Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData);
         collection create(ReferencePlane plane) override;
@@ -21,4 +21,4 @@ class Gamba : public CollectionInterface {
         float getZ_Acc();
 };
 
-#endif
+#endif 
