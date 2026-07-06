@@ -27,6 +27,9 @@ class JointInterface{
 
         virtual ~JointInterface(){};
         virtual void movechild() = 0;
+        virtual void setRotOffset(unsigned int id, rb::Vector3 nRot){
+            rotOffset[id] = nRot;
+        }
 
         
 };

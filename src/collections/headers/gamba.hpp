@@ -10,7 +10,7 @@ class Gamba : public CollectionInterface {
         std::vector<PieceInterface*> pezzi;
         std::vector<JointInterface*> joints;
 
-        std::vector<rb::Vector3> calibarzione;
+        std::vector<rb::Vector3> calibrazione;
 
     public:
         Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData);

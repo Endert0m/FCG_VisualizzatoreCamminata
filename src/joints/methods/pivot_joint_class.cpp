@@ -39,14 +39,14 @@ void PivotJoint::rotate(unsigned int id){
     
     ////  sposto l'origine passivamente su tutti gli assi ////
 
-    offsetAngle[id] = offsetAngle[id] + (cRot - oldCRot[id]);
+    rotOffset[id] = rotOffset[id] + (cRot - oldCRot[id]);
 
     
-    float cosB = glm::cos(offsetAngle[id][0]);
-    float sinB = glm::sin(offsetAngle[id][0]);
+    float cosB = glm::cos(rotOffset[id][0]);
+    float sinB = glm::sin(rotOffset[id][0]);
     
-    float cosB1 = glm::cos(offsetAngle[id][1]);
-    float sinB1 = glm::sin(offsetAngle[id][1]);
+    float cosB1 = glm::cos(rotOffset[id][1]);
+    float sinB1 = glm::sin(rotOffset[id][1]);
     
     glm::mat4 Rcx = glm::mat4{
         1 , 0, 0, 0,
@@ -100,7 +100,7 @@ PivotJoint::PivotJoint(PieceInterface* father,std::vector<PieceInterface*> child
         tmpCoords = cCoords - pivotCenter;
         oldCRot.push_back(c->body.getRot());
         offset.push_back(tmpCoords);
-        offsetAngle.push_back(rb::Vector3{0,0,0});
+        rotOffset.push_back(rb::Vector3{0,0,0});
     }
 
 
