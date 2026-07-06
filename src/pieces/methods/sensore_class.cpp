@@ -63,7 +63,7 @@ void Sensore::update(sf::Clock cl, float multiplier){
 }
 
 sf::Shape* Sensore::draw(ReferencePlane plane){
-    
+    this->plane = plane;
     rb::Vector3 tmpRot = body.getRot();
     rb::Vector3 tmpPos = body.getPos();
 
@@ -100,6 +100,7 @@ sf::Shape* Sensore::draw(ReferencePlane plane){
 
 void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori della gravità
     int dir = direction == Direction::R ? -1 : 1;
+    int ydir = plane == ReferencePlane::XZ ? -1 : 1;
     std::vector<float> grav = gData[index];
 
     //x = mod * cosX -> mod = x/cosx -> cosx = x/mod
@@ -109,7 +110,7 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
     float tmpSinZ = -grav[2] / gModule;
 
     float tmpAX = acos(dir*tmpSinX);
-    float tmpAY = acos(dir*tmpSinY);
+    float tmpAY = acos(ydir*dir*tmpSinY);
     float tmpAZ = acos(tmpSinZ);
 
     body.setRot(rb::Vector3{tmpAY, tmpAX, tmpAZ });

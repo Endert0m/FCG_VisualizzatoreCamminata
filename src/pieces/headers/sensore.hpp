@@ -16,6 +16,7 @@ class Sensore : public PieceInterface{
         std::vector<float> timeData;
 
         float gModule;
+        ReferencePlane plane = ReferencePlane::XZ;
 
         //in che punto sto controllando il segnale 
         unsigned int* dataPos;

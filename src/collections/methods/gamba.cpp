@@ -37,12 +37,12 @@ Gamba::Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std
     calibrazione.push_back(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} - sensori[1]->calibrateRotation(1000));
 
     if (dir == Direction::L){
-        sensori[0]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708), 0} + calibrazione[0]);
-        sensori[1]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708), 0} + calibrazione[1]);
-    }
-    else {
         sensori[0]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708), 0} - calibrazione[0]);
         sensori[1]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708), 0} - calibrazione[1]);
+    }
+    else {
+        sensori[0]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708), 0} + calibrazione[0]);
+        sensori[1]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708), 0} + calibrazione[1]);
     }
     joints.clear();
     joints.push_back(new RigidJoint(sensori[0], {pezzi[0]}));
