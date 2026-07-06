@@ -15,11 +15,11 @@ Gamba::Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std
         sensori.push_back(new Sensore (rb::Vector3{pos[0],pos[1],pos[2]+200},_Float16( 0.2 ),dataPos,caviglia));
 
         // modifico la rotazione relativa della gamba
-        calibrazione.push_back(!sensori[0]->calibrateRotation(100));
-        calibrazione.push_back(!sensori[1]->calibrateRotation(100));
+        calibrazione.push_back(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} - sensori[0]->calibrateRotation(1000));
+        calibrazione.push_back(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} - sensori[1]->calibrateRotation(1000));
 
-        sensori[0]->body.setRot(calibrazione[0]);
-        sensori[1]->body.setRot(calibrazione[1]);
+        sensori[0]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} + calibrazione[0]);
+        sensori[1]->body.setRot(rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} + calibrazione[1]);
         
         //sensori[1]->body.setRot({_Float16 (1.5708),_Float16 (1.5708),0});
 
@@ -63,9 +63,9 @@ void Gamba::setDirection(Direction dir){
     for (auto i : sensori){
         i->setDirection(dir);
     }
-    joints[0]->setRotOffset(0,dir == Direction::L ? calibrazione[0] : !calibrazione[0]);
-    joints[2]->setRotOffset(0,dir == Direction::L ? calibrazione[1] : !calibrazione[1]);
-    //joints[1]->setRotOffset(0,dir == Direction::L ? sensori[1]->calibrateRotation(200) : !sensori[1]->calibrateRotation(200));
+    joints[0]->setRotOffset(0,dir == Direction::L ? rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} + calibrazione[0] : rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} - calibrazione[0]);
+    joints[2]->setRotOffset(0,dir == Direction::L ? rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} + calibrazione[1] : rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} - calibrazione[1]);
+    joints[1]->setRotOffset(0,dir == Direction::R ? calibrazione[1] : !calibrazione[1]);
 }
 
 float Gamba::getZ_Acc(){

@@ -118,3 +118,10 @@ void PivotJoint::movechild(){
         rotate(i);
     }
 }
+
+void PivotJoint::setRotOffset(unsigned int id, rb::Vector3 nRot){
+    rotOffset[id] = rotOffset[id] + nRot;
+
+
+    // devo applicare una rotazione del pivot e non modificare solo l'offset di rotazione
+}

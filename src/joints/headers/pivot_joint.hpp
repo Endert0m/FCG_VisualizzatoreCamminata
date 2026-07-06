@@ -25,6 +25,7 @@ class PivotJoint : public JointInterface {
     public:
         
         void movechild() override;
+        void setRotOffset(unsigned int id, rb::Vector3 nRot) override;
 
         PivotJoint(PieceInterface* father,std::vector<PieceInterface*> childs, rb::Vector3 pivotPoint);
         ~PivotJoint();
