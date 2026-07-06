@@ -141,7 +141,6 @@ void handle_keyPressed(const sf::Event::KeyPressed &keyPressed, State &gs)
     gs.updateCollections();
 }
 
-
 void handle_mouseMove(const sf::Event::MouseMoved &mouseMoved, State &gs)
 {
     sf::Vector2i offset = mouseMoved.position - gs.mouse_pos;
@@ -270,8 +269,6 @@ void handle_mouseRelease(const sf::Event::MouseButtonReleased &, State &gs)
     gs.rot_Piece = false;
     gs.selected = nullptr;
 }
-
-
 
 void handle_resize(const sf::Event::Resized &resized, State &gs)
 {

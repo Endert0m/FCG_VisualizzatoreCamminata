@@ -29,18 +29,18 @@ collection Lower_Body::create(ReferencePlane plane){
         switch (plane)
         {
         case ReferencePlane::XZN: 
-            dx->setTransparency(0.5 * transparency);
+            sx->setTransparency(0.5 * transparency);
             dx->setDirection(Direction::L);
             sx->setDirection(Direction::R);
-            coll = coll + dx->create(plane);
             coll = coll + sx->create(plane);
+            coll = coll + dx->create(plane);
             break;
         case ReferencePlane::XZ:
-            sx->setTransparency(0.5 * transparency);
+            dx->setTransparency(0.5 * transparency);
             dx->setDirection(Direction::R);
             sx->setDirection(Direction::L);
-            coll = coll + sx->create(plane);
             coll = coll + dx->create(plane);
+            coll = coll + sx->create(plane);
             break;
         case ReferencePlane::YZ:
             sx->setDirection(Direction::R);
