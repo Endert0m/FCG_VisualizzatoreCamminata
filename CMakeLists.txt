@@ -53,9 +53,7 @@ target_compile_options(common INTERFACE
 
 set(METHODS_PATH "./src/*/methods/*.cpp")
 
-set(VERSION "V11")
-
 file(GLOB_RECURSE METHODS_SRC "${METHODS_PATH}")
-add_executable(main${VERSION} ./src/Main.cpp ${METHODS_SRC} )
-target_link_libraries(main${VERSION} PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML common glm)
-target_compile_definitions(main${VERSION} PRIVATE $<$<CONFIG:Debug>:DEBUG_MODE>)
+add_executable(VisualCamm ./src/Main.cpp ${METHODS_SRC} )
+target_link_libraries(VisualCamm PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML common glm)
+target_compile_definitions(VisualCamm PRIVATE $<$<CONFIG:Debug>:DEBUG_MODE>)
