@@ -70,6 +70,7 @@ struct State
             createdColl.push_back(c->create(selectedPlane));
         }
     }
+    void calcCollisions();
     ~State(){
         delete tMul;
     }
@@ -81,12 +82,38 @@ struct State
 ///////////////////////////////////////////////////////////
 /// Fisics functions
 
+void State::calcCollisions(){
+    for (auto p : pieces){
+        if(p->body.hasCollisions() && !p->body.isFixed()){
+            for (auto p1 : pieces){
+                if(p1->body.hasCollisions() && !p1->body.isFixed() && p1 != p){
+                    auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
+                    auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
+                
+                    if (XZintr.has_value()){
+                        auto tmpR = XZintr.value();
+                        p->body.reboundPos = {0,0,tmpR.size.y};
+                    }
+                    if (YZintr.has_value()){
+                        auto tmpR = YZintr.value();
+                        float y = std::max(p->body.reboundPos[2],tmpR.size.y);
+                        p->body.reboundPos = {0,0,y};
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
 void State::update(){
 
     /*
     std::vector<PieceInterface*> collPieces;
     std::vector<JointInterface*> collJoints;
     */
+    calcCollisions();
     if (play){
         for (auto i : collections){
             i->update(PieceClock, *tMul);

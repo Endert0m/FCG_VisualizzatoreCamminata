@@ -14,6 +14,7 @@ Caviglia::Caviglia(rb::Vector3 coords, _Float16 mass){
         printf("Caviglia: %s\n", e);
     }
     
+    body.setCollisions(true);
 }
 
 

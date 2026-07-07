@@ -79,9 +79,6 @@ void Gamba::setDirection(Direction dir){
     for (auto i : sensori){
         i->setDirection(dir);
     }
-    //joints[0]->setRotOffset(0,dir == Direction::L ? rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} + calibrazione[0] : rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} - calibrazione[0]);
-    //joints[2]->setRotOffset(0,dir == Direction::L ? rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} + calibrazione[1] : rb::Vector3{_Float16 (1.5708),_Float16 (1.5708),0} - calibrazione[1]);
-    //joints[1]->setRotOffset(0,dir == Direction::R ? calibrazione[1] : !calibrazione[1]);
 }
 
 float Gamba::getZ_Acc(){
@@ -90,4 +87,11 @@ float Gamba::getZ_Acc(){
     totZ_Acc = sensori[0]->getZ_Acc() + sensori[1]->getZ_Acc();
 
     return totZ_Acc;
+}
+
+void Gamba::update(sf::Clock cl, float multiplier){
+   // int nLat = pezzi[1]->shapeXZ->getPointCount();
+   // for (int i = 0; i < nLat; )
+   rebound = pezzi[1]->body.reboundPos;
+   pezzi[1]->body.reboundPos = {0,0,0};
 }

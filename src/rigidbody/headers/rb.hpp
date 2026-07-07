@@ -18,8 +18,9 @@
                 Vector3 tanAcc = {0,0,0};
                 Vector3 tanVel = {0,0,0};
 
-                bool isFixed = false;
+                bool fixed = false;
                 bool enabledCollisions = false;
+                
 
                 float R = 1;
                 _Float16 mass = 1;
@@ -39,12 +40,13 @@
 
 
             public:
+                Vector3 reboundPos = {0,0,0};
                 rigidbody(){ }
                 rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass, float radius);
                 ~rigidbody();
 
                 void setFixed(bool c){
-                    isFixed = c;
+                    fixed = c;
                 }
                 void setCollisions(bool c){
                     enabledCollisions = c;
@@ -52,7 +54,9 @@
                 bool hasCollisions(){
                     return enabledCollisions;
                 }
-                
+                bool isFixed(){
+                    return fixed;
+                }
                 Vector3 getPos();
                 Vector3 getRot();
                 Vector3 getAcc();

@@ -12,13 +12,15 @@ class Gamba : public CollectionInterface {
 
         std::vector<rb::Vector3> calibrazione;
 
+        rb::Vector3 rebound = {0,0,0};
+
     public:
         Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData);
         Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData, Direction dir);
         collection create(ReferencePlane plane) override;
         PieceInterface* getJointPiece();
         void setDirection(Direction dir);
-        void update(sf::Clock cl, float multiplier)override {};
+        void update(sf::Clock cl, float multiplier)override;
         float getZ_Acc();
 };
 

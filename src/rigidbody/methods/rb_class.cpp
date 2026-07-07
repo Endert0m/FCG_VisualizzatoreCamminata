@@ -60,7 +60,7 @@ void rigidbody::setRot(const Vector3 Nrot){
 }
 
 void rigidbody::calcVel(const float Dtime){
-    if (!isFixed){
+    if (!fixed){
         Vector3 tmpVel;
 
         for (float a : acc){
@@ -77,7 +77,7 @@ void rigidbody::calcVel(const float Dtime){
 }
 
 void rigidbody::calcPos(const float Dtime){
-    if (!isFixed){
+    if (!fixed){
         Vector3 tmpPos;
     
         for (float v : vel){
@@ -93,7 +93,7 @@ void rigidbody::calcPos(const float Dtime){
 }
 
 void rigidbody::step(const sf::Clock time, float multiplier){
-    if (!isFixed){
+    if (!fixed){
         int64_t Dtime = time.getElapsedTime().asMicroseconds();
         if (prevT == 0) prevT = Dtime;
 
@@ -123,7 +123,7 @@ void rigidbody::setTanAcc(const Vector3 Dacc){
 void rigidbody::calcRot(const float Dtime){
     // Ds = wt +1/2*at^2 -> l'accelerazione angolare la trovo ac = v^2/R
 
-    if (!isFixed){
+    if (!fixed){
         Vector3 tmpVel;
         for (float a : tanAcc){
             tmpVel.push_back( a*Dtime );
