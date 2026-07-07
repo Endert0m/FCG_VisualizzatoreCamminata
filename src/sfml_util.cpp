@@ -101,8 +101,73 @@ void State::calcCollisions(){
                     }
                 }
             }
+            for (auto i : createdColl){
+                for (auto p1 : i.pieces){
+                     if(p1->body.hasCollisions() && !p1->body.isFixed() && p1 != p){
+                        auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
+                        auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
+                    
+                        if (XZintr.has_value()){
+                            auto tmpR = XZintr.value();
+                            float y = std::max(p->body.reboundPos[2],tmpR.size.y);
+                            p->body.reboundPos = {0,0,y};
+                        }
+                        if (YZintr.has_value()){
+                            auto tmpR = YZintr.value();
+                            float y = std::max(p->body.reboundPos[2],tmpR.size.y);
+                            p->body.reboundPos = {0,0,y};
+                        }
+                    }
+                }
+            }
         }
     }
+
+    for (auto i : createdColl){
+         for (auto p : i.pieces){
+            if(p->body.hasCollisions() && !p->body.isFixed()){
+                for (auto p1 : pieces){
+                    if(p1->body.hasCollisions() && p1->body.isFixed() && p1 != p){
+                        auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
+                        auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
+                    
+                        if (XZintr.has_value()){
+                            auto tmpR = XZintr.value();
+                            p->body.reboundPos = {0,0,tmpR.size.y};
+                        }
+                        /*if (YZintr.has_value()){
+                            auto tmpR = YZintr.value();
+                            float y = std::max(p->body.reboundPos[2],tmpR.size.y);
+                            p->body.reboundPos = {0,0,y};
+                        }*/
+                    }
+                }
+                for (auto i : createdColl){
+                    for (auto p1 : i.pieces){
+                        if(p1->body.hasCollisions() && p1->body.isFixed() && p1 != p){
+                            auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
+                            auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
+                        
+                            if (XZintr.has_value()){
+                                auto tmpR = XZintr.value();
+                                float y = std::max(p->body.reboundPos[2],tmpR.size.y);
+                                p->body.reboundPos = {0,0,y};
+                            }
+                            if (YZintr.has_value()){
+                                auto tmpR = YZintr.value();
+                                float y = std::max(p->body.reboundPos[2],tmpR.size.y);
+                                p->body.reboundPos = {0,0,y};
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+
+
 }
 
 

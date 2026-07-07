@@ -151,3 +151,9 @@ void rigidbody::calcRot(const float Dtime){
 rb::Vector3 rigidbody::getAcc(){
     return Vector3(acc);
 }
+
+void rigidbody::setVel(const Vector3 Nacc){
+    if (Nacc.size() != 3) throw "Vel vector must be 3 in lenght!";
+
+    vel = Nacc;
+}

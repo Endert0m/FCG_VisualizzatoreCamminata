@@ -12,9 +12,9 @@ class Gamba : public CollectionInterface {
 
         std::vector<rb::Vector3> calibrazione;
 
-        rb::Vector3 rebound = {0,0,0};
-
+    
     public:
+        rb::Vector3 rebound = {0,0,0};
         Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData);
         Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std::string cavigliaData, Direction dir);
         collection create(ReferencePlane plane) override;

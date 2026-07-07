@@ -68,6 +68,9 @@ Lower_Body::~Lower_Body(){
 
 
 void Lower_Body::update(sf::Clock cl, float multiplier){
+    sx->update(cl,multiplier);
+    dx->update(cl,multiplier);
+
     float sxAcc = sx->getZ_Acc() ;
     float dxAcc = dx->getZ_Acc() ;
 
@@ -94,5 +97,11 @@ void Lower_Body::update(sf::Clock cl, float multiplier){
     t->body.setRot({alpha,0,0});
     auto tPos = t->body.getPos();
     
+    t->body.setPos(tPos-sx->rebound-dx->rebound);
+    if (t->body.getPos()[2] != tPos[2]) {
+        t->body.setVel(rb::Vector3{0,0,0});
+        sx->rebound = {0,0,0};
+        dx->rebound = {0,0,0};
+    }
     //t->shapeXZ->getGlobalBounds().findIntersection(t->shapeXZ->getLocalBounds());
 }
