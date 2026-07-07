@@ -39,8 +39,8 @@ int main() {
 
 
         //aggiungo il pavimento 
-        gs.pieces.push_back(new Pavimento({200,200,750},_Float16(0.2) ));
-        gs.pieces[0]->body.setRot({0.01,-0.03,0});
+        gs.pieces.push_back(new Pavimento({200,200,550},_Float16(0.2) ));
+        //gs.pieces[0]->body.setRot({0.01,-0.03,0});
         gs.pieces[0]->body.setCollisions(true);
         gs.pieces[0]->body.setFixed(true);
         

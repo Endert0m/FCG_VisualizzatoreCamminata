@@ -90,11 +90,11 @@ void State::calcCollisions(){
                     auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
                     auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
                 
-                    if (XZintr.has_value()){
+                    if (XZintr.has_value() && selectedPlane != ReferencePlane::YZ){
                         auto tmpR = XZintr.value();
                         p->body.reboundPos = {0,0,tmpR.size.y};
                     }
-                    if (YZintr.has_value()){
+                    if (YZintr.has_value() && selectedPlane == ReferencePlane::YZ){
                         auto tmpR = YZintr.value();
                         float y = std::max(p->body.reboundPos[2],tmpR.size.y);
                         p->body.reboundPos = {0,0,y};
@@ -107,12 +107,12 @@ void State::calcCollisions(){
                         auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
                         auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
                     
-                        if (XZintr.has_value()){
+                        if (XZintr.has_value() && selectedPlane != ReferencePlane::YZ){
                             auto tmpR = XZintr.value();
                             float y = std::max(p->body.reboundPos[2],tmpR.size.y);
                             p->body.reboundPos = {0,0,y};
                         }
-                        if (YZintr.has_value()){
+                        if (YZintr.has_value() && selectedPlane == ReferencePlane::YZ){
                             auto tmpR = YZintr.value();
                             float y = std::max(p->body.reboundPos[2],tmpR.size.y);
                             p->body.reboundPos = {0,0,y};
@@ -131,15 +131,15 @@ void State::calcCollisions(){
                         auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
                         auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
                     
-                        if (XZintr.has_value()){
+                        if (XZintr.has_value() && selectedPlane != ReferencePlane::YZ ){
                             auto tmpR = XZintr.value();
                             p->body.reboundPos = {0,0,tmpR.size.y};
                         }
-                        /*if (YZintr.has_value()){
+                        if (YZintr.has_value() && selectedPlane == ReferencePlane::YZ){
                             auto tmpR = YZintr.value();
                             float y = std::max(p->body.reboundPos[2],tmpR.size.y);
                             p->body.reboundPos = {0,0,y};
-                        }*/
+                        }
                     }
                 }
                 for (auto i : createdColl){
@@ -148,12 +148,12 @@ void State::calcCollisions(){
                             auto XZintr = p->shapeXZ->getGlobalBounds().findIntersection(p1->shapeXZ->getGlobalBounds());
                             auto YZintr = p->shapeYZ->getGlobalBounds().findIntersection(p1->shapeYZ->getGlobalBounds());
                         
-                            if (XZintr.has_value()){
+                            if (XZintr.has_value() && selectedPlane != ReferencePlane::YZ){
                                 auto tmpR = XZintr.value();
                                 float y = std::max(p->body.reboundPos[2],tmpR.size.y);
                                 p->body.reboundPos = {0,0,y};
                             }
-                            if (YZintr.has_value()){
+                            if (YZintr.has_value() && selectedPlane == ReferencePlane::YZ){
                                 auto tmpR = YZintr.value();
                                 float y = std::max(p->body.reboundPos[2],tmpR.size.y);
                                 p->body.reboundPos = {0,0,y};
