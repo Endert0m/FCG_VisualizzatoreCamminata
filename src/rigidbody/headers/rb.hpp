@@ -19,6 +19,7 @@
                 Vector3 tanVel = {0,0,0};
 
                 bool isFixed = false;
+                bool enabledCollisions = false;
 
                 float R = 1;
                 _Float16 mass = 1;
@@ -45,7 +46,12 @@
                 void setFixed(bool c){
                     isFixed = c;
                 }
-
+                void setCollisions(bool c){
+                    enabledCollisions = c;
+                }
+                bool hasCollisions(){
+                    return enabledCollisions;
+                }
                 
                 Vector3 getPos();
                 Vector3 getRot();
