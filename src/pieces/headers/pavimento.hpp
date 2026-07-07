@@ -18,7 +18,7 @@ class Pavimento : public PieceInterface{
         Pavimento(rb::Vector3 coords, _Float16 mass);
         ~Pavimento();
 
-        void update(sf::Clock cl, float multiplier) override {};
+        void update(sf::Clock cl, float multiplier) override {body.step(cl,multiplier);};
         sf::Shape* draw(ReferencePlane plane) override;
 };
 

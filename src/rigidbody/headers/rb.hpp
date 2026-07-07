@@ -18,6 +18,8 @@
                 Vector3 tanAcc = {0,0,0};
                 Vector3 tanVel = {0,0,0};
 
+                bool isFixed = false;
+
                 float R = 1;
                 _Float16 mass = 1;
 
@@ -39,6 +41,10 @@
                 rigidbody(){ }
                 rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass, float radius);
                 ~rigidbody();
+
+                void setFixed(bool c){
+                    isFixed = c;
+                }
 
                 
                 Vector3 getPos();

@@ -94,5 +94,5 @@ void Lower_Body::update(sf::Clock cl, float multiplier){
     t->body.setRot({alpha,0,0});
     auto tPos = t->body.getPos();
     
-
+    //t->shapeXZ->getGlobalBounds().findIntersection(t->shapeXZ->getLocalBounds());
 }

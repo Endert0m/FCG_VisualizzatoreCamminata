@@ -12,6 +12,7 @@ rigidbody::rigidbody(Vector3 coords, Vector3 centerOfMass, _Float16 mass, float 
     this->centerOfMass = centerOfMass;
     this->mass = mass;
     this->R = radius;
+    this->acc = {0,0,9.81};
 }
 
 rigidbody::~rigidbody()
@@ -59,43 +60,52 @@ void rigidbody::setRot(const Vector3 Nrot){
 }
 
 void rigidbody::calcVel(const float Dtime){
-    Vector3 tmpVel;
+    if (!isFixed){
+        Vector3 tmpVel;
 
-    for (float a : acc){
-        //if (a>0.8 || a<-0.8)
-        tmpVel.push_back( a*Dtime );
-    }
+        for (float a : acc){
+            //if (a>0.8 || a<-0.8)
+            tmpVel.push_back( a*Dtime );
+        }
 
-    int i = 0;
-    for (float nv : tmpVel){
-        vel[i++] += nv;
+        int i = 0;
+        for (float nv : tmpVel){
+            vel[i++] += nv;
+        }
     }
+    
 }
 
 void rigidbody::calcPos(const float Dtime){
-    Vector3 tmpPos;
+    if (!isFixed){
+        Vector3 tmpPos;
     
-    for (float v : vel){
-        tmpPos.push_back( v*Dtime );
-    }
+        for (float v : vel){
+            tmpPos.push_back( v*Dtime );
+        }
 
-    int i = 0;
-    for (float np : tmpPos){
-        coords[i++] += np *100;//(np* cos(float(rot[i]))) *100;
+        int i = 0;
+        for (float np : tmpPos){
+            coords[i++] += np *100;//(np* cos(float(rot[i]))) *100;
+        }
     }
+    
 }
 
 void rigidbody::step(const sf::Clock time, float multiplier){
-    int64_t Dtime = time.getElapsedTime().asMicroseconds();
-    if (prevT == 0) prevT = Dtime;
+    if (!isFixed){
+        int64_t Dtime = time.getElapsedTime().asMicroseconds();
+        if (prevT == 0) prevT = Dtime;
 
 
-    float dt = ((float(Dtime) / 1000000.0) - (float(prevT) / 1000000.0)) * multiplier;
-    prevT = Dtime;
+        float dt = ((float(Dtime) / 1000000.0) - (float(prevT) / 1000000.0)) * multiplier;
+        prevT = Dtime;
 
-    calcRot(dt);
-    calcPos(dt);
-    calcVel(dt);
+        calcRot(dt);
+        calcPos(dt);
+        calcVel(dt);
+    }
+   
 }
     
 void rigidbody::setTanAcc(const Vector3 Dacc){
@@ -112,25 +122,29 @@ void rigidbody::setTanAcc(const Vector3 Dacc){
 
 void rigidbody::calcRot(const float Dtime){
     // Ds = wt +1/2*at^2 -> l'accelerazione angolare la trovo ac = v^2/R
-    Vector3 tmpVel;
-    for (float a : tanAcc){
-        tmpVel.push_back( a*Dtime );
-    }
-    int i = 0;
-    for (float nv : tmpVel){
-        tanVel[i++] += nv;
+
+    if (!isFixed){
+        Vector3 tmpVel;
+        for (float a : tanAcc){
+            tmpVel.push_back( a*Dtime );
+        }
+        int i = 0;
+        for (float nv : tmpVel){
+            tanVel[i++] += nv;
+        }
+
+        Vector3 tmpTanAcc;
+        for (int i = 0; i<3; i++){
+            tmpTanAcc.push_back( pow(tanVel[i],2) / R );
+        }
+
+        i=0;
+        for (auto axes : rot){
+            rot[i] = axes + (0.5 * tmpTanAcc[i] * pow(Dtime,2));
+            i++;
+        }
     }
 
-    Vector3 tmpTanAcc;
-    for (int i = 0; i<3; i++){
-        tmpTanAcc.push_back( pow(tanVel[i],2) / R );
-    }
-
-    i=0;
-    for (auto axes : rot){
-        rot[i] = axes + (0.5 * tmpTanAcc[i] * pow(Dtime,2));
-        i++;
-    }
 
 }
 

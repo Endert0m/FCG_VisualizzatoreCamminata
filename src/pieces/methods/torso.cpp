@@ -22,7 +22,7 @@ Torso::~Torso(){
 }
 
 void Torso::update(sf::Clock cl,float multiplier){
-    
+    body.step(cl, multiplier);
 }
 
 sf::Shape* Torso::draw(ReferencePlane plane){
