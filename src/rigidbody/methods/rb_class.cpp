@@ -95,7 +95,7 @@ void rigidbody::calcPos(const float Dtime){
 void rigidbody::step(const sf::Clock time, float multiplier){
     if (!fixed){
         int64_t Dtime = time.getElapsedTime().asMicroseconds();
-        if (prevT == 0) prevT = Dtime;
+        if (prevT == 0) prevT = Dtime; // Posso azzerare prevT quando va in pausa o non visibile
 
 
         float dt = ((float(Dtime) / 1000000.0) - (float(prevT) / 1000000.0)) * multiplier;

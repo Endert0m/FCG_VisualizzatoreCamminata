@@ -25,7 +25,8 @@ collection Lower_Body::create(ReferencePlane plane){
     if (isVisible){
         coll.joints.push_back(jsx);
         coll.joints.push_back(jdx);
-
+        resetTime();
+        
         switch (plane)
         {
         case ReferencePlane::XZN: 
@@ -104,4 +105,10 @@ void Lower_Body::update(sf::Clock cl, float multiplier){
         dx->rebound = {0,0,0};
     }
     //t->shapeXZ->getGlobalBounds().findIntersection(t->shapeXZ->getLocalBounds());
+}
+
+void Lower_Body::resetTime(){
+    sx->resetTime();
+    dx->resetTime();
+    t->body.resetTime();
 }

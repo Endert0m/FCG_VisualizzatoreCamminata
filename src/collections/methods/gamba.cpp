@@ -95,3 +95,12 @@ void Gamba::update(sf::Clock cl, float multiplier){
    rebound = pezzi[1]->body.reboundPos;
    pezzi[1]->body.reboundPos = {0,0,0};
 }
+
+void Gamba::resetTime(){
+    for (auto i : sensori){
+        i->body.resetTime();
+    }
+    for (auto i : pezzi){
+        i->body.resetTime();
+    }
+}

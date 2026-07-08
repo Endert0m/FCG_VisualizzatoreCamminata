@@ -22,6 +22,7 @@ class Gamba : public CollectionInterface {
         void setDirection(Direction dir);
         void update(sf::Clock cl, float multiplier)override;
         float getZ_Acc();
+        void resetTime() override;
 };
 
 #endif 

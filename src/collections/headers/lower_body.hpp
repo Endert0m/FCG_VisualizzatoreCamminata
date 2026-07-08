@@ -35,6 +35,7 @@ public:
     ~Lower_Body();
     void update(sf::Clock cl, float multiplier) override;
     collection create(ReferencePlane plane) override;
+    void resetTime() override;
 };
 
 

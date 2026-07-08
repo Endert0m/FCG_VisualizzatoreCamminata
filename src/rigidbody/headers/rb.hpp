@@ -57,6 +57,9 @@
                 bool isFixed(){
                     return fixed;
                 }
+                void resetTime(){
+                    prevT = 0;
+                }
                 Vector3 getPos();
                 Vector3 getRot();
                 Vector3 getAcc();
