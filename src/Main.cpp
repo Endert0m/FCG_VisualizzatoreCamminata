@@ -16,7 +16,7 @@ int main() {
 
     try{
         
-        processor.readCSVFile (DATA_PATH + "coscia_filt.csv"); //utilizzo questo file per definire la dimensione dei dati
+        processor.readCSVFile (DATA_PATH + "caviglia_dx.csv"); //utilizzo questo file per definire la dimensione dei dati
         const auto& coscia = processor.getData();
         gs.setIntervall(coscia.size());
 
@@ -24,16 +24,35 @@ int main() {
         //gs.collections.push_back(new Gamba({220,0,220},&pos,"coscia_filt.csv","caviglia_filt.csv"));
         
         std::vector<gamba_data> data;
-        gamba_data d;
-        d.dataPos = &pos;
-        d.cavigliaData = "caviglia_dx.csv";
-        d.cosciaData = "coscia_dx.csv";
-        gamba_data s;
-        s.dataPos = &pos;
-        s.cavigliaData = "caviglia_sx.csv";
-        s.cosciaData = "coscia_sx.csv";
-        data.push_back(d);
-        data.push_back(s);
+        {
+            gamba_data d;
+            d.dataPos = &pos;
+            d.cavigliaData = "caviglia_dx.csv";
+            d.cosciaData = "coscia_dx.csv";
+            gamba_data s;
+            s.dataPos = &pos;
+            s.cavigliaData = "caviglia_sx.csv";
+            s.cosciaData = "coscia_sx.csv";
+            data.push_back(d);
+            data.push_back(s);
+        }
+        gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
+
+
+        // aggiunta sistema in sovvrapposizione (filtrato)
+        data.clear();
+        {
+            gamba_data d;
+            d.dataPos = &pos;
+            d.cavigliaData = "FilteredData/caviglia_filtD.csv";
+            d.cosciaData = "FilteredData/coscia_filtD.csv";
+            gamba_data s;
+            s.dataPos = &pos;
+            s.cavigliaData = "FilteredData/caviglia_filtS.csv";
+            s.cosciaData = "FilteredData/coscia_filtS.csv";
+            data.push_back(d);
+            data.push_back(s);
+        }
         gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
 
 

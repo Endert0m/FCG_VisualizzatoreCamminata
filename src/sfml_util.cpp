@@ -445,12 +445,12 @@ void doGUI(State &gs)
         s <<"Collezione :" << c;
         ImGui::Text(s.str().c_str());
         float tmpTr = i->getTransparency();
-        if (ImGui::SliderFloat("Transparency ", &tmpTr,0.0,1.0)) {
+        if (ImGui::SliderFloat("Transparency "+c, &tmpTr,0.0,1.0)) {
             gs.updateCollections();
             i->setTransparency(tmpTr);
         }
         bool tmpVs = i->getVisibility();
-        if (ImGui::Checkbox("is visible", &tmpVs)) {
+        if (ImGui::Checkbox("is visible"+c, &tmpVs)) {
             i->setVisibility(tmpVs);
             gs.updateCollections();
         }
