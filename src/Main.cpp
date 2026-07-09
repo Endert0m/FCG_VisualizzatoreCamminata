@@ -55,6 +55,22 @@ int main() {
         }
         gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
 
+        // aggiunta sistema in sovvrapposizione (corretto)
+        
+        data.clear();
+        {
+            gamba_data d;
+            d.dataPos = &pos;
+            d.cavigliaData = "CorrectedData/caviglia_CorrD.csv";
+            d.cosciaData = "CorrectedData/coscia_CorrD.csv";
+            gamba_data s;
+            s.dataPos = &pos;
+            s.cavigliaData = "CorrectedData/caviglia_CorrS.csv";
+            s.cosciaData = "CorrectedData/coscia_CorrS.csv";
+            data.push_back(d);
+            data.push_back(s);
+        }
+        gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
 
 
         //aggiungo il pavimento 

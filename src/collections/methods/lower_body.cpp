@@ -82,14 +82,14 @@ void Lower_Body::update(sf::Clock cl, float multiplier){
 
     float tmpVelS = sxAcc*dt;
     float tmpVelD = dxAcc*dt;
-    float tmpPosD =  tmpVelD *dt *500 + velD * 500 * dt; 
-    float tmpPosS =  tmpVelS * 500 *dt + velS * 500 * dt;
+    float tmpPosD = -1* tmpVelD *dt *1000 + velD * 1000 * dt; 
+    float tmpPosS = -1* tmpVelS * 1000 *dt + velS * 1000 * dt;
 
     velD += tmpVelD; 
     velS += tmpVelS;
 
     // PosD + PosS + Z = 0
-    float alpha = atan(tmpPosD/60.0 - tmpPosS/60); //il 60 è il raggio (dimesione del bacino)
+    float alpha = -atan(tmpPosD/60.0 - tmpPosS/60); //il 60 è il raggio (dimesione del bacino)
 
     //applico smoothing e ritorno a zero
     velD -= velD * fabs(alpha);
@@ -117,7 +117,7 @@ void Lower_Body::setColor(float* col){
     multColor[0] = col[0];
     multColor[1] = col[1];
     multColor[2] = col[2];
-    
+
     t->setColor(col);
     sx->setColor(col);
     dx->setColor(col);
