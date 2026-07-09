@@ -84,7 +84,7 @@ void Gamba::setDirection(Direction dir){
 float Gamba::getZ_Acc(){
     
     float totZ_Acc = 0;
-    totZ_Acc = sensori[0]->getZ_Acc() + sensori[1]->getZ_Acc();
+    totZ_Acc = (sensori[0]->getZ_Acc() + sensori[1]->getZ_Acc())/2;
 
     return totZ_Acc;
 }
@@ -109,7 +109,7 @@ void Gamba::setColor(float* col){
     multColor[0] = col[0];
     multColor[1] = col[1];
     multColor[2] = col[2];
-     
+
     for (auto i : sensori){
         i->setColor(col);
     }
