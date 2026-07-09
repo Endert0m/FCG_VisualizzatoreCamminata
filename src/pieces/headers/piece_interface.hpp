@@ -53,6 +53,7 @@ class PieceInterface{
         rb::Vector3 globalPos;
         rb::rigidbody body;
         sf::Color color;
+        float multColor[3] = {1,1,1};
         float transparency = 1.0; //canale alpha del pezzo
 
         virtual void update(sf::Clock cl, float multiplier) = 0;
@@ -65,6 +66,11 @@ class PieceInterface{
             if (alpha < 0 || alpha > 1) return false;
             transparency = alpha; 
             return true;
+        }
+        virtual void setColor(float* col) {
+            multColor[0] = col[0];
+            multColor[1] = col[1];
+            multColor[2] = col[2];
         }
 };
 

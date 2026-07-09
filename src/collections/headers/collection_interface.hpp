@@ -14,6 +14,8 @@ class CollectionInterface{
     protected:
         float transparency = 1.0;
         bool isVisible = true;
+        float multColor[3] = {255,255,255};
+
     public:
         virtual collection create(ReferencePlane plane) = 0;
         virtual void update(sf::Clock cl, float multiplier) = 0;
@@ -33,6 +35,10 @@ class CollectionInterface{
         virtual void setVisibility(bool c) {
             isVisible = c;
         }
+        virtual float* getColor(){
+            return multColor;
+        }
+        virtual void setColor(float* col) = 0;
         virtual ~CollectionInterface(){};
 };
 

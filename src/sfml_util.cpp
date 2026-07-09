@@ -379,9 +379,7 @@ void doGUI(State &gs)
 {
     //Bottoni
     sf::Time elapsed = gs.clock.restart();
-
     unsigned int zero = 0;
-
     ImGui::SFML::Update(gs.window, elapsed);
 
     //Finestra gestione posizione nei dati
@@ -449,11 +447,16 @@ void doGUI(State &gs)
             gs.updateCollections();
             i->setTransparency(tmpTr);
         }
+        float* Col = i->getColor();
+        if (ImGui::ColorEdit3("Color "+c, Col, ImGuiColorEditFlags_NoInputs)){
+            i->setColor(Col);
+        }
         bool tmpVs = i->getVisibility();
-        if (ImGui::Checkbox("is visible"+c, &tmpVs)) {
+        if (ImGui::Checkbox("is visible "+c, &tmpVs)) {
             i->setVisibility(tmpVs);
             gs.updateCollections();
         }
+        
         
         
         c++;
@@ -470,7 +473,7 @@ void doGUI(State &gs)
     ImGui::SetWindowPos("Set time multiplier",ImVec2(wsize.x-400,wsize.y - 61));
     ImGui::SetWindowSize("Set time multiplier",ImVec2(400,30));
     ImGui::SetWindowPos("Set overlap",ImVec2(wsize.x-300,31));
-    ImGui::SetWindowSize("Set overlap",ImVec2(300,70*gs.collections.size()));
+    ImGui::SetWindowSize("Set overlap",ImVec2(300,90*gs.collections.size()));
     
     ImGui::SFML::Render(gs.window);
 }

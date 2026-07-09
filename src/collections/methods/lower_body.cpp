@@ -112,3 +112,13 @@ void Lower_Body::resetTime(){
     dx->resetTime();
     t->body.resetTime();
 }
+
+void Lower_Body::setColor(float* col){
+    multColor[0] = col[0];
+    multColor[1] = col[1];
+    multColor[2] = col[2];
+    
+    t->setColor(col);
+    sx->setColor(col);
+    dx->setColor(col);
+}

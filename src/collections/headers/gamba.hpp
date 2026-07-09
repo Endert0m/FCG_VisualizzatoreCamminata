@@ -23,6 +23,7 @@ class Gamba : public CollectionInterface {
         void update(sf::Clock cl, float multiplier)override;
         float getZ_Acc();
         void resetTime() override;
+        void setColor(float* col) override;
 };
 
 #endif 

@@ -104,3 +104,16 @@ void Gamba::resetTime(){
         i->body.resetTime();
     }
 }
+
+void Gamba::setColor(float* col){
+    multColor[0] = col[0];
+    multColor[1] = col[1];
+    multColor[2] = col[2];
+     
+    for (auto i : sensori){
+        i->setColor(col);
+    }
+    for (auto i : pezzi){
+        i->setColor(col);
+    }
+}

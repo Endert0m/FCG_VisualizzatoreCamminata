@@ -36,6 +36,7 @@ public:
     void update(sf::Clock cl, float multiplier) override;
     collection create(ReferencePlane plane) override;
     void resetTime() override;
+    void setColor(float* col) override;
 };
 
 
