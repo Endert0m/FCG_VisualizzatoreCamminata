@@ -6,7 +6,7 @@ int main() {
     // inizializzo variabili per gestire l'intervallo di visualizzazione
 
     unsigned int min = 0;
-    unsigned int pos = 0;
+    unsigned int pos = 10;
     unsigned int maj = 100;
 
     //Costruisco la GUI 
@@ -71,10 +71,6 @@ int main() {
             data.push_back(s);
         }
         gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
-
-
-        gs.collections.push_back(new Gamba({200,200,100},&pos,"CorrectedData/coscia_CorrS.csv","CorrectedData/caviglia_CorrS.csv"));
-
 
         //aggiungo il pavimento 
         gs.pieces.push_back(new Pavimento({200,200,550},_Float16(0.2) ));
