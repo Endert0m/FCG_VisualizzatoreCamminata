@@ -109,9 +109,9 @@ void Sensore::calcRotWithG(unsigned int index){ // calcolo rotazione con valori 
     float tmpSinY = -grav[1] / gModule;
     float tmpSinZ = -grav[2] / gModule;
 
-    float tmpAX = acos(dir*tmpSinX);
-    float tmpAY = acos(ydir*dir*tmpSinY);
-    float tmpAZ = acos(tmpSinZ);
+    float tmpAX = atanh(dir*tmpSinX);
+    float tmpAY = atanh(ydir*dir*tmpSinY);
+    float tmpAZ = atanh(tmpSinZ);
 
     body.setRot(rb::Vector3{tmpAY, tmpAX, tmpAZ });
 

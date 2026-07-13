@@ -73,6 +73,9 @@ int main() {
         gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
 
 
+        gs.collections.push_back(new Gamba({200,200,100},&pos,"CorrectedData/coscia_CorrS.csv","CorrectedData/caviglia_CorrS.csv"));
+
+
         //aggiungo il pavimento 
         gs.pieces.push_back(new Pavimento({200,200,550},_Float16(0.2) ));
         //gs.pieces[0]->body.setRot({0.01,-0.03,0});
