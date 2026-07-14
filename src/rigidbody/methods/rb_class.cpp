@@ -104,6 +104,7 @@ void rigidbody::step(const sf::Clock time, float multiplier){
         calcRot(dt);
         calcPos(dt);
         calcVel(dt);
+        calcKinetic(dt);
     }
    
 }
@@ -162,8 +163,12 @@ void rigidbody::setVel(const Vector3 Nacc){
     vel = Nacc;
 }
 
-void rigidbody::calcKinetic(){
+void rigidbody::calcKinetic(const float Dtime){
     //Ktot = 1/2(mv^2) + 1/2((0.187)mL^2)w^2
+    Vector3 vel = coords - prevCoords;
+    vel = {vel[0]*Dtime,vel[1]*Dtime,vel[2]*Dtime};
+    prevCoords = coords;
+
     float modvel = sqrt(pow(vel[0],2) + pow(vel[2],2) +pow(vel[2],2));
     double ktot = (mass*pow(modvel,2))/2;
 

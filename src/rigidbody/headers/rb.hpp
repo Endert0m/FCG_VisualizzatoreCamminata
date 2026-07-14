@@ -30,6 +30,7 @@
                 _Float16 mass = 1;
 
                 Vector3 coords = {0,0,0};
+                Vector3 prevCoords = {0,0,0};
                 Vector3 centerOfMass = {0,0,0};
 
                 int64_t prevT = 0;
@@ -41,7 +42,7 @@
                 void calcTanAcc(const Vector3 Dacc);
                 void calcPos(const float Dtime);
 
-                void calcKinetic ();
+                void calcKinetic (const float Dtime);
 
 
             public:
