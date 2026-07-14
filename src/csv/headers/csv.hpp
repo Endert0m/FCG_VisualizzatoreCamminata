@@ -22,6 +22,8 @@ public:
     // Getter for data
     const std::vector<std::vector<float>>& getData() const;
 
+    void writeCSVFile(const std::string& filename);
+
 };
 
 #endif

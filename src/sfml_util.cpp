@@ -38,6 +38,7 @@ struct State
     bool rot_Piece = false;
     bool drag_Piece = false;
     bool drag = false;
+    bool gettingKe = false;
     sf::Vector2i mouse_pos;
 
     /// per settare l'ntervallo di visualizzazione
@@ -46,6 +47,9 @@ struct State
     unsigned int* intervalMinLimit ;
     unsigned int maxEntries = 1000;
     bool play = true;
+
+    //per tenere traccia dei valori dell'energia cinetica
+    std::vector<std::vector<double>> kEnergy;
 
     State(unsigned w, unsigned h, std::string title, unsigned int* maj, unsigned int* min, unsigned int* pos) 
     {
@@ -60,6 +64,7 @@ struct State
         updateCollections();
     }
     void update();
+    void saveKe();
     void setIntervall(int n){
         maxEntries = n;
     }
@@ -170,7 +175,9 @@ void State::calcCollisions(){
 
 }
 
+void State::saveKe(){
 
+}
 
 void State::update(){
 
@@ -178,6 +185,19 @@ void State::update(){
     std::vector<PieceInterface*> collPieces;
     std::vector<JointInterface*> collJoints;
     */
+
+    if(gettingKe){
+        std::vector<double> row;
+        for (auto i : collections){
+            row.push_back(i->getKEnergy());
+        }
+        kEnergy.push_back(row);
+        if(*pos == *intervalMajLimit-1) {
+            gettingKe = false;
+            play = false;
+        } 
+    }
+
     calcCollisions();
     if (play){
         for (auto i : collections){
@@ -389,7 +409,8 @@ void doGUI(State &gs)
                                  ImGuiWindowFlags_NoCollapse|
                                  ImGuiWindowFlags_NoTitleBar;
 
-
+    bool active = gs.gettingKe;
+    if (active) ImGui::BeginDisabled(); 
     // Finestra gestione posizione dati  
     ImGui::Begin("Set data position", 0,sdp_flags);
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.3);
@@ -456,14 +477,27 @@ void doGUI(State &gs)
             i->setVisibility(tmpVs);
             gs.updateCollections();
         }
-        
-        
-        
         c++;
         ImGui::Separator();
     }
     ImGui::End();
 
+    //Finestra salvataggio ke
+    ImGui::Begin("Get ke & save", 0,sdp_flags);
+    if (ImGui::Button("Retrieve Ke")){
+        gs.gettingKe = true;
+        gs.play = true;
+        *gs.pos = *gs.intervalMinLimit;
+        gs.kEnergy.clear();
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Save Ke")){
+        gs.saveKe();
+    }
+
+    ImGui::End();
+
+    if(active) ImGui::EndDisabled();
 
     sf::Vector2u wsize = gs.window.getSize();
     ImGui::SetWindowPos("Set data position",ImVec2(0,wsize.y - 30));
@@ -474,6 +508,8 @@ void doGUI(State &gs)
     ImGui::SetWindowSize("Set time multiplier",ImVec2(400,30));
     ImGui::SetWindowPos("Set overlap",ImVec2(wsize.x-300,31));
     ImGui::SetWindowSize("Set overlap",ImVec2(300,90*gs.collections.size()));
+    ImGui::SetWindowPos("Get ke & save",ImVec2(wsize.x-300,1+90*gs.collections.size()));
+    ImGui::SetWindowSize("Get ke & save",ImVec2(300,40));
     
     ImGui::SFML::Render(gs.window);
 }

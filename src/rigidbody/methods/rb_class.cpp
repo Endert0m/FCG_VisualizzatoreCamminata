@@ -167,7 +167,7 @@ void rigidbody::calcKinetic(const float Dtime){
     //Ktot = 1/2(mv^2) + 1/2((0.187)mL^2)w^2
 
 
-    Vector3 vel = coords - prevCoords;
+    Vector3 vel = (coords - prevCoords)/100;
     vel = {vel[0]/Dtime,vel[1]/Dtime,vel[2]/Dtime};
     prevCoords = coords;
 
