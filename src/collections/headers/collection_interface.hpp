@@ -15,6 +15,7 @@ class CollectionInterface{
         float transparency = 1.0;
         bool isVisible = true;
         float multColor[3] = {255,255,255};
+        double kEnergy = 0;
 
     public:
         virtual collection create(ReferencePlane plane) = 0;
@@ -40,6 +41,9 @@ class CollectionInterface{
         }
         virtual void setColor(float* col) = 0;
         virtual ~CollectionInterface(){};
+
+        virtual double getKEnergy() = 0;
+        virtual void resetKenergy() = 0;
 };
 
 

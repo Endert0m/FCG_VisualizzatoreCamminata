@@ -117,3 +117,17 @@ void Gamba::setColor(float* col){
         i->setColor(col);
     }
 }
+
+void Gamba::resetKenergy(){
+    for (auto i : pezzi){
+        i->body.resetKe();
+    }
+}
+
+double Gamba::getKEnergy(){
+    double tmpK = 0;
+    for (auto i : pezzi){
+        tmpK += i->body.getKe();
+    }
+    return tmpK;
+}

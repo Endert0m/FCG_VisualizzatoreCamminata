@@ -126,7 +126,7 @@ void rigidbody::calcRot(const float Dtime){
 
     if (!fixed){
         Vector3 tmprot = rot - prevrot;
-        angVel = angVel + Vector3{tmprot[0]*Dtime,tmprot[1]*Dtime,tmprot[2]*Dtime};
+        angVel = angVel + Vector3{tmprot[0]/Dtime,tmprot[1]/Dtime,tmprot[2]/Dtime};
         prevrot = rot;
 
         Vector3 tmpVel;
@@ -165,8 +165,10 @@ void rigidbody::setVel(const Vector3 Nacc){
 
 void rigidbody::calcKinetic(const float Dtime){
     //Ktot = 1/2(mv^2) + 1/2((0.187)mL^2)w^2
+
+
     Vector3 vel = coords - prevCoords;
-    vel = {vel[0]*Dtime,vel[1]*Dtime,vel[2]*Dtime};
+    vel = {vel[0]/Dtime,vel[1]/Dtime,vel[2]/Dtime};
     prevCoords = coords;
 
     float modvel = sqrt(pow(vel[0],2) + pow(vel[2],2) +pow(vel[2],2));
@@ -177,7 +179,7 @@ void rigidbody::calcKinetic(const float Dtime){
     ktot += (0.187*mass*pow(0.4,2)*pow(angVel[2],2))/2;
 
 
-    kEnergy += ktot;
+    kEnergy = ktot;
 }
 
 double rigidbody::getKe(){

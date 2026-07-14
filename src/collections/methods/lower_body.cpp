@@ -122,3 +122,17 @@ void Lower_Body::setColor(float* col){
     sx->setColor(col);
     dx->setColor(col);
 }
+
+double Lower_Body::getKEnergy(){
+    double tmpK = 0;
+    tmpK += sx->getKEnergy();
+    tmpK += dx->getKEnergy();
+    tmpK += t->body.getKe();
+    return tmpK;
+}
+
+void Lower_Body::resetKenergy(){
+    t->body.resetKe();
+    sx->resetKenergy();
+    dx->resetKenergy();
+}

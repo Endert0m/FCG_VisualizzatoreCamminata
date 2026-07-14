@@ -37,6 +37,8 @@ public:
     collection create(ReferencePlane plane) override;
     void resetTime() override;
     void setColor(float* col) override;
+    double getKEnergy();
+    void resetKenergy();
 };
 
 

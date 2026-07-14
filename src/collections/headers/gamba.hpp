@@ -24,6 +24,8 @@ class Gamba : public CollectionInterface {
         float getZ_Acc();
         void resetTime() override;
         void setColor(float* col) override;
+        double getKEnergy();
+        void resetKenergy();
 };
 
 #endif 
