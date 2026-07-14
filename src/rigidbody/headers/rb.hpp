@@ -15,8 +15,12 @@
                 Vector3 vel = {0,0,0};
                 Vector3 acc = {0,0,0};
                 Vector3 rot = {0,0,0};
+                Vector3 prevrot = {0,0,0};
+                Vector3 angVel = {0,0,0};
                 Vector3 tanAcc = {0,0,0};
                 Vector3 tanVel = {0,0,0};
+
+                double kEnergy = 0;
 
                 bool fixed = false;
                 bool enabledCollisions = false;
@@ -37,6 +41,7 @@
                 void calcTanAcc(const Vector3 Dacc);
                 void calcPos(const float Dtime);
 
+                void calcKinetic ();
 
 
             public:
@@ -69,6 +74,8 @@
                 void setAcc(const Vector3 Nvel);
                 void setTanAcc(const Vector3 Dacc);
                 void step(const sf::Clock time, float multiplier);
+                void resetKe();
+                double getKe();
 
                 //complesso, deve definire accelerazione e accelerazione tangenziale 
                 void appForce(Vector3 f, Vector3 pos);

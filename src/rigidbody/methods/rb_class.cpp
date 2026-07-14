@@ -124,6 +124,10 @@ void rigidbody::calcRot(const float Dtime){
     // Ds = wt +1/2*at^2 -> l'accelerazione angolare la trovo ac = v^2/R
 
     if (!fixed){
+        Vector3 tmprot = rot - prevrot;
+        angVel = angVel + Vector3{tmprot[0]*Dtime,tmprot[1]*Dtime,tmprot[2]*Dtime};
+        prevrot = rot;
+
         Vector3 tmpVel;
         for (float a : tanAcc){
             tmpVel.push_back( a*Dtime );
@@ -156,4 +160,25 @@ void rigidbody::setVel(const Vector3 Nacc){
     if (Nacc.size() != 3) throw "Vel vector must be 3 in lenght!";
 
     vel = Nacc;
+}
+
+void rigidbody::calcKinetic(){
+    //Ktot = 1/2(mv^2) + 1/2((0.187)mL^2)w^2
+    float modvel = sqrt(pow(vel[0],2) + pow(vel[2],2) +pow(vel[2],2));
+    double ktot = (mass*pow(modvel,2))/2;
+
+    ktot += (0.187*mass*pow(0.4,2)*pow(angVel[0],2))/2;
+    ktot += (0.187*mass*pow(0.4,2)*pow(angVel[1],2))/2;
+    ktot += (0.187*mass*pow(0.4,2)*pow(angVel[2],2))/2;
+
+
+    kEnergy += ktot;
+}
+
+double rigidbody::getKe(){
+    return kEnergy;
+}
+
+void rigidbody::resetKe(){
+    kEnergy = 0;
 }
