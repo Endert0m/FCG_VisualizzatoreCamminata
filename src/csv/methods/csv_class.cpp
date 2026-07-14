@@ -50,4 +50,62 @@ const std::vector<std::vector<float>>& CSVProcessor::getData() const {
     return data;
 }
 
+/*
+void CSVProcessor::writeCSVFile(const std::string& filename, std::vector<std::vector<double>> data){
+   char c = '0';
+   std::ifstream file (filename);
+   while (file.is_open())
+   {
+      file.close();
+      file.open(filename+c++);
+   }
+   
+   std::ofstream ofile(filename);
 
+}*/
+namespace fs = std::filesystem;
+
+void CSVProcessor::writeCSVFile(const std::string& filename, std::vector<std::vector<double>> data) {
+    fs::path filePath(filename);
+    std::string stem = filePath.stem().string();      // Il nome del file senza estensione (es: "dati")
+    std::string extension = filePath.extension().string(); // L'estensione (es: ".csv")
+    
+    std::string finalFilename = filename;
+    int counter = 0;
+    // 1. LOGICA DI CONTROLLO NOME (Evitare sovrascrittura)
+    // Se il file esiste già, cerchiamo un nome disponibile: nome0.ext, nome1.ext...
+    if (fs::exists(filePath)) {
+        while (fs::exists(stem + std::to_string(counter) + extension)) {
+            counter++;
+        }
+        finalFilename = stem + std::to_string(counter) + extension;
+    }
+    // 2. APERTURA DEL FILE
+    std::ofstream ofile(finalFilename);
+    if (!ofile.is_open()) {
+        throw std::runtime_error("Could not open file for writing: " + finalFilename);
+    }
+    // 3. SCRITTURA DELL'HEADER (Requisito: "Collezione #")
+    if (!data.empty()) {
+        size_t numCols = data[0].size();
+        for (size_t i = 1; i <= numCols; ++i) {
+            ofile << "Collezione " << i;
+            if (i < numCols) {
+                ofile << ",";
+            }
+        }
+        ofile << "\n";
+    }
+    // 4. SCRITTURA DEI DATI
+    for (const auto& row : data) {
+        for (size_t j = 0; j < row.size(); ++j) {
+            ofile << row[j];
+            if (j < row.size() - 1) {
+                ofile << ",";
+            }
+        }
+        ofile << "\n";
+    }
+    ofile.close();
+    std::cout << "File salvato con successo come: " << finalFilename << std::endl;
+}

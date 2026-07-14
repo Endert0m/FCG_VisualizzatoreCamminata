@@ -3,6 +3,8 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <filesystem> // Necessario per gestire i percorsi e verificare l'esistenza
+#include <string>
 
 #ifndef CSV_H
 #define CSV_H
@@ -22,7 +24,7 @@ public:
     // Getter for data
     const std::vector<std::vector<float>>& getData() const;
 
-    void writeCSVFile(const std::string& filename);
+    void writeCSVFile(const std::string& filename, std::vector<std::vector<double>> data);
 
 };
 

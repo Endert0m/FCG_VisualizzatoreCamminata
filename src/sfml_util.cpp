@@ -3,6 +3,7 @@
 #include "pieces/headers/piece_interface.hpp"
 #include "joints/headers/joint_interface.hpp"
 #include "collections/headers/collection_interface.hpp"
+#include "csv/headers/csv.hpp"
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include <format>
@@ -176,7 +177,8 @@ void State::calcCollisions(){
 }
 
 void State::saveKe(){
-
+    CSVProcessor csvproc;
+    csvproc.writeCSVFile("EnergiaCinetica.csv",kEnergy);
 }
 
 void State::update(){
