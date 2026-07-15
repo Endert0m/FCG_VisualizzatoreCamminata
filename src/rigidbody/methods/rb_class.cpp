@@ -176,10 +176,7 @@ void rigidbody::calcKinetic(const float Dtime){
         prevCoords = coords;
 
         float modvel = sqrt(pow(tmpvel[0],2) + pow(tmpvel[1],2) +pow(tmpvel[2],2));
-        printf("%f\n",modvel);
         double ktot = (mass*pow(modvel,2))/2;
-
-
 
         ktot += (0.187*mass*pow(0.4,2)*pow(angVel[0],2))/2;
         ktot += (0.187*mass*pow(0.4,2)*pow(angVel[1],2))/2;
