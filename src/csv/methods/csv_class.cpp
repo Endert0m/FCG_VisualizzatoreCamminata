@@ -66,11 +66,11 @@ void CSVProcessor::writeCSVFile(const std::string& filename, std::vector<std::ve
 namespace fs = std::filesystem;
 
 void CSVProcessor::writeCSVFile(const std::string& filename, std::vector<std::vector<double>> data) {
-    fs::path filePath(filename);
+    fs::path filePath(DATA_PATH+filename);
     std::string stem = filePath.stem().string();      // Il nome del file senza estensione (es: "dati")
     std::string extension = filePath.extension().string(); // L'estensione (es: ".csv")
     
-    std::string finalFilename = filename;
+    std::string finalFilename = DATA_PATH + filename;
     int counter = 0;
     // 1. LOGICA DI CONTROLLO NOME (Evitare sovrascrittura)
     // Se il file esiste già, cerchiamo un nome disponibile: nome0.ext, nome1.ext...

@@ -8,11 +8,11 @@ Gamba::Gamba(rb::Vector3 pos, unsigned int* dataPos, std::string cosciaData, std
         
         processor.readCSVFile (DATA_PATH + cosciaData);
         const auto& coscia = processor.getData();
-        sensori.push_back(new Sensore(pos,_Float16( 0.2 ),dataPos,coscia));
+        sensori.push_back(new Sensore(pos,_Float16( 7.0 ),dataPos,coscia));
         
         processor.readCSVFile(DATA_PATH + cavigliaData);
         const auto& caviglia = processor.getData();
-        sensori.push_back(new Sensore (rb::Vector3{pos[0],pos[1],pos[2]+200},_Float16( 0.2 ),dataPos,caviglia));
+        sensori.push_back(new Sensore (rb::Vector3{pos[0],pos[1],pos[2]+200},_Float16( 4.28 ),dataPos,caviglia));
 
         // modifico la rotazione relativa della gamba
 

@@ -178,7 +178,7 @@ void State::calcCollisions(){
 
 void State::saveKe(){
     CSVProcessor csvproc;
-    csvproc.writeCSVFile("EnergiaCinetica.csv",kEnergy);
+    csvproc.writeCSVFile("Ecinetica/EnergiaCinetica.csv",kEnergy);
 }
 
 void State::update(){

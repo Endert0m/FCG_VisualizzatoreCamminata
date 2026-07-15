@@ -125,9 +125,12 @@ void rigidbody::calcRot(const float Dtime){
     // Ds = wt +1/2*at^2 -> l'accelerazione angolare la trovo ac = v^2/R
 
     if (!fixed){
-        Vector3 tmprot = rot - prevrot;
-        angVel = angVel + Vector3{tmprot[0]/Dtime,tmprot[1]/Dtime,tmprot[2]/Dtime};
-        prevrot = rot;
+        if (Dtime != 0){
+            Vector3 tmprot = rot - prevrot;
+            angVel = angVel + Vector3{tmprot[0]/Dtime,tmprot[1]/Dtime,tmprot[2]/Dtime};
+            prevrot = rot;
+        }
+        
 
         Vector3 tmpVel;
         for (float a : tanAcc){
@@ -167,19 +170,24 @@ void rigidbody::calcKinetic(const float Dtime){
     //Ktot = 1/2(mv^2) + 1/2((0.187)mL^2)w^2
 
 
-    Vector3 vel = (coords - prevCoords)/100;
-    vel = {vel[0]/Dtime,vel[1]/Dtime,vel[2]/Dtime};
-    prevCoords = coords;
+    if (Dtime != 0){
+        Vector3 tmpvel = (coords - prevCoords)/100;
+        tmpvel = {tmpvel[0]/Dtime,tmpvel[1]/Dtime,tmpvel[2]/Dtime};
+        prevCoords = coords;
 
-    float modvel = sqrt(pow(vel[0],2) + pow(vel[1],2) +pow(vel[2],2));
-    double ktot = (mass*pow(modvel,2))/2;
-
-    ktot += (0.187*mass*pow(0.4,2)*pow(angVel[0],2))/2;
-    ktot += (0.187*mass*pow(0.4,2)*pow(angVel[1],2))/2;
-    ktot += (0.187*mass*pow(0.4,2)*pow(angVel[2],2))/2;
+        float modvel = sqrt(pow(tmpvel[0],2) + pow(tmpvel[1],2) +pow(tmpvel[2],2));
+        printf("%f\n",modvel);
+        double ktot = (mass*pow(modvel,2))/2;
 
 
-    kEnergy = ktot;
+
+        ktot += (0.187*mass*pow(0.4,2)*pow(angVel[0],2))/2;
+        ktot += (0.187*mass*pow(0.4,2)*pow(angVel[1],2))/2;
+        ktot += (0.187*mass*pow(0.4,2)*pow(angVel[2],2))/2;
+
+
+        kEnergy = ktot;
+    }
 }
 
 double rigidbody::getKe(){
