@@ -127,7 +127,7 @@ void rigidbody::calcRot(const float Dtime){
     if (!fixed){
         if (Dtime != 0){
             Vector3 tmprot = rot - prevrot;
-            angVel = angVel + Vector3{tmprot[0]/Dtime,tmprot[1]/Dtime,tmprot[2]/Dtime};
+            angVel = Vector3{tmprot[0]/Dtime,tmprot[1]/Dtime,tmprot[2]/Dtime};
             prevrot = rot;
         }
         

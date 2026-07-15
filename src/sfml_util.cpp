@@ -433,6 +433,7 @@ void doGUI(State &gs)
     ImGui::SameLine();
     if (ImGui::ArrowButton("Play", ImGuiDir_Right)){
         gs.play = !gs.play;
+        if (gs.play) gs.PieceClock.restart();
     }
     if (red) ImGui::PopStyleColor();
     ImGui::End();
@@ -510,7 +511,7 @@ void doGUI(State &gs)
     ImGui::SetWindowSize("Set time multiplier",ImVec2(400,30));
     ImGui::SetWindowPos("Set overlap",ImVec2(wsize.x-300,31));
     ImGui::SetWindowSize("Set overlap",ImVec2(300,90*gs.collections.size()));
-    ImGui::SetWindowPos("Get ke & save",ImVec2(wsize.x-300,1+90*gs.collections.size()));
+    ImGui::SetWindowPos("Get ke & save",ImVec2(wsize.x-300,31+90*gs.collections.size()));
     ImGui::SetWindowSize("Get ke & save",ImVec2(300,40));
     
     ImGui::SFML::Render(gs.window);
