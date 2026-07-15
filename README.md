@@ -9,6 +9,7 @@ Contiene:
 - Visualizzazione ortogonale sui tre piani
 - Controllo sul tempo di riproduzione e su posizione dei dati
 - Controllo sovrapposizioni (permette di sovrapporre due camminate per confrontarle)
+- Calcolo energia cinetica del sistema nell'intervallo selezionato ed esportazione dati
 
 
 # Per compilare:
