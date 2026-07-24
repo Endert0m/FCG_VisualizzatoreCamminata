@@ -73,6 +73,38 @@ int main() {
         }
         gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
 
+        // collezioni extra
+
+        data.clear();
+        {
+            gamba_data d;
+            d.dataPos = &pos;
+            d.cavigliaData = "CasoBase/FilteredData/caviglia_filtD.csv";
+            d.cosciaData = "CasoBase/FilteredData/coscia_filtD.csv";
+            gamba_data s;
+            s.dataPos = &pos;
+            s.cavigliaData = "CasoBase/FilteredData/caviglia_filtS.csv";
+            s.cosciaData = "CasoBase/FilteredData/coscia_filtS.csv";
+            data.push_back(d);
+            data.push_back(s);
+        }
+        gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
+
+        data.clear();
+        {
+            gamba_data d;
+            d.dataPos = &pos;
+            d.cavigliaData = "CasoBase/CorrectedData/caviglia_CorrD.csv";
+            d.cosciaData = "CasoBase/CorrectedData/coscia_CorrD.csv";
+            gamba_data s;
+            s.dataPos = &pos;
+            s.cavigliaData = "CasoBase/CorrectedData/caviglia_CorrS.csv";
+            s.cosciaData = "CasoBase/CorrectedData/coscia_CorrS.csv";
+            data.push_back(d);
+            data.push_back(s);
+        }
+        gs.collections.push_back(new Lower_Body(rb::Vector3{200,200,100},data));
+
         //aggiungo il pavimento 
         gs.pieces.push_back(new Pavimento({200,200,550},_Float16(0.2) ));
         //gs.pieces[0]->body.setRot({0.01,-0.03,0});

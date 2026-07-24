@@ -111,6 +111,7 @@ void Lower_Body::resetTime(){
     sx->resetTime();
     dx->resetTime();
     t->body.resetTime();
+    prevT = 0;
 }
 
 void Lower_Body::setColor(float* col){

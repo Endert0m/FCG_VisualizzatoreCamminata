@@ -196,7 +196,7 @@ void State::update(){
         kEnergy.push_back(row);
         if(*pos == *intervalMajLimit-1) {
             gettingKe = false;
-            play = false;
+            //play = false;
         } 
     }
 
@@ -433,7 +433,7 @@ void doGUI(State &gs)
     ImGui::SameLine();
     if (ImGui::ArrowButton("Play", ImGuiDir_Right)){
         gs.play = !gs.play;
-        if (gs.play) gs.PieceClock.restart();
+        //if (gs.play) gs.PieceClock.restart();
     }
     if (red) ImGui::PopStyleColor();
     ImGui::End();
